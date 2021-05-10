@@ -1,0 +1,955 @@
+@import '../public/styles/colors.scss';
+
+$header-height: 70px;
+
+$card-shadow: 0px 0px 10px 5px #d3d3d3;
+
+$small-shadow: 0px 0px 5px #d3d3d3;
+
+body {
+    height: 100vh;
+    background: #f4f4f4;
+}
+
+.header {
+    padding: 25px 50px;
+    background-color: $primary;
+    box-shadow: 0 0 10px;
+    position: fixed;
+    width: 100%;
+    height: $header-height;
+    z-index: 100;
+
+    .header-wrapper {
+        display: flex;
+        justify-content: space-between;
+    }
+
+    a.menu-item {
+        color: white;
+        padding: 15px;
+        font-weight: bold;
+    }
+
+    img.logo {
+        width: 30px;
+        height: 30px;
+    }
+}
+
+.p-float-label input.p-filled~label {
+    top: -.75rem;
+    font-size: 12px;
+}
+
+.main-app-content {
+    padding-top: $header-height + 50px;
+    padding-bottom: 30px;
+}
+
+.App {
+    height: 100vh;
+}
+
+.h-100 {
+    height: 100%;
+}
+
+.mt-30 {
+    margin-top: 30px;
+}
+
+.primary-button {
+    background-color: $primary;
+}
+
+.a-center {
+    align-items: center;
+}
+
+.j-sp-between {
+    justify-content: space-between;
+}
+
+.j-center {
+    justify-content: center;
+    align-items: center;
+}
+
+.a-i-start {
+    align-items: flex-start;
+}
+
+.form-group {
+    margin-bottom: 2rem;
+}
+
+.app-card {
+    background: white;
+    box-shadow: $card-shadow;
+    padding: 10px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.form-card {
+    background: white;
+    box-shadow: $card-shadow;
+    padding: 20px;
+    border-radius: 5px;
+    margin-bottom: 20px;
+}
+
+.single-post-wrapper {
+    .post-card:hover {
+        cursor: pointer;
+        transition-duration: 300ms;
+        box-shadow: 0px 0px 10px 10px #d4d4d4;
+    }
+
+    margin-top: 20px;
+
+    .user-image {
+        height: 50px;
+        width: 50px;
+        border-radius: 50px;
+    }
+
+    .post-card {
+        box-shadow: $card-shadow;
+        border-radius: 5px;
+        background: white;
+    }
+
+    .post-bottom-section {
+        // border-top: 1px #dfdfdf solid;
+        border-bottom-left-radius: 5px;
+        border-bottom-right-radius: 5px;
+        padding: 20px;
+
+        .post-numbers-wrapper {
+            display: flex;
+        }
+
+        .upvotes-count:hover,
+        .replies-count:hover,
+        .options-div:hover {
+            p {
+                color: $primary;
+                transition-duration: 500ms;
+            }
+
+            cursor: pointer;
+            box-shadow: $card-shadow;
+            transition-duration: 200ms;
+        }
+
+        .upvotes-count,
+        .replies-count,
+        .options-div {
+            padding: 10px 15px;
+            border-radius: 5px;
+            box-shadow: $small-shadow;
+            display: inline-block;
+
+            i {
+                margin-right: 5px;
+                font-size: small;
+            }
+
+            p {
+                color: darkslategrey;
+                font-size: small;
+            }
+        }
+
+        .replies-count,
+        .options-div {
+            margin-left: 20px;
+        }
+    }
+
+    .post-content {
+        padding: 5px 20px;
+
+        .post-title {
+            font-weight: bold;
+        }
+    }
+
+    .post-top-section {
+        padding: 10px 20px;
+
+        .post-user {
+            margin-left: 20px;
+
+            .post-username {
+                font-weight: 500;
+            }
+        }
+
+        .post-meta {
+            font-size: small;
+            padding: 0px;
+            color: grey;
+        }
+
+        .post-type {
+            padding: 3px 10px;
+            border-radius: 10px;
+            color: white;
+        }
+
+        .post-type.question {
+            background-color: $question-color-light;
+        }
+
+        .post-type.resource {
+            background-color: $resource-color-light;
+        }
+    }
+
+    p {
+        text-align: left;
+        margin: 0px;
+    }
+}
+
+.scholarship-component {
+
+    .card-heading {
+        font-size: larger;
+        font-weight: bold;
+    }
+
+    .filter-form {
+        padding-top: 20px;
+    }
+
+    .scholarship-filter-card {
+        background: white;
+        box-shadow: $card-shadow;
+        border-radius: 5px;
+        display: block;
+        padding: 20px;
+    }
+
+    .country-filter {
+        .p-dropdown {
+            width: 100%;
+            text-align: left;
+        }
+    }
+
+    a {
+        text-decoration: none;
+    }
+}
+
+.single-scholarship-wrapper {
+    margin-bottom: 20px;
+
+    .scholarship-card {
+        background: white;
+        padding: 20px;
+        box-shadow: $card-shadow;
+        border-radius: 5px;
+    }
+
+    .scholarship-card:hover {
+        box-shadow: 0px 0px 10px 10px #d4d4d4;
+        transition-duration: 300ms;
+    }
+
+    .provider-logo {
+        max-width: 100px;
+        max-height: 100px;
+    }
+
+    .scholarship-title {
+        font-size: larger;
+        font-weight: bold;
+    }
+
+    .scholarship-subtitle {
+        color: grey;
+    }
+
+    p {
+        margin: 5px;
+        color: black;
+        text-decoration: unset;
+    }
+
+    .scholarship-description {
+        font-size: small;
+        display: -webkit-box;
+        -webkit-line-clamp: 2;
+        -webkit-box-orient: vertical;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .features-wrapper {
+        text-align: left;
+    }
+
+    .date-wrapper,
+    .amount-wrapper,
+    .level-wrapper {
+        margin-top: 10px;
+        display: inline-block;
+        padding: 0px 5px;
+        border-radius: 20px;
+        box-shadow: $small-shadow;
+        margin-right: 10px;
+    }
+}
+
+.post-feed-component {
+    .add-post-card {
+        box-shadow: $card-shadow;
+        border-radius: 5px;
+        background: white;
+    }
+
+    .add-post-div {
+        display: inline-block;
+        padding: 30px;
+        width: 50%;
+
+        p {
+            margin: 0;
+        }
+    }
+
+    .add-post.main-text {
+        font-weight: bold;
+        font-size: large;
+    }
+
+    .add-post.main-text.question {
+        color: $question-color-dark;
+    }
+
+    .add-post.main-text.resource {
+        color: $resource-color-dark;
+    }
+
+    .add-post-div:hover {
+        color: white;
+        cursor: pointer;
+        transition-duration: 200ms;
+    }
+
+    .add-post-div.add-question:hover {
+        .add-post.main-text.question {
+            transition-duration: 200ms;
+            color: white;
+        }
+
+        box-shadow: 0px 0px 5px 3px $question-color-light;
+        border-top-left-radius: 5px;
+        border-bottom-left-radius: 5px;
+        background-color: $question-color-dark;
+    }
+
+    .add-post-div.add-resource:hover {
+        .add-post.main-text.resource {
+            transition-duration: 200ms;
+            color: white;
+        }
+
+        box-shadow: 0px 0px 5px 3px $resource-color-light;
+        border-top-right-radius: 5px;
+        border-bottom-right-radius: 5px;
+        background-color: $resource-color-dark;
+    }
+
+    .add-post.subtext {
+        font-size: small;
+    }
+
+    .add-post-div.add-question {
+        border-right: 1px #d3d3d3 solid;
+    }
+
+    .post-feed-wrapper {
+        padding-bottom: 30px;
+    }
+}
+
+.profile-page-content {
+    .heading-wrapper {
+        font-size: larger;
+        font-weight: bold;
+    }
+
+    .profile-form,
+    .password-form {
+        padding-top: 30px;
+
+        .p-inputwrapper {
+            width: 100%;
+        }
+
+        .p-inputtext {
+            width: 100%;
+        }
+    }
+
+    .profile-image {
+        width: 100%;
+    }
+
+    .attachment-input {
+        position: relative;
+        top: -152px;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+    }
+
+    .upload-attachment-wrapper {
+        padding: 20px;
+        width: 100%;
+        border: 1px solid #d3d3d3;
+        height: 100%;
+        text-align: center;
+        border-radius: 5px;
+
+        i {
+            margin-right: 20px;
+        }
+
+        p {
+            text-align: center;
+            font-weight: bold;
+            color: grey;
+            padding: 5px 20px;
+            border: 1px dashed grey;
+            width: auto;
+        }
+    }
+}
+
+.add-post-dialog {
+    width: 70%;
+}
+
+.add-post-dialog-wrapper {
+    padding-top: 20px;
+}
+
+.add-post-form {
+    .attachment-input {
+        position: relative;
+        top: -62px;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+    }
+
+    .upload-attachment-wrapper {
+        padding: 20px;
+        width: 100%;
+        border: 1px solid #d3d3d3;
+        height: 100%;
+        text-align: center;
+        border-radius: 5px;
+
+        i {
+            margin-right: 20px;
+        }
+
+        p {
+            text-align: center;
+            font-weight: bold;
+            color: grey;
+            padding: 5px 20px;
+            border: 1px dashed grey;
+            width: auto;
+        }
+    }
+
+    .editor-control {
+        .p-editor-content .ql-editor {
+            min-height: 200px;
+        }
+    }
+}
+
+.view-user-component {
+    span.user-type-badge {
+        padding: 2px 5px;
+        border-radius: 5px;
+        width: 100%;
+        display: inline-block;
+        text-align: center;
+    }
+
+    span.user-type-badge.user-type-student {
+        background: $student-type;
+    }
+
+    span.user-type-badge.user-type-admin {
+        background: $admin-type;
+    }
+
+    .tutor-status {
+        padding: 5px;
+        border-radius: 5px;
+        display: inline-block;
+        width: 70%;
+        margin-left: 15%;
+        color: white;
+    }
+
+    .tutor-status.listed-tutor {
+        color: green;
+    }
+
+    .tutor-status.not-tutor {
+        color: red;
+    }
+
+    .tutor-status.applied-tutor {
+        color: orange;
+    }
+}
+
+.sidebar {
+    padding: 30px;
+    background-color: white;
+    box-shadow: $card-shadow;
+    margin-bottom: 30px;
+    border-radius: 5px;
+
+    .user-info {
+        .user-image-wrapper {
+            background-color: $primary;
+            padding: 5px;
+            border-radius: 50%;
+            width: 70%;
+            height: 70%;
+            margin-left: 15%;
+        }
+
+        .user-image {
+            width: 100%;
+            height: 100%;
+            border-radius: 50%;
+            border: 3px white solid;
+        }
+
+        .user-name {
+            font-weight: bold;
+            margin: 0px;
+            margin-top: 20px;
+        }
+
+        .user-degree {
+            font-size: small;
+        }
+    }
+
+    .sidebar-link:hover {
+        background-color: $primary;
+        color: white;
+        transition-duration: 300ms;
+    }
+
+    .sidebar-link {
+        cursor: pointer;
+        display: flex;
+        padding: 10px 20px;
+        box-shadow: $small-shadow;
+        margin-top: 20px;
+        border-radius: 40px;
+        align-items: center;
+
+        p.sidebar-link-label {
+            margin: 0;
+            font-weight: 500;
+            margin-left: 20px;
+        }
+    }
+
+    .become-tutor-heading {
+        font-weight: bold;
+        font-size: large;
+    }
+
+    .become-tutor-desc {
+        font-size: small;
+    }
+
+    .become-tutor-button {
+        width: 100%;
+        padding: 10px;
+        color: white;
+        font-weight: bold;
+        border-radius: 10px;
+        box-shadow: $small-shadow;
+    }
+
+    .single-filter {
+        padding: 10px;
+        margin: 20px 0px;
+        border-radius: 5px;
+        width: 100%;
+        display: flex;
+        align-items: center;
+        box-shadow: $small-shadow;
+        cursor: pointer;
+
+        p {
+            margin: 0px;
+            text-align: left;
+            display: inline-block;
+        }
+    }
+
+    .filter-circle {
+        height: 12px;
+        width: 12px;
+        border-radius: 50%;
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    .single-filter:hover {
+        color: white;
+        transition-duration: 300ms;
+
+        .filter-circle {
+            background-color: white;
+        }
+    }
+
+    .single-filter.question-filter:hover {
+        background-color: $question-color-dark;
+    }
+
+    .single-filter.resource-filter:hover {
+        background-color: $resource-color-dark;
+    }
+
+    .filter-circle.question-filter-color {
+        background-color: $question-color-dark;
+    }
+
+    .filter-circle.resource-filter-color {
+        background-color: $resource-color-dark;
+    }
+}
+
+.post-details-component {
+    .post-details-card {
+        padding: 40px;
+        box-shadow: $card-shadow;
+        border-radius: 5px;
+        background: white;
+    }
+
+    .posted-by-image {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+        margin-right: 20px;
+    }
+
+    .title-and-poster {
+        padding-left: 30px;
+    }
+
+    .post-votes {
+        padding-right: 30px;
+        border-right: 1px #d3d3d3 solid;
+    }
+
+    .votes-count {
+        font-size: x-large;
+        font-weight: bold;
+    }
+
+    .vote-icon {
+        font-size: x-large;
+        color: grey;
+        padding: 0px;
+        margin: 0;
+        line-height: 0;
+    }
+
+    .post-heading {
+        font-size: x-large;
+        font-weight: bold;
+        text-align: left;
+    }
+
+    .post-image {
+        width: 80%;
+    }
+
+    .post-details {
+        padding-top: 30px;
+    }
+
+    .post-description {
+        text-align: left;
+        padding-bottom: 30px;
+    }
+
+    .replies-card {
+        box-shadow: $card-shadow;
+        padding: 20px 30px;
+        margin-top: 30px;
+        border-radius: 5px;
+        background: white;
+    }
+
+    .replies-card-heading {
+        font-size: x-large;
+        font-weight: bold;
+        text-align: left;
+    }
+
+    .reply-votes-count {
+        margin: 0px;
+        font-size: large;
+    }
+
+    .reply-vote-icon {
+        margin: 0 10px;
+    }
+
+    .replier-img {
+        width: 30px;
+        height: 30px;
+        border-radius: 50%;
+    }
+
+    .single-reply-wrapper {
+        margin-top: 10px;
+    }
+
+    .replier-name-and-time {
+        margin-left: 20px;
+        padding-bottom: 10px;
+    }
+
+    .replier-name {
+        font-weight: bold;
+        text-align: left;
+        margin: 0;
+    }
+
+    .reply-time {
+        margin: 0;
+        font-size: small;
+    }
+
+    .reply-text {
+        text-align: justify;
+    }
+
+    .post-reply-heading {
+        font-weight: bold;
+        font-size: large;
+    }
+}
+
+.job-feed-sidebar {
+    box-shadow: $card-shadow;
+    padding: 20px 10px;
+    background: white;
+    border-radius: 5px;
+
+    .job-feed-heading {
+        font-size: large;
+        text-align: center;
+        font-weight: bold;
+        margin-bottom: 20px;
+
+        span {
+            margin-right: 5px;
+        }
+    }
+
+    .sidebar-single-job-wrapper {
+        hr {
+            margin: 3px;
+            padding: 0;
+        }
+    }
+
+    .sidebar-single-job {
+        display: flex;
+        justify-content: space-between;
+        padding: 10px;
+    }
+
+    .sidebar-single-job:hover {
+        box-shadow: $small-shadow;
+        border-radius: 10px;
+        transition-duration: 300ms;
+        cursor: pointer;
+    }
+
+    p {
+        margin: 0;
+    }
+
+    .job-title {
+        font-weight: bold;
+    }
+
+    .job-time {
+        font-size: small;
+        color: grey;
+    }
+
+    .budget-wrapper {
+        font-weight: bold;
+    }
+}
+
+
+
+.bold {
+    font-weight: bold;
+}
+
+p {
+    text-align: left;
+}
+
+p.center {
+    text-align: center;
+}
+
+.primary-color {
+    background-color: $primary;
+    border: 0px;
+}
+
+.primary-button {
+    background-color: $primary;
+    color: white;
+}
+
+.primary-gradient {
+    background: linear-gradient(to left, $primary, $primary-dark);
+    color: white;
+    border: 0;
+}
+
+.single-control {
+    width: 100%;
+
+    .p-dropdown-label.p-placeholder {
+        text-align: left;
+    }
+}
+
+.pl-0 {
+    padding-left: 0;
+}
+
+.pr-0 {
+    padding-right: 0;
+}
+
+.pt-0 {
+    padding-top: 0;
+}
+
+.pb-0 {
+    padding-bottom: 0;
+}
+
+.full-height {
+    height: 100%;
+}
+
+.c-pointer {
+    cursor: pointer;
+}
+
+.sp-20 {
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+
+.signup-component {
+    .attachment-input {
+        position: relative;
+        top: -62px;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        opacity: 0;
+    }
+
+    .upload-attachment-wrapper {
+        padding: 20px;
+        width: 100%;
+        border: 1px solid #d3d3d3;
+        height: 100%;
+        text-align: center;
+        border-radius: 5px;
+
+        i {
+            margin-right: 20px;
+        }
+
+        p {
+            text-align: center;
+            font-weight: bold;
+            color: grey;
+            padding: 5px 20px;
+            border: 1px dashed grey;
+            width: auto;
+        }
+    }
+
+}
+
+.signup-card,
+.login-card {
+    box-shadow: $card-shadow;
+    padding: 40px;
+    border-radius: 10px;
+    background: white;
+    color: black;
+
+    .p-inputtext {
+        width: 100%;
+    }
+}
+
+.table-card {
+    box-shadow: $card-shadow;
+    padding: 20px;
+    border-radius: 5px;
+    background: white;
+}
+
+.switch-field {
+    display: flex;
+    width: 100%;
+    justify-content: space-between;
+}
+
+.progress-div {
+    display: none;
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    justify-content: center;
+    align-items: center;
+    z-index: 10000;
+    background-color: #00000050;
+}
