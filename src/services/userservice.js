@@ -21,6 +21,9 @@ const userService = {
         let user = localStorage.getItem('user');
         return user ? JSON.parse(user).userType === 0 : false;
     },
+    logout() {
+        localStorage.removeItem('user');
+    },
 };
 
 export default userService;

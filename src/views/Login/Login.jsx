@@ -63,6 +63,17 @@ function Login() {
                                     Login
                                 </button>
                             </div>
+
+                            <p className="sign-up-message">
+                                Don't Have an Account?
+                                <span
+                                    onClick={() => {
+                                        history.push('/signup');
+                                    }}
+                                >
+                                    Sign Up
+                                </span>
+                            </p>
                         </form>
                     </div>
                 </div>

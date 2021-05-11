@@ -12,7 +12,7 @@ body {
 }
 
 .header {
-    padding: 25px 50px;
+    padding: 5px 50px;
     background-color: $primary;
     box-shadow: 0 0 10px;
     position: fixed;
@@ -23,6 +23,7 @@ body {
     .header-wrapper {
         display: flex;
         justify-content: space-between;
+        align-items: center;
     }
 
     a.menu-item {
@@ -34,6 +35,21 @@ body {
     img.logo {
         width: 30px;
         height: 30px;
+    }
+
+    .p-menubar {
+        background: none;
+        border: none;
+
+    .p-menuitem>.p-menuitem-link {
+            margin-right: 10px;
+            border: 1px solid white;
+            border-radius: 20px;
+            .p-menuitem-text,
+            .p-menuitem-icon {
+                color: white;
+            }
+        }
     }
 }
 
@@ -508,11 +524,11 @@ body {
     }
 
     .tutor-status.listed-tutor {
-        color: green;
+        color: $success-color-dark;
     }
 
     .tutor-status.not-tutor {
-        color: red;
+        color: $failure-color-dark;
     }
 
     .tutor-status.applied-tutor {
@@ -915,6 +931,30 @@ p.center {
         }
     }
 
+    .signed-up-message {
+        p {
+            text-align: center;
+        }
+
+        .success-heading {
+            span {
+                margin-right: 20px;
+                font-size: large;
+            }
+
+            font-size: larger;
+            font-weight: bold;
+        }
+
+        .success-description {
+            color: grey;
+        }
+
+        button {
+            margin-top: 30px;
+        }
+    }
+
 }
 
 .signup-card,
@@ -927,6 +967,20 @@ p.center {
 
     .p-inputtext {
         width: 100%;
+    }
+
+    .sign-up-message,
+    .login-message {
+        font-size: small;
+        color: grey;
+        text-align: center;
+
+        span {
+            margin-left: 10px;
+            color: $primary;
+            cursor: pointer;
+
+        }
     }
 }
 
