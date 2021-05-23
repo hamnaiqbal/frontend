@@ -42,6 +42,14 @@ function PostDetails(props) {
         httpService.postRequest(URLS.POST_UPVOTE, { _id: postId, upvote: !!upvote }).subscribe();
     };
 
+    const isImage = () => {
+        return (
+            post.attachmentLink.endsWith('jpg') ||
+            post.attachmentLink.endsWith('png') ||
+            post.attachmentLink.endsWith('jpeg')
+        );
+    };
+
     const repliesList = () => {
         if (replies.length === 0) {
             return <p>No Replies Yet</p>;
@@ -110,9 +118,19 @@ function PostDetails(props) {
                     </div>
                     <div className="post-details">
                         <p className="post-description" dangerouslySetInnerHTML={{ __html: post.description }}></p>
-                        {post.attachmentLink && (
+                        {post.attachmentLink && isImage() && (
                             <div className="post-image-wrapper">
                                 <img className="post-image" src={post.attachmentLink} alt={post.title} />
+                            </div>
+                        )}
+                        {post.attachmentLink && !isImage() && (
+                            <div className="post-resource-wrapper">
+                                <a href={post.attachmentLink} target="_blank" rel="noreferrer">
+                                    <button className="primary-button btn">
+                                        <i className="pi pi-download"></i>
+                                        Download Resource
+                                    </button>
+                                </a>
                             </div>
                         )}
                     </div>

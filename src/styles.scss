@@ -2,13 +2,15 @@
 
 $header-height: 70px;
 
-$card-shadow: 0px 0px 10px 5px #d3d3d3;
+$card-shadow: 0px 0px 10px 5px $light-border;
 
-$small-shadow: 0px 0px 5px #d3d3d3;
+$small-shadow: 0px 0px 5px $light-border;
+
+
 
 body {
     height: 100vh;
-    background: #f4f4f4;
+    background: $body-bg;
 }
 
 .header {
@@ -27,7 +29,7 @@ body {
     }
 
     a.menu-item {
-        color: white;
+        color: $light-color;
         padding: 15px;
         font-weight: bold;
     }
@@ -41,13 +43,14 @@ body {
         background: none;
         border: none;
 
-    .p-menuitem>.p-menuitem-link {
+        .p-menuitem>.p-menuitem-link {
             margin-right: 10px;
-            border: 1px solid white;
+            border: 1px solid $light-color;
             border-radius: 20px;
+
             .p-menuitem-text,
             .p-menuitem-icon {
-                color: white;
+                color: $light-color;
             }
         }
     }
@@ -101,7 +104,7 @@ body {
 }
 
 .app-card {
-    background: white;
+    background: $light-color;
     box-shadow: $card-shadow;
     padding: 10px;
     border-radius: 5px;
@@ -109,7 +112,7 @@ body {
 }
 
 .form-card {
-    background: white;
+    background: $light-color;
     box-shadow: $card-shadow;
     padding: 20px;
     border-radius: 5px;
@@ -120,7 +123,7 @@ body {
     .post-card:hover {
         cursor: pointer;
         transition-duration: 300ms;
-        box-shadow: 0px 0px 10px 10px #d4d4d4;
+        box-shadow: 0px 0px 10px 10px $hover-shadow;
     }
 
     margin-top: 20px;
@@ -134,7 +137,7 @@ body {
     .post-card {
         box-shadow: $card-shadow;
         border-radius: 5px;
-        background: white;
+        background: $light-color;
     }
 
     .post-bottom-section {
@@ -174,7 +177,7 @@ body {
             }
 
             p {
-                color: darkslategrey;
+                color: darkslate$light-text;
                 font-size: small;
             }
         }
@@ -207,13 +210,13 @@ body {
         .post-meta {
             font-size: small;
             padding: 0px;
-            color: grey;
+            color: $light-text;
         }
 
         .post-type {
             padding: 3px 10px;
             border-radius: 10px;
-            color: white;
+            color: $light-color;
         }
 
         .post-type.question {
@@ -243,7 +246,7 @@ body {
     }
 
     .scholarship-filter-card {
-        background: white;
+        background: $light-color;
         box-shadow: $card-shadow;
         border-radius: 5px;
         display: block;
@@ -266,14 +269,14 @@ body {
     margin-bottom: 20px;
 
     .scholarship-card {
-        background: white;
+        background: $light-color;
         padding: 20px;
         box-shadow: $card-shadow;
         border-radius: 5px;
     }
 
     .scholarship-card:hover {
-        box-shadow: 0px 0px 10px 10px #d4d4d4;
+        box-shadow: 0px 0px 10px 10px $hover-shadow;
         transition-duration: 300ms;
     }
 
@@ -288,12 +291,12 @@ body {
     }
 
     .scholarship-subtitle {
-        color: grey;
+        color: $light-text;
     }
 
     p {
         margin: 5px;
-        color: black;
+        color: $dark-text;
         text-decoration: unset;
     }
 
@@ -326,7 +329,7 @@ body {
     .add-post-card {
         box-shadow: $card-shadow;
         border-radius: 5px;
-        background: white;
+        background: $light-color;
     }
 
     .add-post-div {
@@ -353,7 +356,7 @@ body {
     }
 
     .add-post-div:hover {
-        color: white;
+        color: $light-color;
         cursor: pointer;
         transition-duration: 200ms;
     }
@@ -361,7 +364,7 @@ body {
     .add-post-div.add-question:hover {
         .add-post.main-text.question {
             transition-duration: 200ms;
-            color: white;
+            color: $light-color;
         }
 
         box-shadow: 0px 0px 5px 3px $question-color-light;
@@ -373,7 +376,7 @@ body {
     .add-post-div.add-resource:hover {
         .add-post.main-text.resource {
             transition-duration: 200ms;
-            color: white;
+            color: $light-color;
         }
 
         box-shadow: 0px 0px 5px 3px $resource-color-light;
@@ -387,11 +390,34 @@ body {
     }
 
     .add-post-div.add-question {
-        border-right: 1px #d3d3d3 solid;
+        border-right: 1px $light-border solid;
     }
 
     .post-feed-wrapper {
         padding-bottom: 30px;
+    }
+
+    .load-more-card {
+        padding: 10px;
+        background-color: $light-color;
+        box-shadow: $card-shadow;
+        margin-bottom: 30px;
+        border-radius: 5px;
+        cursor: pointer;
+
+        .load-more {
+            text-align: center;
+            margin: 0;
+            font-weight: bold;
+
+            i {
+                margin-right: 10px;
+            }
+        }
+    }
+
+    .load-more-card:hover {
+        box-shadow: $hover-shadow;
     }
 }
 
@@ -430,7 +456,7 @@ body {
     .upload-attachment-wrapper {
         padding: 20px;
         width: 100%;
-        border: 1px solid #d3d3d3;
+        border: 1px solid $light-border;
         height: 100%;
         text-align: center;
         border-radius: 5px;
@@ -442,9 +468,9 @@ body {
         p {
             text-align: center;
             font-weight: bold;
-            color: grey;
+            color: $light-text;
             padding: 5px 20px;
-            border: 1px dashed grey;
+            border: 1px dashed $light-text;
             width: auto;
         }
     }
@@ -471,7 +497,7 @@ body {
     .upload-attachment-wrapper {
         padding: 20px;
         width: 100%;
-        border: 1px solid #d3d3d3;
+        border: 1px solid $light-border;
         height: 100%;
         text-align: center;
         border-radius: 5px;
@@ -483,9 +509,9 @@ body {
         p {
             text-align: center;
             font-weight: bold;
-            color: grey;
+            color: $light-text;
             padding: 5px 20px;
-            border: 1px dashed grey;
+            border: 1px dashed $light-text;
             width: auto;
         }
     }
@@ -520,7 +546,7 @@ body {
         display: inline-block;
         width: 70%;
         margin-left: 15%;
-        color: white;
+        color: $light-color;
     }
 
     .tutor-status.listed-tutor {
@@ -532,13 +558,13 @@ body {
     }
 
     .tutor-status.applied-tutor {
-        color: orange;
+        color: $pending-color;
     }
 }
 
 .sidebar {
     padding: 30px;
-    background-color: white;
+    background-color: $light-color;
     box-shadow: $card-shadow;
     margin-bottom: 30px;
     border-radius: 5px;
@@ -557,7 +583,7 @@ body {
             width: 100%;
             height: 100%;
             border-radius: 50%;
-            border: 3px white solid;
+            border: 3px $light-color solid;
         }
 
         .user-name {
@@ -573,7 +599,7 @@ body {
 
     .sidebar-link:hover {
         background-color: $primary;
-        color: white;
+        color: $light-color;
         transition-duration: 300ms;
     }
 
@@ -605,7 +631,7 @@ body {
     .become-tutor-button {
         width: 100%;
         padding: 10px;
-        color: white;
+        color: $light-color;
         font-weight: bold;
         border-radius: 10px;
         box-shadow: $small-shadow;
@@ -637,11 +663,11 @@ body {
     }
 
     .single-filter:hover {
-        color: white;
+        color: $light-color;
         transition-duration: 300ms;
 
         .filter-circle {
-            background-color: white;
+            background-color: $light-color;
         }
     }
 
@@ -667,7 +693,7 @@ body {
         padding: 40px;
         box-shadow: $card-shadow;
         border-radius: 5px;
-        background: white;
+        background: $light-color;
     }
 
     .posted-by-image {
@@ -683,7 +709,7 @@ body {
 
     .post-votes {
         padding-right: 30px;
-        border-right: 1px #d3d3d3 solid;
+        border-right: 1px $light-border solid;
     }
 
     .votes-count {
@@ -693,7 +719,7 @@ body {
 
     .vote-icon {
         font-size: x-large;
-        color: grey;
+        color: $light-text;
         padding: 0px;
         margin: 0;
         line-height: 0;
@@ -723,7 +749,7 @@ body {
         padding: 20px 30px;
         margin-top: 30px;
         border-radius: 5px;
-        background: white;
+        background: $light-color;
     }
 
     .replies-card-heading {
@@ -775,12 +801,22 @@ body {
         font-weight: bold;
         font-size: large;
     }
+
+    .post-resource-wrapper {
+        text-align: left;
+
+        button {
+            i {
+                margin-right: 10px;
+            }
+        }
+    }
 }
 
 .job-feed-sidebar {
     box-shadow: $card-shadow;
     padding: 20px 10px;
-    background: white;
+    background: $light-color;
     border-radius: 5px;
 
     .job-feed-heading {
@@ -824,7 +860,7 @@ body {
 
     .job-time {
         font-size: small;
-        color: grey;
+        color: $light-text;
     }
 
     .budget-wrapper {
@@ -853,12 +889,12 @@ p.center {
 
 .primary-button {
     background-color: $primary;
-    color: white;
+    color: $light-color;
 }
 
 .primary-gradient {
     background: linear-gradient(to left, $primary, $primary-dark);
-    color: white;
+    color: $light-color;
     border: 0;
 }
 
@@ -912,7 +948,7 @@ p.center {
     .upload-attachment-wrapper {
         padding: 20px;
         width: 100%;
-        border: 1px solid #d3d3d3;
+        border: 1px solid $light-border;
         height: 100%;
         text-align: center;
         border-radius: 5px;
@@ -924,9 +960,9 @@ p.center {
         p {
             text-align: center;
             font-weight: bold;
-            color: grey;
+            color: $light-text;
             padding: 5px 20px;
-            border: 1px dashed grey;
+            border: 1px dashed $light-text;
             width: auto;
         }
     }
@@ -947,7 +983,7 @@ p.center {
         }
 
         .success-description {
-            color: grey;
+            color: $light-text;
         }
 
         button {
@@ -962,8 +998,8 @@ p.center {
     box-shadow: $card-shadow;
     padding: 40px;
     border-radius: 10px;
-    background: white;
-    color: black;
+    background: $light-color;
+    color: $dark-text;
 
     .p-inputtext {
         width: 100%;
@@ -972,7 +1008,7 @@ p.center {
     .sign-up-message,
     .login-message {
         font-size: small;
-        color: grey;
+        color: $light-text;
         text-align: center;
 
         span {
@@ -988,7 +1024,7 @@ p.center {
     box-shadow: $card-shadow;
     padding: 20px;
     border-radius: 5px;
-    background: white;
+    background: $light-color;
 }
 
 .switch-field {
@@ -1005,5 +1041,5 @@ p.center {
     justify-content: center;
     align-items: center;
     z-index: 10000;
-    background-color: #00000050;
+    background-color: $progress-bg;
 }

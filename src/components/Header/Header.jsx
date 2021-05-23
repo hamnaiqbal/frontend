@@ -1,10 +1,8 @@
-import React from 'react';
-import { Link, useHistory } from 'react-router-dom';
 import { Menubar } from 'primereact/menubar';
+import React, { useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import CONSTANTS from '../../constants/constants';
 import userService from '../../services/userservice';
-import { useEffect } from 'react';
-import { useState } from 'react';
 
 const unAuthItems = [
     { label: 'Login', icon: 'pi pi-fw pi-plus', link: '/login' },
@@ -35,14 +33,10 @@ function Header() {
 
     const [currentMenuItems, setCurrentMenuItems] = useState([]);
 
-    const isLoggedIn = userService.isLoggedIn();
-
     useEffect(() => {
-        let menuItems = userService.isLoggedIn()
-            ? userService.isCurrentUserAdmin()
-                ? adminItems
-                : studentItems
-            : unAuthItems;
+        const isLoggedIn = userService.isLoggedIn();
+        const isAdmin = userService.isCurrentUserAdmin();
+        let menuItems = isLoggedIn ? (isAdmin ? adminItems : studentItems) : unAuthItems;
 
         menuItems = menuItems.map((menu) => {
             return {

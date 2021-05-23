@@ -68,22 +68,26 @@ function Sidebar() {
     const middleSection = () => {
         if (!user.listedAsTutor && !user.appliedAsTutor) {
             return (
-                <div className="bottom-card">
-                    <p className="become-tutor-heading center">Become a Tutor</p>
-                    <p className="become-tutor-desc center">
-                        The new modifier instructs the compiler to use the new implementation instead of the base class
-                        function.
-                    </p>
+                <div>
+                    <hr />
 
-                    <div className="tutor-button-wrapper">
-                        <button className="become-tutor-button primary-color">Become a Tutor</button>
+                    <div className="bottom-card">
+                        <p className="become-tutor-heading center">Become a Tutor</p>
+                        <p className="become-tutor-desc center">
+                            The new modifier instructs the compiler to use the new implementation instead of the base class
+                            function.
+                        </p>
+
+                        <div className="tutor-button-wrapper">
+                            <button className="become-tutor-button primary-color">Become a Tutor</button>
+                        </div>
                     </div>
                 </div>
             );
         } else {
             return (
                 <div className="bottom-card">
-                    <p className="become-tutor-heading center">Become a Tutor</p>
+                    {/* <p className="become-tutor-heading center">Become a Tutor</p>
                     <p className="become-tutor-desc center">
                         The new modifier instructs the compiler to use the new implementation instead of the base class
                         function.
@@ -91,7 +95,7 @@ function Sidebar() {
 
                     <div className="tutor-button-wrapper">
                         <button className="become-tutor-button primary-color">Become a Tutor</button>
-                    </div>
+                    </div> */}
                 </div>
             );
         }
@@ -124,7 +128,6 @@ function Sidebar() {
                 </div>
             </div> */}
             {sidebarLinks()}
-            <hr />
             <div className="sidebar-bottom-section">{middleSection()}</div>
         </div>
     );

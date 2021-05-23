@@ -166,6 +166,9 @@ export default function UserProfile(props) {
                                     }}
                                 />
                             </div>
+                            <div className="col-sm-12 form-group">
+                                <button className="change-image-button form-control primary-button">Update Profile</button>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -189,8 +192,8 @@ export default function UserProfile(props) {
             data.password = passwords.password;
             data.newPassword = passwords.newPassword;
 
-            httpService.postRequest(URLS.CHANGE_PASSWORD, data, false).subscribe((data)=>{
-                setPasswords({})
+            httpService.postRequest(URLS.CHANGE_PASSWORD, data, false).subscribe((data) => {
+                setPasswords({});
             });
         } else {
             const data = {};

@@ -53,7 +53,11 @@ function AddPostForm(props) {
             return;
         }
 
-        httpService.postRequest(URLS.POST, formBody, true).subscribe();
+        httpService.postRequest(URLS.POST, formBody, true).subscribe((d) => {
+            if (props && props.closeDialog) {
+                props.closeDialog();
+            }
+        });
     };
 
     useEffect(() => {
@@ -128,10 +132,18 @@ function AddPostForm(props) {
                         </div>
                         <div className="form-group col-sm-12">
                             <div className="upload-attachment-wrapper">
-                                <p>
-                                    <i className="pi pi-upload"></i>
-                                    Upload Your Files
-                                </p>
+                                {!attachmentLink && (
+                                    <p>
+                                        <i className="pi pi-upload"></i>
+                                        Upload Your Files
+                                    </p>
+                                )}
+                                {attachmentLink && (
+                                    <p>
+                                        <i className="pi pi-check-circle"></i>
+                                        File Uploaded Successfully
+                                    </p>
+                                )}
                             </div>
                             <input
                                 type="file"

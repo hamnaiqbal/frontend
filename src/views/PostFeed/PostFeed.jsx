@@ -3,7 +3,6 @@ import { useEffect, useState } from 'react';
 import AddPostForm from '../../components/AddPostForm/AddPostForm';
 import JobFeed from '../../components/JobFeed/JobFeed';
 import Post from '../../components/PostComponent/Post';
-import ScholarshipComponent from '../../components/ScholarshipComponent/ScholarshipComponent';
 import URLS from '../../constants/api-urls';
 import enums from '../../constants/enums';
 import httpService from '../../services/httpservice';
@@ -14,6 +13,9 @@ function PostFeed() {
 
     const [postsList, setPostsList] = useState([]);
 
+    const [postsToShow, setPostsToShow] = useState([]);
+    const POSTS_PER_PAGE = 5;
+
     const showDialog = (type) => {
         setShowAddDialig(true);
         setAddPostType(type);
@@ -22,20 +24,32 @@ function PostFeed() {
     const fetchPosts = () => {
         httpService.getRequest(URLS.POST).subscribe((data) => {
             setPostsList(data);
+            setPostsToShow(data.slice(0, POSTS_PER_PAGE));
         });
     };
 
     const posts = () => {
-        return postsList.map((post) => {
+        return postsToShow.map((post) => {
             return <Post post={post} key={post._id} />;
-            // return <ScholarshipComponent scholarship={post}></ScholarshipComponent>;
         });
+    };
+
+    const showNextPosts = () => {
+        const currentIndex = postsToShow.length;
+        const nextPosts = [...postsList.slice(0, currentIndex + POSTS_PER_PAGE)];
+        setPostsToShow(nextPosts);
     };
 
     useEffect(() => {
         fetchPosts();
-        // setPostsList([1, 2, 3, 4, 5, 6]);
     }, []);
+
+    const closeDialog = () => {
+        setShowAddDialig(false);
+        setAddPostType(null);
+
+        fetchPosts();
+    };
 
     return (
         <div className="post-feed-component row">
@@ -48,7 +62,7 @@ function PostFeed() {
                     className="add-post-dialog"
                 >
                     <div className="add-post-dialog-wrapper">
-                        <AddPostForm type={addPostType} />
+                        <AddPostForm type={addPostType} closeDialog={closeDialog} />
                     </div>
                 </Dialog>
             </div>
@@ -74,6 +88,21 @@ function PostFeed() {
                     </div>
                 </div>
                 <div className="post-feed-wrapper">{posts()}</div>
+                {postsToShow.length < postsList.length && (
+                    <div
+                        className="load-more-bar"
+                        onClick={() => {
+                            showNextPosts();
+                        }}
+                    >
+                        <div className="load-more-card">
+                            <p className="load-more">
+                                <i className="pi pi-chevron-down"></i>
+                                Load More
+                            </p>
+                        </div>
+                    </div>
+                )}
             </div>
             <div className="col-md-4">
                 <JobFeed />
