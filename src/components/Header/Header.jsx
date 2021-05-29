@@ -1,7 +1,9 @@
 import { Menubar } from 'primereact/menubar';
 import React, { useEffect, useState } from 'react';
+import { useSelector, useStore } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import CONSTANTS from '../../constants/constants';
+import { reduxService } from '../../redux/actions';
 import userService from '../../services/userservice';
 
 const unAuthItems = [
@@ -25,6 +27,9 @@ const studentItems = [
 
 function Header() {
     const history = useHistory();
+    const store = useSelector((state) => {
+        return state;
+    });
 
     const logout = () => {
         userService.logout();
@@ -34,10 +39,9 @@ function Header() {
     const [currentMenuItems, setCurrentMenuItems] = useState([]);
 
     useEffect(() => {
-        const isLoggedIn = userService.isLoggedIn();
-        const isAdmin = userService.isCurrentUserAdmin();
+        const isLoggedIn = store.isLoggedIn;
+        const isAdmin = store.isAdmin;
         let menuItems = isLoggedIn ? (isAdmin ? adminItems : studentItems) : unAuthItems;
-
         menuItems = menuItems.map((menu) => {
             return {
                 ...menu,
@@ -52,7 +56,7 @@ function Header() {
         });
 
         setCurrentMenuItems(menuItems);
-    }, []);
+    }, [store]);
 
     return (
         <div className="header">

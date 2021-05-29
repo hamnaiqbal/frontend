@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import URLS from '../../constants/api-urls';
+import { reduxService } from '../../redux/actions';
 import httpService from '../../services/httpservice';
 import userService from '../../services/userservice';
 import './Login.scss';
@@ -19,6 +20,7 @@ function Login() {
         };
         httpService.postRequest(URLS.LOGIN, body).subscribe((data) => {
             userService.saveLoggedInUser(data);
+            reduxService.studentLogin();
             history.push('/home');
         });
     };
