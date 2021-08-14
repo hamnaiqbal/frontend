@@ -1,4 +1,4 @@
-@import '../public/styles/colors.scss';
+@import "../public/styles/colors.scss";
 
 $header-height: 70px;
 
@@ -6,26 +6,42 @@ $card-shadow: 0px 0px 10px 5px $light-border;
 
 $small-shadow: 0px 0px 5px $light-border;
 
-
-
 body {
     height: 100vh;
     background: $body-bg;
 }
 
 .header {
-    padding: 5px 50px;
-    background-color: $primary;
-    box-shadow: 0 0 10px;
-    position: fixed;
-    width: 100%;
-    height: $header-height;
+    padding: 15px;
+    position: absolute;
+    float: right;
+    right: 10px;
     z-index: 100;
 
     .header-wrapper {
         display: flex;
         justify-content: space-between;
         align-items: center;
+        align-items: center;
+    }
+
+    .header-icon-wrapper {
+        background-color: white;
+        padding: 8px;
+        border-radius: 50%;
+        color: grey;
+        height: 40px;
+        box-shadow: 0px 0px 10px #d6d6d6;
+        width: 40px;
+        align-items: center;
+        text-align: center;
+        margin-left: 10px;
+        cursor: pointer;
+    }
+
+    .header-icon-wrapper:hover {
+        box-shadow: 0px 0px 20px #b4b4b4;
+        transition-duration: 300ms;
     }
 
     a.menu-item {
@@ -43,7 +59,7 @@ body {
         background: none;
         border: none;
 
-        .p-menuitem>.p-menuitem-link {
+        .p-menuitem > .p-menuitem-link {
             margin-right: 10px;
             border: 1px solid $light-color;
             border-radius: 20px;
@@ -56,13 +72,13 @@ body {
     }
 }
 
-.p-float-label input.p-filled~label {
-    top: -.75rem;
+.p-float-label input.p-filled ~ label {
+    top: -0.75rem;
     font-size: 12px;
 }
 
 .main-app-content {
-    padding-top: $header-height + 50px;
+    padding-top: 100px;
     padding-bottom: 30px;
 }
 
@@ -235,7 +251,6 @@ body {
 }
 
 .scholarship-component {
-
     .card-heading {
         font-size: larger;
         font-weight: bold;
@@ -562,28 +577,68 @@ body {
     }
 }
 
+.sidebar-wrapper {
+    position: fixed;
+    width: 24%;
+    height: 100vh;
+
+    ::-webkit-scrollbar {
+        width: 8px;
+    }
+
+    ::-webkit-scrollbar-track {
+        background: #f1f1f1;
+    }
+
+    ::-webkit-scrollbar-thumb {
+        background: #cccccc;
+        border-radius: 5px;
+    }
+
+    ::-webkit-scrollbar-thumb:hover {
+        background: rgb(189, 189, 189);
+    }
+}
+
 .sidebar {
-    padding: 30px;
+    padding: 10px 30px;
+    height: 100vh;
     background-color: $light-color;
-    box-shadow: $card-shadow;
+    // box-shadow: $card-shadow;
     margin-bottom: 30px;
-    border-radius: 5px;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    // border-radius: 5px;
+
+    .app-logo {
+        width: 130px;
+    }
+
+    .user-text-wrapper {
+        margin-left: 30px;
+    }
+
+    .user-info {
+        display: flex;
+        width: 100%;
+        background: #f1f1f1;
+        padding: 0px 10px;
+        border-radius: 10px;
+        align-items: center;
+    }
 
     .user-info {
         .user-image-wrapper {
-            background-color: $primary;
-            padding: 5px;
-            border-radius: 50%;
-            width: 70%;
-            height: 70%;
-            margin-left: 15%;
+            // background-color: $primary;
+            width: 50px;
+            height: 50px;
         }
 
         .user-image {
-            width: 100%;
-            height: 100%;
+            width: 50px;
+            height: 50px;
             border-radius: 50%;
-            border: 3px $light-color solid;
+            border: 3px white solid;
         }
 
         .user-name {
@@ -597,9 +652,15 @@ body {
         }
     }
 
+    hr {
+        color: #9c9c9c;
+        margin: 10px;
+    }
+
     .sidebar-link:hover {
-        background-color: $primary;
-        color: $light-color;
+        color: $primary;
+        // color: $dark-text;
+        // color: white;
         transition-duration: 300ms;
     }
 
@@ -607,14 +668,12 @@ body {
         cursor: pointer;
         display: flex;
         padding: 10px 20px;
-        box-shadow: $small-shadow;
-        margin-top: 20px;
-        border-radius: 40px;
+        margin-top: 5px;
+        color: $light-text;
         align-items: center;
 
         p.sidebar-link-label {
             margin: 0;
-            font-weight: 500;
             margin-left: 20px;
         }
     }
@@ -868,8 +927,6 @@ body {
     }
 }
 
-
-
 .bold {
     font-weight: bold;
 }
@@ -990,7 +1047,14 @@ p.center {
             margin-top: 30px;
         }
     }
+}
 
+.login-card-div {
+    min-height: 100vh;
+}
+
+.sidebar-user-section {
+    margin-bottom: 20px;
 }
 
 .signup-card,
@@ -1015,7 +1079,6 @@ p.center {
             margin-left: 10px;
             color: $primary;
             cursor: pointer;
-
         }
     }
 }

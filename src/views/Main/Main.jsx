@@ -7,20 +7,24 @@ import PostFeed from '../PostFeed/PostFeed';
 import ScholarshipFeed from '../ScholarshipFeed/ScholarshipFeed';
 import UserProfile from '../UserProfile/UserProfile';
 import ViewUsers from '../ViewUsers/ViewUser';
+import Header from '../../components/Header/Header';
 
 const Main = ({ match }) => {
     return (
         <div>
-            <div className={CONSTANTS.MAIN_WIDTH_CLASS}>
-                <div className="row">
-                    <div className="col-md-3 d-none d-md-block">
+            <div className={CONSTANTS.MAIN_WIDTH_CLASS + ' p-0'} >
+
+                <Header />
+
+                <div className="row m-0">
+                    <div className="col-md-3 pl-0 d-none d-md-block">
                         <div className="sidebar-wrapper">
                             <Sidebar />
                         </div>
                     </div>
 
-                    <div className="col-md-9">
-                        <div className="">
+                    <div className="col-md-9 main-app-content">
+                        <div className="container-fluid">
                             <Switch>
                                 <Route path={match.url + '/'} exact component={PostFeed} />
                                 <Route path={match.url + '/addPost'} component={AddPostForm} />

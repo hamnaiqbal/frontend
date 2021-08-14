@@ -21,6 +21,11 @@ function Sidebar() {
 
     const links = [
         {
+            label: 'Post Feed',
+            icon: 'pi pi-send',
+            link: '/home',
+        },
+        {
             label: 'Your Posts',
             icon: 'pi pi-comment',
             link: '/home/profile',
@@ -29,6 +34,7 @@ function Sidebar() {
             label: 'Your Jobs',
             icon: 'pi pi-list',
             link: '/home/profile',
+            separatorBelow: true
         },
         {
             label: 'Your Payments',
@@ -40,6 +46,16 @@ function Sidebar() {
             icon: 'pi pi-user',
             link: '/home/profile',
         },
+        {
+            label: 'Your Profile',
+            icon: 'pi pi-user',
+            link: '/home/profile',
+        },
+        {
+            label: 'Your Profile',
+            icon: 'pi pi-user',
+            link: '/home/profile',
+        }
     ];
 
     const sidebarLinks = () => {
@@ -56,6 +72,7 @@ function Sidebar() {
                         <i className={`link-icon ${link.icon}`}></i>
                         <p className="sidebar-link-label">{link.label}</p>
                     </div>
+                    {link.separatorBelow && <hr></hr>}
                 </div>
             );
         });
@@ -103,18 +120,22 @@ function Sidebar() {
 
     return (
         <div className="sidebar">
+
+            <div className="d-flex sidebar-logo-section">
+                <img className="app-logo" src="/logo.png" alt="SEA" />
+            </div>
+
             <div className="sidebar-user-section">
                 <div className="user-info">
                     <div className="user-image-wrapper">
                         <img className="user-image" src={user.imageLink} alt="" />
                     </div>
                     <div className="user-text-wrapper">
-                        <p className="user-name center">{user.name}</p>
-                        <p className="user-degree center">{user.degree}</p>
+                        <p className="user-name">{user.name}</p>
+                        <p className="user-degree">{user.degree}</p>
                     </div>
                 </div>
             </div>
-            <hr />
             {/* <div className="sidebar-filters-section">
                 <div className="filters-wrapper">
                     <div className="single-filter question-filter">
@@ -128,7 +149,7 @@ function Sidebar() {
                 </div>
             </div> */}
             {sidebarLinks()}
-            <div className="sidebar-bottom-section">{middleSection()}</div>
+            {/* <div className="sidebar-bottom-section">{middleSection()}</div> */}
         </div>
     );
 }
