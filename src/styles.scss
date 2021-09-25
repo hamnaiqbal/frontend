@@ -77,6 +77,8 @@ body {
     font-size: 12px;
 }
 
+
+
 .main-app-content {
     padding-top: 100px;
     padding-bottom: 30px;
@@ -125,6 +127,81 @@ body {
     padding: 10px;
     border-radius: 5px;
     margin-bottom: 20px;
+}
+
+.quiz-card {
+    background: $light-color;
+    box-shadow: $card-shadow;
+    padding-top: 0px;
+    border-radius: 10px;
+    margin-bottom: 20px;
+
+    .quiz-card-header {
+        text-align: left;
+        font-size: large;
+        font-weight: bold;
+        background-color: $primary;
+        color: white;
+        border-top-left-radius: 10px;
+        border-top-right-radius: 10px;
+        padding: 20px 10px;
+    }
+
+    .question-statement {
+        font-size: medium;
+        font-weight: 600;
+    }
+
+    .quiz-card-content {
+        padding: 20px;
+    }
+
+    .question-option-select {
+        padding: 15px 15px;
+        border: 1px solid #cecece;
+        margin-bottom: 10px;
+        cursor: pointer;
+        border-radius: 10px;
+    }
+    
+    .question-option-select.selected {
+        background-color: $progress-bg;
+        color: $light-color;
+    }
+    
+}
+
+.quiz-info-card {
+    padding: 0;
+    background: $light-color;
+    box-shadow: $card-shadow;
+    border-radius: 5px;
+    margin-bottom: 20px;
+
+    .quiz-gen-content {
+        padding: 50px 30px;
+        text-align: left;
+
+        .quiz-description {
+            font-size: large;
+            color: $dark-text;
+            font-weight: 400;
+        }
+    }
+
+    .quiz-uploader {
+        font-size: large;
+        p {
+            margin-top: 10px;
+            z-index: 5;
+            font-size: large;
+        }
+        
+        i {
+            font-size: large;
+            margin-right: 10px;
+        }
+    }
 }
 
 .form-card {
@@ -236,11 +313,11 @@ body {
         }
 
         .post-type.question {
-            background-color: $question-color-light;
+            color: $question-color-light;
         }
 
         .post-type.resource {
-            background-color: $resource-color-light;
+            color: $resource-color-light;
         }
     }
 
@@ -664,6 +741,13 @@ body {
         transition-duration: 300ms;
     }
 
+    p.sidebar-link-title {
+        color: grey;
+        padding-left: 20px;
+        font-weight: bold;
+        margin: 0px;
+    }
+
     .sidebar-link {
         cursor: pointer;
         display: flex;
@@ -939,6 +1023,10 @@ p.center {
     text-align: center;
 }
 
+.text-left, p.left {
+    text-align: left;
+}
+
 .primary-color {
     background-color: $primary;
     border: 0px;
@@ -992,38 +1080,74 @@ p.center {
     padding-bottom: 10px;
 }
 
-.signup-component {
-    .attachment-input {
-        position: relative;
-        top: -62px;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        opacity: 0;
+.attachment-input {
+    position: relative;
+    top: -62px;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    opacity: 0;
+}
+
+.upload-attachment-wrapper {
+    padding: 20px;
+    width: 100%;
+    border: 1px solid $light-border;
+    height: 100%;
+    text-align: center;
+    border-radius: 5px;
+
+    i {
+        margin-right: 20px;
     }
 
-    .upload-attachment-wrapper {
-        padding: 20px;
-        width: 100%;
-        border: 1px solid $light-border;
-        height: 100%;
+    p {
         text-align: center;
-        border-radius: 5px;
-
-        i {
-            margin-right: 20px;
-        }
-
-        p {
-            text-align: center;
-            font-weight: bold;
-            color: $light-text;
-            padding: 5px 20px;
-            border: 1px dashed $light-text;
-            width: auto;
-        }
+        font-weight: bold;
+        color: $light-text;
+        padding: 5px 20px;
+        border: 1px dashed $light-text;
+        width: auto;
     }
+}
 
+.padge-heading {
+    color: $dark-text;
+    text-align: left;
+    margin-bottom: 20px;
+    // border-bottom: 2px $dark-text solid;
+    // padding-bottom: 30px;
+    // width: 50%;
+}
+
+.user-page-bg {
+    background-image: url("https://res.cloudinary.com/studentassister/image/upload/v1630523109/612fcea0e5673_ndk1pq.jpg");
+    background-position: center; /* Center the image */
+    background-repeat: no-repeat; /* Do not repeat the image */
+    background-size: cover;
+}
+
+.bg-overlay {
+    background: rgba(255, 255, 255, 0.623);
+}
+
+.section-heading {
+    color: $dark-text;
+    text-align: left;
+    margin-bottom: 30px;
+}
+
+.profile-buttons-row {
+    margin-bottom: 20px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+button.profile-btn {
+    margin-left: 20px;
+}
+
+.signup-component {
     .signed-up-message {
         p {
             text-align: center;
@@ -1049,7 +1173,7 @@ p.center {
     }
 }
 
-.login-card-div {
+.login-card-div, .signup-card-div {
     min-height: 100vh;
 }
 

@@ -21,58 +21,133 @@ function Sidebar() {
 
     const links = [
         {
-            label: 'Post Feed',
+            label: 'Feed',
+            isTitle: true
+        },
+        {
+            label: 'View Feed',
             icon: 'pi pi-send',
             link: '/home',
         },
         {
-            label: 'Your Posts',
-            icon: 'pi pi-comment',
+            label: 'Search Posts',
+            icon: 'pi pi-search',
             link: '/home/profile',
         },
         {
-            label: 'Your Jobs',
+            label: 'View My Posts',
             icon: 'pi pi-list',
             link: '/home/profile',
             separatorBelow: true
         },
         {
-            label: 'Your Payments',
-            icon: 'pi pi-dollar',
+            label: 'Tutor',
+            isTitle: true
+        },
+        {
+            label: 'Tutor Dashboard',
+            icon: 'pi pi-home',
             link: '/home/profile',
         },
         {
-            label: 'Your Profile',
-            icon: 'pi pi-user',
+            label: 'Nearby Tutors',
+            icon: 'pi pi-map',
             link: '/home/profile',
         },
         {
-            label: 'Your Profile',
+            label: 'Become a Tutor',
             icon: 'pi pi-user',
+            link: '/home/becomeTutor',
+        },
+        {
+            label: 'Jobs',
+            isTitle: true
+        },
+
+        {
+            label: 'Jobs Dashboard',
+            icon: 'pi pi-home',
             link: '/home/profile',
         },
         {
-            label: 'Your Profile',
-            icon: 'pi pi-user',
+            label: 'View Jobs Feed',
+            icon: 'pi pi-list',
             link: '/home/profile',
-        }
+        },
+        {
+            label: 'Search Jobs',
+            icon: 'pi pi-search',
+            link: '/home/profile',
+        },
+        {
+            label: 'Post a New Job',
+            icon: 'pi pi-plus-circle',
+            link: '/home/profile',
+        },
+        {
+            label: 'Quiz',
+            isTitle: true,
+        },
+        {
+            label: 'Attempt Practice Quiz',
+            icon: 'pi pi-th-large',
+            link: '/home/attempt-quiz',
+        },
+        {
+            label: 'Scholarships',
+            isTitle: true,
+        },
+        {
+            label: 'View Scholarships',
+            icon: 'pi pi-money-bill',
+            link: '/home/profile',
+        },
+        {
+            label: 'Users',
+            isTitle: true,
+        },
+        {
+            label: 'Manage Users',
+            icon: 'pi pi-users',
+            link: '/home/profile',
+        },
+        {
+            label: 'Profile',
+            isTitle: true,
+        },
+        {
+            label: 'Manage Your Profile',
+            icon: 'pi pi-user-edit',
+            link: '/home/profile',
+        },
     ];
 
     const sidebarLinks = () => {
         return links.map((link, index) => {
             return (
                 <div
-                    className="sidebar-link-wrapper"
-                    key={index}
-                    onClick={() => {
-                        onLinkClick(link.link);
-                    }}
+                className="sidebar-link-wrapper"
+                key={index}
+                onClick={() => {
+                    onLinkClick(link.link);
+                }}
                 >
-                    <div className="sidebar-link">
-                        <i className={`link-icon ${link.icon}`}></i>
-                        <p className="sidebar-link-label">{link.label}</p>
-                    </div>
-                    {link.separatorBelow && <hr></hr>}
+                    {link.isTitle && <hr></hr>}
+
+                    {
+                        !link.isTitle && <div className="sidebar-link">
+                            <i className={`link-icon ${link.icon}`}></i>
+                            <p className="sidebar-link-label">{link.label}</p>
+                        </div>
+                    }
+
+                    {
+                        link.isTitle &&
+                        <p className="sidebar-link-title">
+                            {link.label}
+                        </p>
+                    }
+
                 </div>
             );
         });

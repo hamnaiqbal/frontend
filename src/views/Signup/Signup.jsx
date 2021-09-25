@@ -173,11 +173,11 @@ function Signup() {
                         }}
                     />
                 </div>
-                <div className="form-group switch-field">
+                {/* <div className="form-group switch-field">
                     <p>List as Tutor</p>
                     <InputSwitch checked={appliedAsTutor} onChange={(e) => setAppliedAsTutor(e.value)} />
                 </div>
-                {appliedAsTutor && fieldsForTutor()}
+                {appliedAsTutor && fieldsForTutor()} */}
                 <div className="form-group">
                     <button
                         onClick={(e) => {
@@ -228,10 +228,10 @@ function Signup() {
     };
 
     return (
-        <div className="signup-component d-flex a-center">
-            <div className="container">
+        <div className="signup-component user-page-bg">
+            <div className="container-fluid bg-overlay">
                 <div className="signup-card-div d-flex j-center row">
-                    <div className="signup-card col-md-5">
+                    <div className="signup-card col-md-4">
                         {!signedUp && signUpForm()}
 
                         {signedUp && successfullySignedUp()}

@@ -42,9 +42,11 @@ const httpService = {
                 });
         });
     },
-    postRequest(url, data, isMultipart = false) {
+    postRequest(url, data, isMultipart = false, showLoader = true) {
         const apiUrl = CONSTANTS.API_PATH + url;
-        miscService.showLoader();
+        if (showLoader) {
+            miscService.showLoader();
+        }
         let formData = data;
         formData = this.setCommonParams(formData);
         if (isMultipart) {

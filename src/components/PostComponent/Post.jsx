@@ -31,7 +31,10 @@ function Post(props) {
                         </div>
                     </div>
                     <div className="post-type-wrapper">
-                        <div className={'post-type ' + post.postType}>{post.postType}</div>
+                        {/* <div className={'post-type ' + post.postType}>{post.postType}</div> */}
+                        <div className={'post-type ' + post.postType}>
+                            <i className={post.postType === 'question' ? "pi pi-question-circle" : "pi pi-file"}></i>
+                        </div>
                     </div>
                 </div>
                 <div className="post-content">

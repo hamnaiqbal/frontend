@@ -8,6 +8,8 @@ import ScholarshipFeed from '../ScholarshipFeed/ScholarshipFeed';
 import UserProfile from '../UserProfile/UserProfile';
 import ViewUsers from '../ViewUsers/ViewUser';
 import Header from '../../components/Header/Header';
+import AddTutor from '../AddTutor/AddTutor';
+import AttemptQuiz from '../AttemptQuiz/AttemptQuiz';
 
 const Main = ({ match }) => {
     return (
@@ -32,6 +34,8 @@ const Main = ({ match }) => {
                                 <Route path={match.url + '/profile'} component={UserProfile} />
                                 <Route path={match.url + '/scholarships'} component={ScholarshipFeed} />
                                 <Route path={match.url + '/viewUsers'} component={ViewUsers} />
+                                <Route path={match.url + '/becomeTutor'} component={AddTutor} />
+                                <Route path={match.url + '/attempt-quiz'} component={AttemptQuiz} />
                             </Switch>
                         </div>
                     </div>

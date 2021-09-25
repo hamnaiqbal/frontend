@@ -13,6 +13,9 @@ const URLS = {
 
     REPLY: '/reply',
 
+    GENERATE_QUESTIONS: '/questions',
+    CHECK_QUESTIONS: '/questions/check',
+
     INTERNATIONAL_SCHOLARSHIPS: '/scholarships/international',
 };
 

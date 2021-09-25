@@ -24,57 +24,59 @@ function Login() {
     };
 
     return (
-        <div className="login-component">
-            <div className="container">
-                <div className="login-card-div d-flex j-center row">
-                    <div className="login-card col-md-4">
-                        <form>
-                            <h2>Login</h2>
-                            <div className="sp-20"></div>
-                            <div className="form-group">
-                                <input
-                                    value={username}
-                                    type="text"
-                                    placeholder="Username"
-                                    className="form-control single-control"
-                                    onChange={(e) => {
-                                        setUsername(e.target.value);
-                                    }}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <input
-                                    type="password"
-                                    placeholder="Password"
-                                    value={password}
-                                    className="form-control single-control"
-                                    onChange={(e) => {
-                                        setPassword(e.target.value);
-                                    }}
-                                />
-                            </div>
-                            <div className="form-group">
-                                <button
-                                    onClick={(e) => {
-                                        login(e);
-                                    }}
-                                    className="btn btn-primary submit-button form-control"
-                                >
-                                    Login
-                                </button>
-                            </div>
+        <div className="login-component user-page-bg">
+            <div className="bg-overlay">
+                <div className="container">
+                    <div className="login-card-div d-flex j-center row">
+                        <div className="login-card col-md-4">
+                            <form>
+                                <h2>Login</h2>
+                                <div className="sp-20"></div>
+                                <div className="form-group">
+                                    <input
+                                        value={username}
+                                        type="text"
+                                        placeholder="Username"
+                                        className="form-control single-control"
+                                        onChange={(e) => {
+                                            setUsername(e.target.value);
+                                        }}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <input
+                                        type="password"
+                                        placeholder="Password"
+                                        value={password}
+                                        className="form-control single-control"
+                                        onChange={(e) => {
+                                            setPassword(e.target.value);
+                                        }}
+                                    />
+                                </div>
+                                <div className="form-group">
+                                    <button
+                                        onClick={(e) => {
+                                            login(e);
+                                        }}
+                                        className="btn btn-primary submit-button form-control"
+                                    >
+                                        Login
+                                    </button>
+                                </div>
 
-                            <p className="sign-up-message">
-                                Don't Have an Account?
-                                <span
-                                    onClick={() => {
-                                        history.push('/signup');
-                                    }}
-                                >
-                                    Sign Up
-                                </span>
-                            </p>
-                        </form>
+                                <p className="sign-up-message">
+                                    Don't Have an Account?
+                                    <span
+                                        onClick={() => {
+                                            history.push('/signup');
+                                        }}
+                                    >
+                                        Sign Up
+                                    </span>
+                                </p>
+                            </form>
+                        </div>
                     </div>
                 </div>
             </div>

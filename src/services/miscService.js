@@ -25,6 +25,19 @@ const miscService = {
         const loaderElement = document.querySelector('.loader');
         loaderElement.setAttribute('style', 'display: none');
     },
+
+    validateForm(reqFields) {
+        let validForm = true;
+
+        reqFields.forEach((field) => {
+            if (field == null || field == '') {
+                validForm = false;
+                return;
+            }
+        });
+        return validForm;
+    }
+
 };
 
 export default miscService;
