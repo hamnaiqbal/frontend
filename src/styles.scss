@@ -77,8 +77,6 @@ body {
     font-size: 12px;
 }
 
-
-
 .main-app-content {
     padding-top: 100px;
     padding-bottom: 30px;
@@ -163,12 +161,11 @@ body {
         cursor: pointer;
         border-radius: 10px;
     }
-    
+
     .question-option-select.selected {
         background-color: $progress-bg;
         color: $light-color;
     }
-    
 }
 
 .quiz-info-card {
@@ -196,11 +193,26 @@ body {
             z-index: 5;
             font-size: large;
         }
-        
+
         i {
             font-size: large;
             margin-right: 10px;
         }
+    }
+}
+
+.quiz-gen-image img {
+    width: 100%;
+}
+
+.quiz-results {
+    padding-top: 50px;
+    padding-bottom: 50px;
+    i {
+        font-size: xx-large;
+        font-weight: bold;
+        margin-bottom: 30px;
+        color: $question-color-dark;
     }
 }
 
@@ -1023,7 +1035,8 @@ p.center {
     text-align: center;
 }
 
-.text-left, p.left {
+.text-left,
+p.left {
     text-align: left;
 }
 
@@ -1173,7 +1186,8 @@ button.profile-btn {
     }
 }
 
-.login-card-div, .signup-card-div {
+.login-card-div,
+.signup-card-div {
     min-height: 100vh;
 }
 

@@ -8,10 +8,10 @@ function ScholarshipFeed() {
     const [scholarships, setScholarships] = useState([]);
 
     const [countriesOptions, setCountriesOptions] = useState([]);
-    const [countrySelected, setCountrySelected] = useState('');
+    const [countrySelected, setCountrySelected] = useState(null);
 
     const [levelsOptions, setLevelsOptions] = useState([]);
-    const [levelSelected, setLevelSelected] = useState('');
+    const [levelSelected, setLevelSelected] = useState(null);
 
     const fetchScholarships = () => {
         const params = {};

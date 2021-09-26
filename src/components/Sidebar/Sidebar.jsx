@@ -100,7 +100,7 @@ function Sidebar() {
         {
             label: 'View Scholarships',
             icon: 'pi pi-money-bill',
-            link: '/home/profile',
+            link: '/home/scholarships',
         },
         {
             label: 'Users',

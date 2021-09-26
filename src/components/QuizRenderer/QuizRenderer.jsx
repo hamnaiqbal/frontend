@@ -7,6 +7,8 @@ import miscService from "../../services/miscService";
 const QuizRenderer = (props) => {
 
     const { questions } = props;
+    const [isChecked, setIsChecked] = useState(false);
+    const [points, setPoints] = useState({ total: 0, got: 0 });
 
     const [answerSelected, setAnswerSelected] = useState({});
 
@@ -22,8 +24,8 @@ const QuizRenderer = (props) => {
             questionsToSend[i].selected = answerSelected[i];
         });
         httpService.postRequest(URLS.CHECK_QUESTIONS, { questions: questionsToSend }).subscribe(res => {
-            // miscService.handleSuccess(res);
-            // console.log(res);
+            setIsChecked(true);
+            setPoints({ total: res.total, got: res.points });
             miscService.handleSuccess(`You have received ${res.points} out of ${res.total}`)
         })
     }
@@ -56,8 +58,8 @@ const QuizRenderer = (props) => {
         })
     }
 
-    return (
-        questions && questions.length > 0 && <div className="quiz-renderer-comp">
+    const showQuizQuestions = () => {
+        return questions && questions.length > 0 && <div className="quiz-renderer-comp">
             {renderQuestions()}
 
             <div className="submit-row row">
@@ -67,6 +69,26 @@ const QuizRenderer = (props) => {
                     </button>
                 </div>
             </div>
+        </div>
+    }
+
+    const showResults = () => {
+        return <div className="row app-card">
+            <div className="col-md-12 quiz-results">
+                <h3 className="center">
+                    <i className="pi pi-check-circle"></i>
+                </h3>
+                <h3 className="center">
+                    You Have Recieved {points.got} out of {points.total} !
+                </h3>
+            </div>
+        </div>
+    }
+
+    return (
+        <div>
+            {!isChecked && showQuizQuestions()}
+            {isChecked && showResults()}
         </div>
     )
 }
