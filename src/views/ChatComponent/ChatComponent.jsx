@@ -7,47 +7,49 @@ import userService from "../../services/userservice";
 const ChatComponent = () => {
 
     const [recentChats, setRecentChats] = useState([]);
-    const [selectedChat, setSelectedChat] = useState(null);
+    const [selectedChat, setSelectedChat] = useState({});
     const [chatMessages, setChatMessages] = useState([]);
     const [message, setMessage] = useState('');
 
 
     useEffect(() => {
         // Fetch Recent Chats from DB
+        const observeMessages = () => {
+            MESSAGE_OBSERVER.subscribe(msg => {
+                if (!msg) {
+                    return
+                }
+                if (msg.sentFrom === selectedChat._id) {
+                    // IF SAME CHAT IS OPEN
+                    const newMsg = {
+                        isOwn: msg.sentFrom === userService.getCurrentUserId(),
+                        text: msg.messageText
+                    };
+                    setChatMessages((cm) => [...cm, newMsg])
+                } else {
+                    // IF SOME OTHER CHAT IS OPEN
+                    const newChatIndex = recentChats.findIndex(rc => rc._id === msg.sentFrom);
+
+                    if (newChatIndex >= 0) {
+                        // CASE IF THE SENDER HAD ALREADY CONTACTED THE USER
+                        const newRecentChats = [...recentChats];
+                        const updatedChat = newRecentChats[newChatIndex];
+                        updatedChat.hasUnred = true;
+                        newRecentChats[newChatIndex] = updatedChat;
+                        setRecentChats(newRecentChats);
+                    } else {
+                        miscService.handleSuccess('Please Refresh Your Chats. You have a message from a new User');
+                    }
+                }
+            })
+        }
+
         fetchRecentChats();
         observeMessages()
-    }, [])
+
+    }, [selectedChat])
 
 
-    const observeMessages = () => {
-        MESSAGE_OBSERVER.subscribe(msg => {
-            if (!msg) {
-                return
-            }
-            if (msg.sentFrom === selectedChat?._id) {
-                // IF SAME CHAT IS OPEN
-                const newMsg = {
-                    isOwn: msg.sentFrom === userService.getCurrentUserId(),
-                    text: msg.messageText
-                };
-                setChatMessages((cm) => [...cm, newMsg])
-            } else {
-                // IF SOME OTHER CHAT IS OPEN
-                const newChatIndex = recentChats.findIndex(rc => rc._id === msg.sentFrom);
-
-                if (newChatIndex >= 0) {
-                    // CASE IF THE SENDER HAD ALREADY CONTACTED THE USER
-                    const newRecentChats = [...recentChats];
-                    const updatedChat = newRecentChats[newChatIndex];
-                    updatedChat.hasUnred = true;
-                    newRecentChats[newChatIndex] = updatedChat;
-                    setRecentChats(newRecentChats);
-                } else {
-                    miscService.handleSuccess('Please Refresh Your Chats. You have a message from a new User');
-                }
-            }
-        })
-    }
 
     const fetchRecentChats = () => {
         // TODO: Implement It

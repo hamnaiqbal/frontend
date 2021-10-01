@@ -109,7 +109,7 @@ function Sidebar() {
         {
             label: 'Manage Users',
             icon: 'pi pi-users',
-            link: '/home/profile',
+            link: '/home/viewUsers',
         },
         {
             label: 'Profile',
