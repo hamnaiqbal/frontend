@@ -10,8 +10,18 @@ import ViewUsers from '../ViewUsers/ViewUser';
 import Header from '../../components/Header/Header';
 import AddTutor from '../AddTutor/AddTutor';
 import AttemptQuiz from '../AttemptQuiz/AttemptQuiz';
+import ChatComponent from '../ChatComponent/ChatComponent';
+import chatService from '../../services/chatService';
+import { useEffect } from 'react';
 
 const Main = ({ match }) => {
+
+
+    useEffect(() => {
+        chatService.subscribeToMessages()
+        return () => {}
+    }, [])
+
     return (
         <div>
             <div className={CONSTANTS.MAIN_WIDTH_CLASS + ' p-0'} >
@@ -36,6 +46,7 @@ const Main = ({ match }) => {
                                 <Route path={match.url + '/viewUsers'} component={ViewUsers} />
                                 <Route path={match.url + '/becomeTutor'} component={AddTutor} />
                                 <Route path={match.url + '/attempt-quiz'} component={AttemptQuiz} />
+                                <Route path={match.url + '/messages'} component={ChatComponent} />
                             </Switch>
                         </div>
                     </div>
