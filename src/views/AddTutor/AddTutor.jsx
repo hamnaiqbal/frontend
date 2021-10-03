@@ -7,6 +7,8 @@ import miscService from '../../services/miscService';
 
 function AddTutor() {
 
+    const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
+
     const [tutorReason, setTutorReason] = useState('');
     const [cvLink, setCvLink] = useState('');
 
@@ -104,7 +106,7 @@ function AddTutor() {
                     <div style={{ height: '60vh', width: '100%' }}>
                         <h4 className="section-heading">Select Your Location on the Map</h4>
                         <GoogleMapReact
-                            bootstrapURLKeys={{ key: 'AIzaSyCjqKwda7aKcI8y11RdE3zgtgxFOBBrs7U' }}
+                            bootstrapURLKeys={{ key: API_KEY }}
                             center={{
                                 lat: latitude,
                                 lng: longitude

@@ -10,9 +10,9 @@ export const MESSAGE_OBSERVER = new BehaviorSubject();
 const chatService = {
     sendMessage(data) {
         const messageData = {
-            sentTo: data.sentTo,
-            sentFrom: userService.getCurrentUserId(),
-            messageText: data.text
+            receiver: data.sentTo,
+            sender: userService.getCurrentUserId(),
+            text: data.text
         }
         socket.emit('message-server', messageData);
 

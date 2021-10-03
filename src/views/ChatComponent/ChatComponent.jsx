@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import CONSTANTS from "../../constants/constants";
 import chatService, { MESSAGE_OBSERVER } from "../../services/chatService";
 import miscService from "../../services/miscService";
@@ -11,45 +11,69 @@ const ChatComponent = () => {
     const [chatMessages, setChatMessages] = useState([]);
     const [message, setMessage] = useState('');
 
+    const [alreadyObserved, setAlreadyObserved] = useState(false);
+
+
 
     useEffect(() => {
         // Fetch Recent Chats from DB
         const observeMessages = () => {
-            MESSAGE_OBSERVER.subscribe(msg => {
-                if (!msg) {
-                    return
-                }
-                if (msg.sentFrom === selectedChat._id) {
-                    // IF SAME CHAT IS OPEN
-                    const newMsg = {
-                        isOwn: msg.sentFrom === userService.getCurrentUserId(),
-                        text: msg.messageText
-                    };
-                    setChatMessages((cm) => [...cm, newMsg])
-                } else {
-                    // IF SOME OTHER CHAT IS OPEN
-                    const newChatIndex = recentChats.findIndex(rc => rc._id === msg.sentFrom);
-
-                    if (newChatIndex >= 0) {
-                        // CASE IF THE SENDER HAD ALREADY CONTACTED THE USER
-                        const newRecentChats = [...recentChats];
-                        const updatedChat = newRecentChats[newChatIndex];
-                        updatedChat.hasUnred = true;
-                        newRecentChats[newChatIndex] = updatedChat;
-                        setRecentChats(newRecentChats);
-                    } else {
-                        miscService.handleSuccess('Please Refresh Your Chats. You have a message from a new User');
+            if (!alreadyObserved) {
+    
+                setAlreadyObserved(true);
+    
+                MESSAGE_OBSERVER.subscribe(msg => {
+                    let tempSC = null;
+                    setSelectedChat(sc => {
+                        tempSC = sc;
+                        return sc
+                    })
+                    if (!msg) {
+                        return
                     }
-                }
-            })
+                    // Sending Message to Self. Do Nothing
+                    if (msg.sender === msg.receiver) {
+                        return;
+                    }
+    
+                    if (msg.sender === tempSC._id) {
+                        // IF SAME CHAT IS OPEN
+                        const newMsg = {
+                            isOwn: msg.sender === userService.getCurrentUserId(),
+                            text: msg.text
+                        };
+                        addMessageToWindow(newMsg);
+                    } else {
+                        // IF SOME OTHER CHAT IS OPEN
+                        const newChatIndex = recentChats.findIndex(rc => rc._id === msg.sentFrom);
+    
+                        if (newChatIndex >= 0) {
+                            // CASE IF THE SENDER HAD ALREADY CONTACTED THE USER
+                            const newRecentChats = [...recentChats];
+                            const updatedChat = newRecentChats[newChatIndex];
+                            updatedChat.hasUnred = true;
+                            newRecentChats[newChatIndex] = updatedChat;
+                            setRecentChats(newRecentChats);
+                        } else {
+                            miscService.handleSuccess('Please Refresh Your Chats. You have a message from a new User');
+                        }
+                    }
+                })
+            }
         }
 
+
         fetchRecentChats();
-        observeMessages()
+        observeMessages();
 
-    }, [selectedChat])
+    
+    }, [])
 
 
+
+    const addMessageToWindow = (msg) => {
+        setChatMessages((cm) => [...cm, msg])
+    }
 
     const fetchRecentChats = () => {
         // TODO: Implement It
@@ -79,13 +103,23 @@ const ChatComponent = () => {
     }
 
     const sendNewMessage = () => {
+        if (message === '') {
+            return;
+        }
+        const newMsg = {
+            isOwn: true,
+            text: message
+        };
+        addMessageToWindow(newMsg);
+        setMessage('');
         chatService.sendMessage({ sentTo: selectedChat._id, text: message });
     }
 
     const renderRecentChats = () => {
         let recentChats = [
             { _id: '60b6b2bac88983254c8c6292', username: 'Hamna', image: CONSTANTS.DEFAULT_USER_IMAGE, textedLast: '15m' },
-            { _id: '60a2a35e9ddaee334cdf4f95', username: 'Kashif', image: CONSTANTS.DEFAULT_USER_IMAGE, textedLast: '20m', hasUnred: true },
+            { _id: '60b3d2c647168609a4907e24', username: 'Kashif', image: CONSTANTS.DEFAULT_USER_IMAGE, textedLast: '20m', hasUnred: true },
+            { _id: '611183ad66519d24745f8d0c', username: 'Hamna 2', image: CONSTANTS.DEFAULT_USER_IMAGE, textedLast: '20m', hasUnred: true },
         ];
 
         return recentChats.map((rc, i) => {
@@ -119,16 +153,11 @@ const ChatComponent = () => {
     }
 
     const chatWindow = () => {
-        const selectedChat = {
-            username: 'Hamna',
-            userImg: CONSTANTS.DEFAULT_USER_IMAGE,
-            _id: 'somerandomid'
-        }
         return <div className="chat-window">
 
             <div className="chat-window-header">
                 <div className="chat-user-info">
-                    <img src={selectedChat.userImg} alt={selectedChat.userImg} />
+                    <img src={selectedChat.image} alt={selectedChat.username} />
                     <h5 className="userinfo">{selectedChat.username}</h5>
                 </div>
 
