@@ -24,7 +24,7 @@ function AddTutor() {
             setLongitude(position.coords.longitude);
 
         });
-    }, []);
+    }, [latitude, longitude]);
 
     const uploadCV = (event) => {
         const data = { cvLink: event.target.files[0] };
