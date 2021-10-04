@@ -1,19 +1,30 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import URLS from '../../constants/api-urls';
 import CONSTANTS from '../../constants/constants';
+import httpService from '../../services/httpservice';
 
 function Post(props) {
     const post = props.post;
     let history = useHistory();
+    const [upvotes, setUpvotes] = useState(post.upvotes);
     const redirectToPost = () => {
         history.push(`/home/post/${post._id}`);
     };
     const postDescription = (post) => {
         return { __html: post.description };
     };
+
+    const upvote = (event) => {
+        event.stopPropagation();
+        httpService.postRequest(URLS.POST_UPVOTE, { _id: post._id, upvote: true }).subscribe(data => {
+            setUpvotes(upvote => upvote + 1);
+        });
+    };
+
     return (
         <div
-        className="single-post-wrapper"
+            className="single-post-wrapper"
             onClick={(e) => {
                 redirectToPost();
             }}
@@ -47,10 +58,10 @@ function Post(props) {
                 </div>
                 <div className="post-bottom-section">
                     <div className="post-numbers-wrapper">
-                        <div className="upvotes-count">
+                        <div className="upvotes-count" onClick={upvote}>
                             <p>
                                 <i className="pi pi-fw pi-chevron-up"></i>
-                                {post.upvotes} Upvotes
+                                {upvotes} Upvotes
                             </p>
                         </div>
                         <div className="replies-count">

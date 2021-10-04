@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import CONSTANTS from "../../constants/constants";
 import chatService, { MESSAGE_OBSERVER } from "../../services/chatService";
 import miscService from "../../services/miscService";
@@ -13,15 +13,17 @@ const ChatComponent = () => {
 
     const [alreadyObserved, setAlreadyObserved] = useState(false);
 
+    const messagesEndRef = useRef(null)
+
 
 
     useEffect(() => {
         // Fetch Recent Chats from DB
         const observeMessages = () => {
             if (!alreadyObserved) {
-    
+
                 setAlreadyObserved(true);
-    
+
                 MESSAGE_OBSERVER.subscribe(msg => {
                     let tempSC = null;
                     setSelectedChat(sc => {
@@ -35,8 +37,8 @@ const ChatComponent = () => {
                     if (msg.sender === msg.receiver) {
                         return;
                     }
-    
-                    if (msg.sender === tempSC._id) {
+
+                    if (msg.sender === tempSC?._id) {
                         // IF SAME CHAT IS OPEN
                         const newMsg = {
                             isOwn: msg.sender === userService.getCurrentUserId(),
@@ -46,7 +48,7 @@ const ChatComponent = () => {
                     } else {
                         // IF SOME OTHER CHAT IS OPEN
                         const newChatIndex = recentChats.findIndex(rc => rc._id === msg.sentFrom);
-    
+
                         if (newChatIndex >= 0) {
                             // CASE IF THE SENDER HAD ALREADY CONTACTED THE USER
                             const newRecentChats = [...recentChats];
@@ -66,13 +68,18 @@ const ChatComponent = () => {
         fetchRecentChats();
         observeMessages();
 
-    
+
     }, [])
 
+
+    const scrollToBottom = () => {
+        messagesEndRef.current?.scrollIntoView({ behavior: "smooth" })
+    }
 
 
     const addMessageToWindow = (msg) => {
         setChatMessages((cm) => [...cm, msg])
+        scrollToBottom();
     }
 
     const fetchRecentChats = () => {
@@ -98,6 +105,8 @@ const ChatComponent = () => {
             { isOwn: true, text: 'Message' },
             { isOwn: false, text: 'Message' }
         ]
+
+        scrollToBottom();
 
         setChatMessages(chatMessages);
     }
@@ -146,9 +155,13 @@ const ChatComponent = () => {
     const renderChatMessages = () => {
 
         return chatMessages.map((cm, i) => {
-            return <p key={i} className={"single-message " + (cm.isOwn ? "own" : "other")}>
-                {cm.text}
-            </p>
+            return <div key={i}>
+                <p className={"single-message " + (cm.isOwn ? "own" : "other")}>
+                    {cm.text} 
+                </p>
+                {(i === chatMessages.length - 1) && <div className="scrollchat" ref={messagesEndRef} />}
+            </div>
+
         })
     }
 
