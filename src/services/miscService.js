@@ -36,6 +36,13 @@ const miscService = {
             }
         });
         return validForm;
+    },
+
+    getFormattedDate(strDate) {
+        if (!strDate) {
+            return (new Date()).toLocaleString()
+        }
+        return new Date(strDate).toLocaleString()
     }
 
 };

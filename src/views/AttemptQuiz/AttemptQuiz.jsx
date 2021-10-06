@@ -35,7 +35,7 @@ const AttemptQuiz = () => {
                                 <h2>
                                     Generate a Quiz
                                 </h2>
-                                
+
                                 <br />
 
                                 <p className="quiz-description">
@@ -58,6 +58,7 @@ const AttemptQuiz = () => {
                                         id="attachmentLink"
                                         className="form-control-file attachment-input"
                                         name="attachmentLink"
+                                        accept="image/*, application/pdf"
                                         onChange={(e) => {
                                             fileUploadHandler(e);
                                         }}

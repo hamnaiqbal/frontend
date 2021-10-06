@@ -89,22 +89,6 @@ const ChatComponent = () => {
     const fetchChatMessages = (chat) => {
         // TODO: Implement It
         setSelectedChat(chat);
-        const chatMessages = [
-            { isOwn: true, text: 'Message' },
-            { isOwn: true, text: 'Message' },
-            { isOwn: false, text: 'Message' },
-            { isOwn: true, text: 'Message' },
-            { isOwn: true, text: 'Message' },
-            { isOwn: true, text: 'Message' },
-            { isOwn: false, text: 'Message' },
-            { isOwn: true, text: 'Message' },
-            { isOwn: true, text: 'Message' },
-            { isOwn: false, text: 'VERY VERY VERY VERY VEYR VERY YEYRYEYREY LONG Message' },
-            { isOwn: true, text: 'VERY VERY VERY VERY VEYR VERY YEYRYEYREY LONG Message' },
-            { isOwn: false, text: 'VERY VERY VERY VERY VEYR VERY YEYRYEYREY LONG Message' },
-            { isOwn: true, text: 'Message' },
-            { isOwn: false, text: 'Message' }
-        ]
 
         scrollToBottom();
 
@@ -128,7 +112,7 @@ const ChatComponent = () => {
         let recentChats = [
             { _id: '60b6b2bac88983254c8c6292', username: 'Hamna', image: CONSTANTS.DEFAULT_USER_IMAGE, textedLast: '15m' },
             { _id: '60b3d2c647168609a4907e24', username: 'Kashif', image: CONSTANTS.DEFAULT_USER_IMAGE, textedLast: '20m', hasUnred: true },
-            { _id: '611183ad66519d24745f8d0c', username: 'Hamna 2', image: CONSTANTS.DEFAULT_USER_IMAGE, textedLast: '20m', hasUnred: true },
+            { _id: '611183ad66519d24745f8d0c', username: 'Hamna Iqbal', image: CONSTANTS.DEFAULT_USER_IMAGE, textedLast: '20m', hasUnred: true },
         ];
 
         return recentChats.map((rc, i) => {

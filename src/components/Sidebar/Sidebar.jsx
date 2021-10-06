@@ -7,6 +7,8 @@ function Sidebar() {
     const [user, setUser] = useState({});
     const history = useHistory();
 
+    const isUserAdmin = userService.isCurrentUserAdmin();
+
     useEffect(() => {
         fetchUser();
     }, []);
@@ -105,11 +107,13 @@ function Sidebar() {
         {
             label: 'Users',
             isTitle: true,
+            adminOnly: true
         },
         {
             label: 'Manage Users',
             icon: 'pi pi-users',
             link: '/home/viewUsers',
+            adminOnly: true
         },
         {
             label: 'Profile',
@@ -125,12 +129,12 @@ function Sidebar() {
     const sidebarLinks = () => {
         return links.map((link, index) => {
             return (
-                <div
-                className="sidebar-link-wrapper"
-                key={index}
-                onClick={() => {
-                    onLinkClick(link.link);
-                }}
+                ((link.adminOnly && isUserAdmin) || !link.adminOnly) && <div
+                    className="sidebar-link-wrapper"
+                    key={index}
+                    onClick={() => {
+                        onLinkClick(link.link);
+                    }}
                 >
                     {link.isTitle && <hr></hr>}
 
