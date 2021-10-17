@@ -13,6 +13,7 @@ function AddPostForm(props) {
     const [description, setDescription] = useState('');
     const [courseId, setCourse] = useState('');
     const [attachmentLink, setAttatchmentLink] = useState('');
+    const [postId, setPostId] = useState('');
 
     const [courseOptions, setCourseOptions] = useState([]);
 
@@ -52,15 +53,32 @@ function AddPostForm(props) {
         if (!checkFormValid(formBody)) {
             return;
         }
-
-        httpService.postRequest(URLS.POST, formBody, true).subscribe((d) => {
-            if (props && props.closeDialog) {
-                props.closeDialog();
-            }
-        });
+        // It means that the dialog is opened in edit mode. Hence we already have the 
+        // ID and we will send the PUT request
+        if (props.post) {
+            formBody._id = postId;
+            httpService.putRequest(URLS.POST, formBody, true).subscribe((d) => {
+                if (props && props.closeDialog) {
+                    props.closeDialog();
+                }
+            });
+        } else {
+            httpService.postRequest(URLS.POST, formBody, true).subscribe((d) => {
+                if (props && props.closeDialog) {
+                    props.closeDialog();
+                }
+            });
+        }
     };
 
     useEffect(() => {
+        if (props.post) {
+            console.log(props.post);
+            setTitle(props.post.title);
+            setDescription(props.post.description);
+            setCourse(props.post.courseId._id);
+            setPostId(props.post._id);
+        }
         fetchCourses();
     }, []);
 

@@ -14,9 +14,12 @@ function PostFeed() {
     const [postsList, setPostsList] = useState([]);
 
     const [postsToShow, setPostsToShow] = useState([]);
+    const [postToEdit, setPostToEdit] = useState('');
+
     const POSTS_PER_PAGE = 5;
 
     const showDialog = (type) => {
+        setPostToEdit(null);
         setShowAddDialig(true);
         setAddPostType(type);
     };
@@ -30,7 +33,7 @@ function PostFeed() {
 
     const posts = () => {
         return postsToShow.map((post) => {
-            return <Post post={post} key={post._id} />;
+            return <Post fetchPosts={fetchPosts} showEditDialog={showEditDialog} post={post} key={post._id} />;
         });
     };
 
@@ -51,6 +54,12 @@ function PostFeed() {
         fetchPosts();
     };
 
+    const showEditDialog = (post) => {
+        setPostToEdit(post);
+        setShowAddDialig(true);
+        setAddPostType(post.postType);
+    }
+
     return (
         <div className="post-feed-component row">
             <div className="add-post-dialog">
@@ -62,7 +71,7 @@ function PostFeed() {
                     className="add-post-dialog"
                 >
                     <div className="add-post-dialog-wrapper">
-                        <AddPostForm type={addPostType} closeDialog={closeDialog} />
+                        <AddPostForm post={postToEdit} type={addPostType} closeDialog={closeDialog} />
                     </div>
                 </Dialog>
             </div>

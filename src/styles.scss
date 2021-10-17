@@ -232,8 +232,35 @@ body {
         text-align: left;
         margin: 0px;
     }
+
 }
 
+.p-overlaypanel .p-overlaypanel-content {
+    padding: 3px;
+}
+
+.options-overlay-div {
+    p {
+        margin-bottom: 0px;
+        padding: 10px 15px;
+        cursor: pointer;
+        i {
+            margin-right: 10px;
+        }
+    }
+
+    .delete-option {
+        color: $failure-color-light;
+    }
+    .edit-option {
+        color: $primary;
+    }
+
+    hr {
+        margin: 0px;
+        height: 1px;
+    }
+}
 .scholarship-component {
 
     .card-heading {
