@@ -1,5 +1,6 @@
 import { Dialog } from 'primereact/dialog';
 import { useEffect, useState } from 'react';
+import { useHistory, useLocation } from 'react-router';
 import AddPostForm from '../../components/AddPostForm/AddPostForm';
 import JobFeed from '../../components/JobFeed/JobFeed';
 import Post from '../../components/PostComponent/Post';
@@ -17,6 +18,10 @@ function PostFeed() {
     const [postsToShow, setPostsToShow] = useState([]);
     const [postToEdit, setPostToEdit] = useState('');
 
+    const [allPostsFeed, setAllPostsFeed] = useState(true);
+
+    const location = useLocation();
+
     const POSTS_PER_PAGE = 5;
 
     const showDialog = (type) => {
@@ -26,8 +31,13 @@ function PostFeed() {
     };
 
     const fetchPosts = () => {
-        httpService.getRequest(URLS.POST).subscribe((data) => {
-            console.log(data);
+        const filter = {}
+        const showAllPosts = !location.pathname?.includes('myPosts');
+        setAllPostsFeed(showAllPosts)
+        if (!showAllPosts) {
+            filter.userId = userService.getCurrentUserId();
+        }
+        httpService.getRequest(URLS.POST, filter).subscribe((data) => {
             data.sort((a, b) => new Date(b.createdOn) - new Date(a.createdOn));
             setPostsList(data);
             setPostsToShow(data.slice(0, POSTS_PER_PAGE));
@@ -48,7 +58,7 @@ function PostFeed() {
 
     useEffect(() => {
         fetchPosts();
-    }, []);
+    }, [location]);
 
     const closeDialog = () => {
         setShowAddDialig(false);
@@ -79,46 +89,51 @@ function PostFeed() {
                 </Dialog>
             </div>
             <div className="col-md-8">
-                <div className="add-post-card">
-                    <div
-                        className="add-post-div add-question"
-                        onClick={() => {
-                            showDialog(enums.QUESTION);
-                        }}
-                    >
-                        <p className="add-post center subtext">Getting Stuck?</p>
-                        <p className="add-post center main-text question">Ask a Question</p>
-                    </div>
-                    <div
-                        className="add-post-div add-resource"
-                        onClick={() => {
-                            showDialog(enums.RESOURCE);
-                        }}
-                    >
-                        <p className="add-post center subtext">Got Something to Share?</p>
-                        <p className="add-post center main-text resource">Post a Resource</p>
-                    </div>
-                </div>
-                <div className="post-feed-wrapper">{posts()}</div>
-                {postsToShow.length < postsList.length && (
-                    <div
-                        className="load-more-bar"
-                        onClick={() => {
-                            showNextPosts();
-                        }}
-                    >
-                        <div className="load-more-card">
-                            <p className="load-more">
-                                <i className="pi pi-chevron-down"></i>
-                                Load More
-                            </p>
+                {/* This will be only shown when the user is on post feed page */}
+                {allPostsFeed &&
+                    <div className="add-post-card">
+                        <div
+                            className="add-post-div add-question"
+                            onClick={() => {
+                                showDialog(enums.QUESTION);
+                            }}
+                        >
+                            <p className="add-post center subtext">Getting Stuck?</p>
+                            <p className="add-post center main-text question">Ask a Question</p>
+                        </div>
+                        <div
+                            className="add-post-div add-resource"
+                            onClick={() => {
+                                showDialog(enums.RESOURCE);
+                            }}
+                        >
+                            <p className="add-post center subtext">Got Something to Share?</p>
+                            <p className="add-post center main-text resource">Post a Resource</p>
                         </div>
                     </div>
-                )}
+                }
+                <div className="post-feed-wrapper">{posts()}</div>
+                {
+                    postsToShow.length < postsList.length && (
+                        <div
+                            className="load-more-bar"
+                            onClick={() => {
+                                showNextPosts();
+                            }}
+                        >
+                            <div className="load-more-card">
+                                <p className="load-more">
+                                    <i className="pi pi-chevron-down"></i>
+                                    Load More
+                                </p>
+                            </div>
+                        </div>
+                    )
+                }
             </div>
-            <div className="col-md-4">
+            {allPostsFeed && <div className="col-md-4">
                 <JobFeed />
-            </div>
+            </div>}
         </div>
     );
 }

@@ -39,6 +39,7 @@ const Main = ({ match }) => {
                         <div className="container-fluid">
                             <Switch>
                                 <Route path={match.url + '/'} exact component={PostFeed} />
+                                <Route path={match.url + '/myPosts'} exact component={PostFeed} />
                                 <Route path={match.url + '/addPost'} component={AddPostForm} />
                                 <Route path={match.url + '/post/:postId'} component={PostDetails} />
                                 <Route path={match.url + '/profile'} component={UserProfile} />

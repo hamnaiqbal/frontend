@@ -39,7 +39,7 @@ function Sidebar() {
         {
             label: 'View My Posts',
             icon: 'pi pi-list',
-            link: '/home/profile',
+            link: '/home/myPosts',
             separatorBelow: true
         },
         {
