@@ -30,6 +30,11 @@ export default function UserProfile(props) {
         { label: 'Email', key: 'email', type: 'email', disabled: false },
         { label: 'Department', key: 'degree', type: 'text', disabled: false },
     ];
+    
+    const addressFields = [
+        { label: 'City', key: 'city', type: 'text', disabled: false },
+        { label: 'Country', key: 'country', type: 'text', disabled: false },
+    ]
 
     const passwordFields = [
         { label: 'Current Password', key: 'password', type: 'password' },
@@ -50,7 +55,7 @@ export default function UserProfile(props) {
         }
     }, []);
 
-    const formFields = (fields) => {
+    const personalInfoFields = (fields) => {
         return fields.map((f) => {
             return (
                 <div className="form-group p-float-label" key={f.key}>
@@ -86,11 +91,44 @@ export default function UserProfile(props) {
         return (
             <div className="profile-dialog-content">
                 <div className="profile-form">
-                    <form>{formFields(dialogProfileFields)}</form>
+                    <form>{personalInfoFields(dialogProfileFields)}</form>
                 </div>
             </div>
         );
     };
+
+    const imageCard = () => {
+        return (
+            <div className="form-card col-md-6">
+                <div className="heading-wrapper">
+                    <p className="password-heading">Change Image</p>
+                </div>
+
+                <div className="image-form row">
+                    <div className="current-image-wrapper col-sm-5">
+                        <img className="profile-image" src={user.imageLink || CONSTANTS.DEFAULT_USER_IMAGE} alt="" />
+                    </div>
+                    <div className="form-group col-sm-7">
+                        <div className="upload-attachment-wrapper">
+                            <p>
+                                <i className="pi pi-upload"></i>
+                                Upload Your Files
+                            </p>
+                        </div>
+                        <input
+                            type="file"
+                            id="attachmentLink"
+                            className="form-control-file attachment-input"
+                            name="attachmentLink"
+                            onChange={(e) => {
+                                fileUploadHandler(e);
+                            }}
+                        />
+                    </div>
+                </div>
+            </div>
+        )
+    }
 
     const onValuesChange = (field, value, isPassword = false) => {
         if (isPassword) {
@@ -103,18 +141,29 @@ export default function UserProfile(props) {
     const pageContent = () => {
         return (
             <div className="profile-page-content row">
+
+                <div className="col-md-12 profile-buttons-row">
+                    <button className="profile-btn btn primary-button" onClick={submitForm}>
+                        Update Profile
+                    </button>
+
+                    <button className="profile-btn btn btn-success" onClick={submitForm}>
+                        Submit for a Tutor
+                    </button>
+
+                </div>
+
+                {/* {imageCard()} */}
+
                 <div className="col-md-6">
                     <div className="form-card">
                         <div className="heading-wrapper">
-                            <p className="name-heading">{user.name}</p>
+                            <p className="name-heading">Personal Information</p>
                         </div>
                         <hr />
                         <div className="profile-form">
                             <form>
-                                {formFields(pageProfileFields)}
-                                <button className="form-control primary-button" onClick={submitForm}>
-                                    Update Profile
-                                </button>
+                                {personalInfoFields(pageProfileFields)}
                             </form>
                         </div>
                     </div>
@@ -128,7 +177,7 @@ export default function UserProfile(props) {
 
                         <div className="password-form">
                             <form>
-                                {formFields(passwordFields)}{' '}
+                                {personalInfoFields(passwordFields)}{' '}
                                 <button
                                     className="form-control primary-button"
                                     onClick={(e) => {
@@ -138,37 +187,6 @@ export default function UserProfile(props) {
                                     Update Password
                                 </button>
                             </form>
-                        </div>
-                    </div>
-                    <div className="form-card col-md-12">
-                        <div className="heading-wrapper">
-                            <p className="password-heading">Change Image</p>
-                        </div>
-
-                        <div className="image-form row">
-                            <div className="current-image-wrapper col-sm-5">
-                                <img className="profile-image" src={user.imageLink || CONSTANTS.DEFAULT_USER_IMAGE} alt="" />
-                            </div>
-                            <div className="form-group col-sm-7">
-                                <div className="upload-attachment-wrapper">
-                                    <p>
-                                        <i className="pi pi-upload"></i>
-                                        Upload Your Files
-                                    </p>
-                                </div>
-                                <input
-                                    type="file"
-                                    id="attachmentLink"
-                                    className="form-control-file attachment-input"
-                                    name="attachmentLink"
-                                    onChange={(e) => {
-                                        fileUploadHandler(e);
-                                    }}
-                                />
-                            </div>
-                            <div className="col-sm-12 form-group">
-                                <button className="change-image-button form-control primary-button">Update Profile</button>
-                            </div>
                         </div>
                     </div>
                 </div>

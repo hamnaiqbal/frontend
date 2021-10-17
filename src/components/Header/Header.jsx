@@ -54,16 +54,25 @@ function Header() {
         setCurrentMenuItems(menuItems);
     }, []);
 
+    const onMessageClick = () => {
+        history.push('/home/messages');
+    }
+
     return (
         <div className="header">
             <div className={CONSTANTS.MAIN_WIDTH_CLASS}>
                 <div className="header-wrapper">
-                    <div className="header-logo">
-                        <img className="logo" src="/logo.png" alt="SEA" />
+                    <div className="header-icon-wrapper">
+                        <i className='header-icon pi pi-search'></i>
                     </div>
-
-                    <div className="header-menu">
-                        <Menubar model={currentMenuItems} />;
+                    <div className="header-icon-wrapper" onClick={onMessageClick}>
+                        <i className='header-icon pi pi-comments'></i>
+                    </div>
+                    <div className="header-icon-wrapper">
+                        <i className='header-icon pi pi-user'></i>
+                    </div>
+                    <div className="header-icon-wrapper" onClick={logout}>
+                        <i className='header-icon pi pi-sign-out'></i>
                     </div>
                 </div>
             </div>

@@ -6,6 +6,7 @@ import enums from '../../constants/enums';
 import httpService from '../../services/httpservice';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { Button } from 'primereact/button';
+import miscService from '../../services/miscService';
 
 function PostDetails(props) {
     const [replies, setReplies] = useState([]);
@@ -24,7 +25,7 @@ function PostDetails(props) {
     const fetchPost = () => {
         httpService.getRequest(URLS.GET_SINGLE_POST, null, { _id: postId }).subscribe((data) => {
             if (data) {
-                data.post.createdOn = new Date(data.post.createdOn).toLocaleString();
+                data.post.createdOn = miscService.getFormattedDate(data.post.createdOn);
                 setPost(data.post);
                 setReplies(data.replies || []);
             }
@@ -34,7 +35,9 @@ function PostDetails(props) {
     const addReply = () => {
         if (replyContent) {
             const data = { replyContent, postId };
-            httpService.postRequest(URLS.REPLY, data).subscribe();
+            httpService.postRequest(URLS.REPLY, data).subscribe(d => {
+                setReplyContent('');
+            });
         }
     };
 
@@ -68,12 +71,12 @@ function PostDetails(props) {
                         </div>
                         <div className="replier-name-and-time">
                             <p className="replier-name">{d.userId?.name || 'Kashif'}</p>
-                            <p className="reply-time">{d.createdOn}</p>
+                            <p className="reply-time">{miscService.getFormattedDate(d.createdOn)}</p>
                         </div>
                     </div>
                     <div className="reply-content-wrapper">
                         <p className="reply-text">{d.replyContent}</p>
-                    </div>
+                    </div>  
                 </div>
             </div>
         ));

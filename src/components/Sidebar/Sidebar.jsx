@@ -7,6 +7,8 @@ function Sidebar() {
     const [user, setUser] = useState({});
     const history = useHistory();
 
+    const isUserAdmin = userService.isCurrentUserAdmin();
+
     useEffect(() => {
         fetchUser();
     }, []);
@@ -21,23 +23,105 @@ function Sidebar() {
 
     const links = [
         {
-            label: 'Your Posts',
-            icon: 'pi pi-comment',
+            label: 'Feed',
+            isTitle: true
+        },
+        {
+            label: 'View Feed',
+            icon: 'pi pi-send',
+            link: '/home',
+        },
+        {
+            label: 'Search Posts',
+            icon: 'pi pi-search',
             link: '/home/profile',
         },
         {
-            label: 'Your Jobs',
+            label: 'View My Posts',
+            icon: 'pi pi-list',
+            link: '/home/profile',
+            separatorBelow: true
+        },
+        {
+            label: 'Tutor',
+            isTitle: true
+        },
+        {
+            label: 'Tutor Dashboard',
+            icon: 'pi pi-home',
+            link: '/home/profile',
+        },
+        {
+            label: 'Nearby Tutors',
+            icon: 'pi pi-map',
+            link: '/home/profile',
+        },
+        {
+            label: 'Become a Tutor',
+            icon: 'pi pi-user',
+            link: '/home/becomeTutor',
+        },
+        {
+            label: 'Jobs',
+            isTitle: true
+        },
+
+        {
+            label: 'Jobs Dashboard',
+            icon: 'pi pi-home',
+            link: '/home/profile',
+        },
+        {
+            label: 'View Jobs Feed',
             icon: 'pi pi-list',
             link: '/home/profile',
         },
         {
-            label: 'Your Payments',
-            icon: 'pi pi-dollar',
+            label: 'Search Jobs',
+            icon: 'pi pi-search',
             link: '/home/profile',
         },
         {
-            label: 'Your Profile',
-            icon: 'pi pi-user',
+            label: 'Post a New Job',
+            icon: 'pi pi-plus-circle',
+            link: '/home/profile',
+        },
+        {
+            label: 'Quiz',
+            isTitle: true,
+        },
+        {
+            label: 'Attempt Practice Quiz',
+            icon: 'pi pi-th-large',
+            link: '/home/attempt-quiz',
+        },
+        {
+            label: 'Scholarships',
+            isTitle: true,
+        },
+        {
+            label: 'View Scholarships',
+            icon: 'pi pi-money-bill',
+            link: '/home/scholarships',
+        },
+        {
+            label: 'Users',
+            isTitle: true,
+            adminOnly: true
+        },
+        {
+            label: 'Manage Users',
+            icon: 'pi pi-users',
+            link: '/home/viewUsers',
+            adminOnly: true
+        },
+        {
+            label: 'Profile',
+            isTitle: true,
+        },
+        {
+            label: 'Manage Your Profile',
+            icon: 'pi pi-user-edit',
             link: '/home/profile',
         },
     ];
@@ -45,17 +129,29 @@ function Sidebar() {
     const sidebarLinks = () => {
         return links.map((link, index) => {
             return (
-                <div
+                ((link.adminOnly && isUserAdmin) || !link.adminOnly) && <div
                     className="sidebar-link-wrapper"
                     key={index}
                     onClick={() => {
                         onLinkClick(link.link);
                     }}
                 >
-                    <div className="sidebar-link">
-                        <i className={`link-icon ${link.icon}`}></i>
-                        <p className="sidebar-link-label">{link.label}</p>
-                    </div>
+                    {link.isTitle && <hr></hr>}
+
+                    {
+                        !link.isTitle && <div className="sidebar-link">
+                            <i className={`link-icon ${link.icon}`}></i>
+                            <p className="sidebar-link-label">{link.label}</p>
+                        </div>
+                    }
+
+                    {
+                        link.isTitle &&
+                        <p className="sidebar-link-title">
+                            {link.label}
+                        </p>
+                    }
+
                 </div>
             );
         });
@@ -103,18 +199,22 @@ function Sidebar() {
 
     return (
         <div className="sidebar">
+
+            <div className="d-flex sidebar-logo-section">
+                <img className="app-logo" src="/logo.png" alt="SEA" />
+            </div>
+
             <div className="sidebar-user-section">
                 <div className="user-info">
                     <div className="user-image-wrapper">
                         <img className="user-image" src={user.imageLink} alt="" />
                     </div>
                     <div className="user-text-wrapper">
-                        <p className="user-name center">{user.name}</p>
-                        <p className="user-degree center">{user.degree}</p>
+                        <p className="user-name">{user.name}</p>
+                        <p className="user-degree">{user.degree}</p>
                     </div>
                 </div>
             </div>
-            <hr />
             {/* <div className="sidebar-filters-section">
                 <div className="filters-wrapper">
                     <div className="single-filter question-filter">
@@ -128,7 +228,7 @@ function Sidebar() {
                 </div>
             </div> */}
             {sidebarLinks()}
-            <div className="sidebar-bottom-section">{middleSection()}</div>
+            {/* <div className="sidebar-bottom-section">{middleSection()}</div> */}
         </div>
     );
 }

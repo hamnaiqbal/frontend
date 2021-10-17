@@ -6,6 +6,7 @@ import Post from '../../components/PostComponent/Post';
 import URLS from '../../constants/api-urls';
 import enums from '../../constants/enums';
 import httpService from '../../services/httpservice';
+import userService from '../../services/userservice';
 
 function PostFeed() {
     const [showAddDialig, setShowAddDialig] = useState(false);
@@ -26,6 +27,8 @@ function PostFeed() {
 
     const fetchPosts = () => {
         httpService.getRequest(URLS.POST).subscribe((data) => {
+            console.log(data);
+            data.sort((a, b) => new Date(b.createdOn) - new Date(a.createdOn));
             setPostsList(data);
             setPostsToShow(data.slice(0, POSTS_PER_PAGE));
         });

@@ -15,6 +15,7 @@
     "classnames": "^2.3.1",
     "cloudinary": "^1.25.1",
     "formik": "^2.2.6",
+    "google-map-react": "^2.1.10",
     "node-sass": "^5.0.0",
     "primeicons": "^4.1.0",
     "primereact": "^6.2.1",
@@ -28,6 +29,7 @@
     "react-transition-group": "^4.4.1",
     "redux": "^4.1.0",
     "rxjs": "^6.6.7",
+    "socket.io-client": "^4.2.0",
     "typescript": "^4.2.4",
     "web-vitals": "^1.1.1"
   },

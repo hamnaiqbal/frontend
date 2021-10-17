@@ -168,6 +168,7 @@ function AddPostForm(props) {
                                 id="attachmentLink"
                                 className="form-control-file attachment-input"
                                 name="attachmentLink"
+                                accept="image/*, application/pdf"
                                 onChange={(e) => {
                                     fileUploadHandler(e);
                                 }}
