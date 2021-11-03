@@ -17,6 +17,7 @@ function Sidebar() {
         const user = userService.getLoggedInUser() || {};
         if (user) {
             user.imageLink = user.imageLink || CONSTANTS.DEFAULT_USER_IMAGE;
+            user.userType = userService.isCurrentUserAdmin() ? 'Admin' : user.listedAsTutor ? 'Tutor' : 'Student';
         }
         setUser(user);
     };
@@ -54,12 +55,17 @@ function Sidebar() {
         {
             label: 'Nearby Tutors',
             icon: 'pi pi-map',
-            link: '/home/profile',
+            link: '/home/nearbyTutos',
         },
         {
             label: 'Become a Tutor',
             icon: 'pi pi-user',
             link: '/home/becomeTutor',
+        },
+        {
+            label: 'Requested Quotes',
+            icon: 'fas fa-file-invoice-dollar',
+            link: '/home/quotes/tutor',
         },
         {
             label: 'Jobs',
@@ -211,24 +217,11 @@ function Sidebar() {
                     </div>
                     <div className="user-text-wrapper">
                         <p className="user-name">{user.name}</p>
-                        <p className="user-degree">{user.degree}</p>
+                        <p className="user-degree">{user.degree} - {user.userType}</p>
                     </div>
                 </div>
             </div>
-            {/* <div className="sidebar-filters-section">
-                <div className="filters-wrapper">
-                    <div className="single-filter question-filter">
-                        <div className="question-filter-color filter-circle"></div>
-                        <p className="filter-by-question">Show Only Questions</p>
-                    </div>
-                    <div className="single-filter resource-filter">
-                        <div className="resource-filter-color filter-circle"></div>
-                        <p className="filter-by-resources">Show Only Resources</p>
-                    </div>
-                </div>
-            </div> */}
             {sidebarLinks()}
-            {/* <div className="sidebar-bottom-section">{middleSection()}</div> */}
         </div>
     );
 }

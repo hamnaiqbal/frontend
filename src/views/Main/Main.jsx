@@ -13,13 +13,15 @@ import AttemptQuiz from '../AttemptQuiz/AttemptQuiz';
 import ChatComponent from '../ChatComponent/ChatComponent';
 import chatService from '../../services/chatService';
 import { useEffect } from 'react';
+import NearbyTutors from '../NearbyTutors/NearbyTutors';
+import RequestedQuotes from '../RequestedQuotes/RequestedQuotes';
 
 const Main = ({ match }) => {
 
 
     useEffect(() => {
         chatService.subscribeToMessages()
-        return () => {}
+        return () => { }
     }, [])
 
     return (
@@ -46,6 +48,8 @@ const Main = ({ match }) => {
                                 <Route path={match.url + '/scholarships'} component={ScholarshipFeed} />
                                 <Route path={match.url + '/viewUsers'} component={ViewUsers} />
                                 <Route path={match.url + '/becomeTutor'} component={AddTutor} />
+                                <Route path={match.url + '/nearbyTutos'} component={NearbyTutors} />
+                                <Route path={match.url + '/quotes/tutor'} component={RequestedQuotes} />
                                 <Route path={match.url + '/attempt-quiz'} component={AttemptQuiz} />
                                 <Route path={match.url + '/messages'} component={ChatComponent} />
                             </Switch>

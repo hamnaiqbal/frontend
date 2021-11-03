@@ -72,7 +72,8 @@ body {
     }
 }
 
-.p-float-label input.p-filled ~ label {
+.p-float-label input.p-filled ~ label,
+.p-float-label select.p-filled ~ label {
     top: -0.75rem;
     font-size: 12px;
 }
@@ -475,7 +476,6 @@ body {
         text-align: left;
         margin: 0px;
     }
-
 }
 
 .p-overlaypanel .p-overlaypanel-content {
@@ -694,10 +694,15 @@ body {
     .heading-wrapper {
         font-size: larger;
         font-weight: bold;
+        color: $dark-text;
+
+        i {
+            margin-right: 10px;
+        }
     }
 
     .profile-form,
-    .password-form {
+    .contact-form {
         padding-top: 30px;
 
         .p-inputwrapper {
@@ -709,13 +714,30 @@ body {
         }
     }
 
+    .applied-success-message {
+        color: $success-color-dark;
+        font-weight: bold;
+        font-size: small;
+
+        .applied-message-icon {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        i {
+            font-size: x-large;
+        }
+    }
+
     .profile-image {
         width: 100%;
+        border-radius: 50%;
+        max-height: 120px;
     }
 
     .attachment-input {
         position: relative;
-        top: -152px;
         left: 0;
         width: 100%;
         height: 100%;
@@ -726,7 +748,7 @@ body {
         padding: 20px;
         width: 100%;
         border: 1px solid $light-border;
-        height: 100%;
+        height: auto;
         text-align: center;
         border-radius: 5px;
 
@@ -753,10 +775,157 @@ body {
     padding-top: 20px;
 }
 
+.nearby-tutors-component {
+    i {
+        margin-right: 10px;
+    }
+
+    .tutor-info-head {
+        padding-bottom: 15px;
+    }
+    .tutor-info-head h4.tutor-name {
+        margin: 0;
+        font-weight: bold;
+        font-size: large;
+    }
+
+    .tutor-courses h6 {
+        font-size: small;
+        font-weight: bold;
+        color: #5a5a5a;
+    }
+
+    p.expert-course {
+        font-size: small;
+        font-weight: 600;
+        color: #424242;
+    }
+
+    .user-image {
+        width: 80px;
+        height: 80px;
+        border-radius: 50%;
+    }
+
+    p.tutor-contact-links {
+        display: flex;
+        font-weight: bold;
+        font-size: small;
+        color: #5a5a5a;
+    }
+
+    .contact-link-wrapper {
+        margin-left: 10px;
+
+        a {
+            color: #5a5a5a;
+        }
+    }
+
+    .sidebar-header h5 {
+        font-size: medium;
+        font-weight: bold;
+    }
+
+    .sidebar-header {
+        padding: 15px 5px;
+        margin-bottom: 35px;
+        border-bottom: 1px solid #dddddd;
+    }
+
+    .tutor-action-wrapper {
+        p {
+            text-align: center;
+            color: $dark-text;
+            font-weight: bold;
+            font-size: small;
+            padding: 10px 5px;
+            cursor: pointer;
+            box-shadow: 0 0 15px #d1d1d1;
+            border-radius: 5px;
+
+            i {
+                margin-right: 10px;
+            }
+        }
+    }
+}
+
+.p-dialog.p-component.quote-dialog {
+    width: 60vw;
+}
+
+.requested-quote-component {
+    .quote-row td {
+        padding: 15px 0px;
+        font-weight: 500;
+        vertical-align: top;
+
+        .quote-status {
+            font-size: small;
+            padding: 5px;
+            text-align: center;
+            margin: 5px 10px;
+            border-radius: 15px;
+            color: white;
+        }
+
+        .duration-wrapper {
+            font-size: small;
+            padding: 5px;
+            i {
+                margin-right: 5px;
+            }
+        }
+
+        .quote-description {
+            color: grey;
+            overflow-wrap: break-word;
+            max-width: 200px;
+        }
+
+        .quote-status.status-0 {
+            background-color: $placed-color;
+        }
+        .quote-status.status-1 {
+            background-color: $replied-color;
+        }
+        .quote-status.status-2 {
+            background-color: $accepted-color;
+        }
+        .quote-status.status-3 {
+            background-color: $rejected-color;
+        }
+    }
+
+    .quote-row td.price-column {
+        font-weight: bold;
+        font-size: large;
+        padding: 20px 30px;
+    }
+
+    .quote-table-head th.table-head-cell {
+        padding: 15px 0px;
+        border-bottom: 1px #d7d7d7 solid;
+        vertical-align: top;
+    }
+
+    .requested-quote-card {
+        padding: 30px;
+    }
+
+    .card-heading {
+        padding: 0;
+        font-size: larger;
+        font-weight: bolder;
+        color: grey;
+        margin-bottom: 30px;
+    }
+}
+
 .add-post-form {
     .attachment-input {
         position: relative;
-        top: -62px;
         left: 0;
         width: 100%;
         height: 100%;
@@ -1192,6 +1361,19 @@ body {
     }
 }
 
+.marker {
+    border-radius: 50% 50% 0 50%;
+    background: red;
+
+    -webkit-transform: rotate(45deg);
+    -moz-transform: rotate(45deg);
+    -o-transform: rotate(45deg);
+    transform: rotate(45deg);
+
+    width: 30px;
+    height: 30px;
+}
+
 .bold {
     font-weight: bold;
 }
@@ -1399,7 +1581,6 @@ button.profile-btn {
 
 .switch-field {
     display: flex;
-    width: 100%;
     justify-content: space-between;
 }
 

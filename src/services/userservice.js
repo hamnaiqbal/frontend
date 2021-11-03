@@ -19,7 +19,7 @@ const userService = {
     },
     isCurrentUserAdmin() {
         let user = localStorage.getItem('user');
-        return user ? JSON.parse(user).userType === 0 : false;
+        return user ? JSON.parse(user).userType === 1 : false;
     },
     logout() {
         localStorage.removeItem('user');

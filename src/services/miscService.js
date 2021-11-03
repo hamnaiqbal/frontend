@@ -1,4 +1,8 @@
 import { toast } from 'react-toastify';
+import URLS from '../constants/api-urls';
+import httpService from './httpservice';
+
+let courseOptions = [];
 
 const miscService = {
     handleSuccess(description) {
@@ -30,7 +34,7 @@ const miscService = {
         let validForm = true;
 
         reqFields.forEach((field) => {
-            if (field == null || field == '') {
+            if (field == null || field === '') {
                 validForm = false;
                 return;
             }
@@ -38,11 +42,47 @@ const miscService = {
         return validForm;
     },
 
-    getFormattedDate(strDate) {
-        if (!strDate) {
-            return (new Date()).toLocaleString()
+    getFormattedDate(strDate, dateOnly = false) {
+        if (dateOnly && strDate) {
+            return new Date(strDate).toLocaleDateString()
         }
-        return new Date(strDate).toLocaleString()
+        if (dateOnly && !strDate) {
+            return (new Date()).toLocaleDateString()
+        }
+        if (strDate) {
+            return new Date(strDate).toLocaleString()
+        }
+        return (new Date()).toLocaleString()
+    },
+
+    getCourseOptions() {
+        return new Promise((resolve, reject) => {
+            if (courseOptions && courseOptions.length > 0) {
+                resolve(courseOptions);
+                return;
+            }
+            httpService.getRequest(URLS.COURSE).subscribe((data) => {
+                if (data.length > 0) {
+                    const options = data.map((d) => {
+                        return { label: `${d.code}-${d.name}`, value: d._id };
+                    });
+                    courseOptions = options;
+                    resolve(options);
+                }
+                resolve([])
+            });
+        })
+    },
+
+    async getCourseName(courseId, includeCode = true) {
+        if (!courseOptions) {
+            await this.getCourseOptions();
+        }
+        if (includeCode) {
+            return courseOptions?.find(c => c.value === courseId)?.label ?? '';
+        } else {
+            return courseOptions?.find(c => c.value === courseId)?.label.split('-')[1] ?? '';
+        }
     }
 
 };

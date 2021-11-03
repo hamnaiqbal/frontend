@@ -3,9 +3,13 @@ const URLS = {
     LOGIN: '/users/login',
     DEACTIVATE: '/users/deactivate',
     UPLOAD_CV: '/users/uploadCV',
+    UPLOAD_PP: '/users/uploadProfImg',
+    GET_TUTORS: '/users/getTutors',
     CHANGE_PASSWORD: '/users/changePassword',
 
     COURSE: '/courses',
+
+    QUOTE: '/quote',
 
     POST: '/post',
     GET_SINGLE_POST: '/post/get/{_id}',

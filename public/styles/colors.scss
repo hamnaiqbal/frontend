@@ -21,7 +21,15 @@ $light-border: #e7e7e7;
 $hover-shadow: #ebebeb;
 $light-color: white;
 $light-text: grey;
-$dark-text: black;
+$dark-text: #3b3b3b;
 $body-bg: #F3F5F7;
 $progress-bg: #00000050;
 $pending-color: orange;
+
+
+// QUOTE STATUS COLORS
+
+$placed-color: #b39ddb;
+$replied-color: #90caf9;
+$accepted-color: #a5d6a7;
+$rejected-color: #ef9a9a;

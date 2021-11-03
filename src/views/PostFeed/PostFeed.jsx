@@ -1,6 +1,6 @@
 import { Dialog } from 'primereact/dialog';
 import { useEffect, useState } from 'react';
-import { useHistory, useLocation } from 'react-router';
+import { useLocation } from 'react-router';
 import AddPostForm from '../../components/AddPostForm/AddPostForm';
 import JobFeed from '../../components/JobFeed/JobFeed';
 import Post from '../../components/PostComponent/Post';

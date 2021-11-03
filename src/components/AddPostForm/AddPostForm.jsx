@@ -82,15 +82,12 @@ function AddPostForm(props) {
         fetchCourses();
     }, []);
 
-    const fetchCourses = () => {
-        httpService.getRequest(URLS.COURSE).subscribe((data) => {
-            if (data.length > 0) {
-                const coursesData = data.map((d) => {
-                    return { label: `${d.code}-${d.name}`, value: d._id };
-                });
-                setCourseOptions(coursesData);
-            }
-        });
+    const fetchCourses = async () => {
+        // miscService.getCourseOptions().subscribe((data) => {
+        //     setCourseOptions(data);
+        // });
+        const cOptions  = await miscService.getCourseOptions();
+        setCourseOptions(cOptions); 
     };
 
     const fileUploadHandler = (event) => {
