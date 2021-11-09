@@ -42,7 +42,7 @@ const httpService = {
                 });
         });
     },
-    postRequest(url, data, isMultipart = false, showLoader = true) {
+    postRequest(url, data, isMultipart = false, showLoader = true, showToast = true) {
         const apiUrl = CONSTANTS.API_PATH + url;
         if (showLoader) {
             miscService.showLoader();
@@ -59,13 +59,17 @@ const httpService = {
                     console.log(response);
                     miscService.hideLoader();
                     if (response.data.success) {
-                        miscService.handleSuccess(response.data.message);
+                        if (showToast) {
+                            miscService.handleSuccess(response.data.message);
+                        }
                         obs.next(response.data.data);
                         obs.complete();
                     } else {
                         obs.error();
                         obs.complete();
-                        miscService.handleError(response.data.message);
+                        if (showToast) {
+                            miscService.handleError(response.data.message);
+                        }
                     }
                 })
                 .catch((error) => {
@@ -76,13 +80,17 @@ const httpService = {
                             ? error.response.data.message
                             : error.message;
                     miscService.hideLoader();
-                    miscService.handleError(message);
+                    if (showToast) {
+                        miscService.handleError(message);
+                    }
                 });
         });
     },
-    putRequest(url, data, isMultipart = false) {
+    putRequest(url, data, isMultipart = false, showLoader = true, showToast = true) {
         const apiUrl = CONSTANTS.API_PATH + url;
-        miscService.showLoader();
+        if (showLoader) {
+            miscService.showLoader();
+        }
         let formData = data;
         formData = this.setCommonParams(formData);
         if (isMultipart) {
@@ -95,13 +103,17 @@ const httpService = {
                     console.log(response);
                     miscService.hideLoader();
                     if (response.data.success) {
-                        miscService.handleSuccess(response.data.message);
+                        if (showToast) {
+                            miscService.handleSuccess(response.data.message);
+                        }
                         obs.next(response.data.data);
                         obs.complete();
                     } else {
                         obs.error();
                         obs.complete();
-                        miscService.handleError(response.data.message);
+                        if (showToast) {
+                            miscService.handleError(response.data.message);
+                        }
                     }
                 })
                 .catch((error) => {
@@ -112,7 +124,9 @@ const httpService = {
                             ? error.response.data.message
                             : error.message;
                     miscService.hideLoader();
-                    miscService.handleError(message);
+                    if (showToast) {
+                        miscService.handleError(message);
+                    }
                 });
         });
     },

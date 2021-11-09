@@ -861,6 +861,12 @@ body {
         font-weight: 500;
         vertical-align: top;
 
+        .quote-name {
+            margin-bottom: 5px;
+            font-size: large;
+            font-weight: bold;
+        }
+
         .quote-status {
             font-size: small;
             padding: 5px;
@@ -919,7 +925,7 @@ body {
         font-size: larger;
         font-weight: bolder;
         color: grey;
-        margin-bottom: 30px;
+        margin-bottom: 20px;
     }
 }
 

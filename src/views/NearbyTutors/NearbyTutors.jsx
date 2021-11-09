@@ -1,11 +1,14 @@
+import GoogleMapReact from 'google-map-react';
 import { Dialog } from 'primereact/dialog';
 import { Dropdown } from 'primereact/dropdown';
 import { useEffect, useState } from 'react';
+import MapMarker from '../../components/MapMarker/MapMarker';
 import RequestQuote from '../../components/RequestQuote/RequestQuote';
 import URLS from '../../constants/api-urls';
 import CONSTANTS from '../../constants/constants';
 import httpService from '../../services/httpservice';
 import miscService from '../../services/miscService';
+import userService from '../../services/userservice';
 
 export default function NearbyTutors() {
 
@@ -15,10 +18,13 @@ export default function NearbyTutors() {
         { label: '20 Kilometers', value: 20 },
         { label: '50 Kilometers', value: 50 },
         { label: '100 Kilometers', value: 100 },
-    ]
+    ];
+
+    const API_KEY = process.env.REACT_APP_GOOGLE_API_KEY;
+    const user = userService.getLoggedInUser();
 
     const [distance, setDistance] = useState('0');
-    const [filteredCourse, setFilteredCourse] = useState([]);
+    const [filteredCourse, setFilteredCourse] = useState('');
 
     const [courseList, setCourseList] = useState([]);
 
@@ -27,10 +33,26 @@ export default function NearbyTutors() {
     const [showQuoteDialog, setShowQuoteDialog] = useState(false);
     const [quoteTutor, setQuoteTutor] = useState({});
 
+    const [userLocation, setUserLocation] = useState({ longitude: user.longitude ?? 0, latitude: user.latitude ?? 0 });
+
     useEffect(() => {
         fetchTutors();
         fetchCourses();
-    }, [])
+
+        navigator.geolocation.getCurrentPosition((position) => {
+            if (!user.latitude || !user.longitude) {
+                console.log({
+                    long: position.coords.longitude,
+                    lat: position.coords.latitude
+                });
+                setUserLocation({
+                    latitude: user.latitude || position.coords.latitude,
+                    longitude: user.longitude || position.coords.longitude
+                });
+            }
+        });
+
+    }, []);
 
     const hideQuoteDialog = (e) => {
         if (e) {
@@ -38,12 +60,12 @@ export default function NearbyTutors() {
         }
         setQuoteTutor({});
         setShowQuoteDialog(false);
-    }
+    };
 
     const viewQuoteDialog = (t) => {
         setQuoteTutor(t);
         setShowQuoteDialog(true);
-    }
+    };
 
 
     const fetchCourses = async () => {
@@ -51,17 +73,33 @@ export default function NearbyTutors() {
             const cOptions = await miscService.getCourseOptions();
             setCourseList(cOptions);
         }
-    }
+    };
 
     const getCourseName = (courseId) => {
         return courseList?.find(cf => cf.value === courseId)?.label ?? 'HUHU';
-    }
+    };
 
-    const fetchTutors = () => {
-        httpService.postRequest(URLS.GET_TUTORS, {}).subscribe(d => {
+    const fetchTutors = (filters) => {
+        httpService.postRequest(URLS.GET_TUTORS, filters ?? {}).subscribe(d => {
             setTutorsList(d);
-        })
-    }
+        });
+    };
+
+    const filterResults = () => {
+        const filters = {};
+        if (filteredCourse) {
+            filters.course = filteredCourse;
+        }
+        if (distance && distance !== '0') {
+            filters.distance = distance;
+            filters.position = {
+                lat: userLocation.latitude,
+                lon: userLocation.longitude
+            };
+        }
+
+        fetchTutors(filters);
+    };
 
     const renderTutorsList = () => {
         return tutorsList.map((t, i) => {
@@ -94,7 +132,7 @@ export default function NearbyTutors() {
                                         t.expertIn?.map((e, i) => {
                                             return <p className="expert-course" key={i}>
                                                 <i className="fas fa-check-circle"></i> {getCourseName(e)}
-                                            </p>
+                                            </p>;
                                         })
                                     }
 
@@ -168,7 +206,7 @@ export default function NearbyTutors() {
 
 
                             {/* Request Quote */}
-                            <div className="tutor-action-wrapper" onClick={() => { viewQuoteDialog(t) }}>
+                            <div className="tutor-action-wrapper" onClick={() => { viewQuoteDialog(t); }}>
                                 <p><i className="fas fa-money-bill-wave-alt" />Quote</p>
                             </div>
 
@@ -181,9 +219,9 @@ export default function NearbyTutors() {
                     </div>
 
                 </div>
-            </div>
-        })
-    }
+            </div>;
+        });
+    };
 
     return (
         <div className="nearby-tutors-component">
@@ -202,11 +240,32 @@ export default function NearbyTutors() {
 
                         <div className="sidebar-filter">
                             <div className="col-sm-12 row p-0 m-0">
+                                <div className="form-group col-sm-12 p-0">
+                                    <label>Your Location</label>
+                                    <div style={{ height: '30vh', width: '100%' }}>
+                                        <GoogleMapReact
+                                            bootstrapURLKeys={{ key: API_KEY }}
+                                            center={{
+                                                lat: user.latitude,
+                                                lng: user.longitude
+                                            }}
+                                            zoom={15}
+                                        >
+                                            <MapMarker user={user} userLocation={userLocation} />
+                                        </GoogleMapReact>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div className="sidebar-filter">
+                            <div className="col-sm-12 row p-0 m-0">
                                 <div className="form-group p-float-label col-sm-12 p-0">
                                     <Dropdown
                                         value={filteredCourse}
                                         required
                                         filter
+                                        showClear
                                         options={courseList}
                                         placeholder="Select Course to Filter"
                                         className="form-cotntrol single-control"
@@ -228,7 +287,6 @@ export default function NearbyTutors() {
                                     <Dropdown
                                         value={distance}
                                         required
-                                        filter
                                         options={DISTANCE_OPTIONS}
                                         placeholder="Max Distance from Your Position"
                                         className="form-cotntrol single-control"
@@ -242,6 +300,10 @@ export default function NearbyTutors() {
                             </div>
                         </div>
 
+                        <div className="col-sm-12">
+                            <button className="btn btn-primary form-control" onClick={filterResults}> Filter Results </button>
+                        </div>
+
                     </div>
                 </div>
             </div>
@@ -252,5 +314,5 @@ export default function NearbyTutors() {
             </Dialog>
 
         </div>
-    )
+    );
 }

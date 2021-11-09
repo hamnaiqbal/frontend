@@ -75,6 +75,18 @@ function Login() {
                                         Sign Up
                                     </span>
                                 </p>
+
+                                <p className="sign-up-message">
+                                    Forgot Your Password? 
+                                    <span
+                                        onClick={() => {
+                                            history.push('/resetPassword');
+                                        }}
+                                    >
+                                        Reset Password
+                                    </span>
+                                </p>
+
                             </form>
                         </div>
                     </div>

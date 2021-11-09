@@ -17,13 +17,16 @@ export default function RequestedQuotes() {
     const [quotesForUser, setQuotesForUser] = useState([]);
 
     const [showEditDialog, setShowEditDialog] = useState(false);
-    const [quoteToEdit, setQuoteToEdit] = useState({});
+
+    const [selectedQuote, setSelectedQuote] = useState({});
+
+    const [showPriceDialog, setShowPriceDialog] = useState(false);
 
     const subscriptions = [];
 
     const getDurationLabel = (durValue) => {
         return CONSTANTS.DURATION_OPTIONS?.find(d => d.value === durValue)?.label ?? '';
-    }
+    };
 
     useEffect(() => {
         fetchQuotes();
@@ -31,24 +34,24 @@ export default function RequestedQuotes() {
         return () => {
             subscriptions.forEach(sub => {
                 sub.unsubscribe();
-            })
-        }
-    }, [])
+            });
+        };
+    }, []);
 
     const fetchQuotes = () => {
 
-        const quoteByUserData = { requestedBy: userService.getCurrentUserId() }
+        const quoteByUserData = { requestedBy: userService.getCurrentUserId() };
         const quoteByUserSub = httpService.getRequest(URLS.QUOTE, quoteByUserData).subscribe(d => {
             setQuotesByUser(d);
-        })
+        });
 
-        const quoteForUserData = { requestedTo: userService.getCurrentUserId() }
+        const quoteForUserData = { requestedTo: userService.getCurrentUserId() };
         const quoteForUserSub = httpService.getRequest(URLS.QUOTE, quoteForUserData).subscribe(d => {
             setQuotesForUser(d);
-        })
+        });
 
         subscriptions.push(quoteByUserSub, quoteForUserSub);
-    }
+    };
 
     const deleteQuoteWarning = (event, quote) => {
         const id = quote?._id;
@@ -60,23 +63,54 @@ export default function RequestedQuotes() {
                 accept: () => deleteQuote(id)
             });
         }
-    }
+    };
+
+    const acceptRejectConfirmation = (event, quote, accept) => {
+        const id = quote?._id;
+        if (id) {
+            confirmPopup({
+                target: event.currentTarget,
+                message: accept ? 'Are you sure you want to accept this quote?' : 'Are you sure to reject this quote?',
+                icon: 'pi pi-exclamation-triangle',
+                accept: () => acceptRejectQuote(quote, accept)
+            });
+        }
+    };
 
     const deleteQuote = (id) => {
         httpService.deleteRequest(URLS.QUOTE, { _id: id }, false).subscribe(() => {
             fetchQuotes();
         });
-    }
+    };
 
     const viewEditDialog = (quote) => {
-        setQuoteToEdit(quote);
+        setSelectedQuote(quote);
         setShowEditDialog(true);
-    }
-    
+    };
+
     const onEditDialogClose = () => {
         setShowEditDialog(false);
         fetchQuotes();
-    }
+    };
+
+    const closePriceDialog = () => {
+        setShowPriceDialog(false);
+        fetchQuotes();
+    };
+
+    const viewPriceDialog = (quote) => {
+        setSelectedQuote(quote);
+        setShowPriceDialog(true);
+    };
+
+    const acceptRejectQuote = (quote, accept) => {
+        const { _id } = quote;
+        const status = accept ? 2 : 3; // 2 is for accept and 3 is for reject
+        const data = { _id, status };
+        httpService.putRequest(URLS.QUOTE, data).subscribe(d => {
+            fetchQuotes();
+        });
+    };
 
     // isForUser will tell if the quote is requested by another
     // user, it will allow the current user to enter the quote amount
@@ -89,14 +123,14 @@ export default function RequestedQuotes() {
                         {isForUser &&
                             <div>
                                 <p className="card-heading-text">
-                                    Quote Requests For User
+                                    <i className="fas fa-file-invoice-dollar"></i> Quote Requests For User
                                 </p>
                             </div>
                         }
                         {!isForUser &&
                             <div>
                                 <p className="card-heading-text">
-                                    Quote Requests By User
+                                    <i className="fas fa-file-invoice-dollar"></i> Quote Requests By User
                                 </p>
                             </div>
                         }
@@ -106,11 +140,9 @@ export default function RequestedQuotes() {
                             <tr>
 
                                 <th className="table-head-cell">
-                                    {isForUser ? 'Sent By' : 'Sent To'}
+
                                 </th>
-                                <th className="table-head-cell">
-                                    Subject
-                                </th>
+
                                 <th className="table-head-cell">
                                     Date
                                 </th>
@@ -123,7 +155,7 @@ export default function RequestedQuotes() {
                                 <th className="table-head-cell text-center">
                                     Amount
                                 </th>
-                                <th className="table-head-cell">
+                                <th className="table-head-cell text-center">
                                     Actions
                                 </th>
                             </tr>
@@ -134,11 +166,12 @@ export default function RequestedQuotes() {
                             {quotes?.length > 0 &&
                                 quotes.map((quote, i) => <tr className="quote-row" key={i}>
                                     <td>
-                                        {isForUser ? quote?.requestedBy?.name : quote?.requestedTo?.name}
-                                    </td>
-
-                                    <td>
-                                        {quote?.course?.name}
+                                        <p className="quote-name">
+                                            {isForUser ? quote?.requestedBy?.name : quote?.requestedTo?.name}
+                                        </p>
+                                        <div>
+                                            {quote?.course?.name}
+                                        </div>
                                         <div className="quote-description">
                                             <small> <i className="fas fa-sticky-note"></i> {quote.description}</small>
                                         </div>
@@ -164,25 +197,33 @@ export default function RequestedQuotes() {
                                     </td>
 
                                     <td className="text-center price-column">
-                                        {quote.amount || 'N/A'}
+                                        {quote.quotedAmount ? `PKR ${quote.quotedAmount}/h` : 'N/A'}
                                     </td>
 
                                     <td className="quote-actions text-center">
                                         {
                                             // User can Edit or remove the quote description
-                                            !isForUser &&
+                                            !isForUser && quote.status == 0 &&
                                             <div className="btn-group" role="group" aria-label="Actions">
-                                                <button onClick={() => { viewEditDialog(quote) }} type="button" className="btn btn-sm btn-outline-primary"><i className="fas fa-pencil-alt"></i></button>
-                                                <button onClick={(e) => { deleteQuoteWarning(e, quote) }} type="button" className="btn btn-sm btn-outline-danger"><i className="fas fa-trash-alt"></i></button>
+                                                <button onClick={() => { viewEditDialog(quote); }} type="button" className="btn btn-sm btn-outline-primary"><i className="fas fa-pencil-alt"></i></button>
+                                                <button onClick={(e) => { deleteQuoteWarning(e, quote); }} type="button" className="btn btn-sm btn-outline-danger"><i className="fas fa-trash-alt"></i></button>
+                                            </div>
+                                        }
+                                        {
+                                            // Once replied, user can either accept or reject the quote
+                                            !isForUser && quote.status == 1 &&
+                                            <div className="btn-group" role="group" aria-label="Actions">
+                                                <button onClick={(e) => { acceptRejectConfirmation(e, quote, true); }} type="button" className="btn btn-sm btn-outline-success"><i className="fas fa-check"></i></button>
+                                                <button onClick={(e) => { acceptRejectConfirmation(e, quote, false); }} type="button" className="btn btn-sm btn-outline-danger"><i className="fas fa-times"></i></button>
                                             </div>
                                         }
 
                                         {
-                                            // User can Edit or remove the quote description
-                                            isForUser &&
+                                            // If the quote is for user, he/she can answer the quote or reject the quote only if the status is either placed or replied
+                                            isForUser && (quote.status === 0 || quote.status === 1) &&
                                             <div className="btn-group" role="group" aria-label="Actions">
-                                                <button type="button" className="btn btn-sm btn-outline-success"><i className="fas fa-check"></i></button>
-                                                <button type="button" className="btn btn-sm btn-outline-danger"><i className="fas fa-times"></i></button>
+                                                <button type="button" className="btn btn-sm btn-outline-success" onClick={() => { viewPriceDialog(quote); }}><i className="fas fa-money-check-alt"></i></button>
+                                                <button type="button" className="btn btn-sm btn-outline-danger" onClick={(e) => { acceptRejectConfirmation(e, quote, false); }}><i className="fas fa-times"></i></button>
                                             </div>
                                         }
                                     </td>
@@ -203,8 +244,8 @@ export default function RequestedQuotes() {
                     </table>
                 </div>
             </div>
-        )
-    }
+        );
+    };
 
     return (
         <div className="requested-quote-component">
@@ -218,11 +259,16 @@ export default function RequestedQuotes() {
 
 
             {/* MODAL TO EDIT QUOTE */}
-            <Dialog className="quote-dialog" header="Edit Quote Details" visible={showEditDialog} onHide={() => { setShowEditDialog(false) }} >
-                <RequestQuote quoteToEdit={quoteToEdit} onClose={() => { onEditDialogClose() }} />
+            <Dialog className="quote-dialog" header="Edit Quote Details" visible={showEditDialog} onHide={() => { setShowEditDialog(false); }} >
+                <RequestQuote quoteToEdit={selectedQuote} onClose={() => { onEditDialogClose(); }} />
+            </Dialog>
+
+            {/* MODAL TO GIVE PRICE FOR THE QUOTE */}
+            <Dialog className="quote-dialog" header="Reply to a Request" visible={showPriceDialog} onHide={() => { setShowPriceDialog(false); }}>
+                <RequestQuote quoteToEdit={selectedQuote} isAnswer={true} onClose={() => { closePriceDialog(); }} />
             </Dialog>
 
 
         </div>
-    )
+    );
 }

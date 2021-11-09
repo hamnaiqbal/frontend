@@ -1,5 +1,6 @@
 import { Dropdown } from 'primereact/dropdown';
 import { InputTextarea } from 'primereact/inputtextarea';
+import { InputText } from 'primereact/inputtext';
 import React, { useEffect, useState } from 'react';
 import URLS from '../../constants/api-urls';
 import CONSTANTS from '../../constants/constants';
@@ -9,7 +10,7 @@ import userService from '../../services/userservice';
 
 export default function RequestQuote(props) {
 
-    const { tutor, onClose, courses, quoteToEdit } = props;
+    const { tutor, onClose, courses, quoteToEdit, isAnswer = false } = props;
 
     const DURATION_OPTIONS = CONSTANTS.DURATION_OPTIONS;
 
@@ -18,6 +19,7 @@ export default function RequestQuote(props) {
     const [course, setCourse] = useState('');
     const [duration, setDuration] = useState('');
     const [description, setDescription] = useState('');
+    const [price, setPrice] = useState(0);
 
     useEffect(() => {
         fetchCourses();
@@ -28,7 +30,7 @@ export default function RequestQuote(props) {
             setDuration(quoteToEdit.duration);
         }
 
-    }, [])
+    }, [quoteToEdit]);
 
     const fetchCourses = async () => {
         if (!courses) {
@@ -37,7 +39,7 @@ export default function RequestQuote(props) {
         } else {
             setCourseOptions(courses);
         }
-    }
+    };
 
     const onFormSubmit = () => {
         const dataToVerify = [course, duration, description];
@@ -48,31 +50,34 @@ export default function RequestQuote(props) {
             return;
         }
 
-        // onSubmit({ course, duration, description });
 
         if (quoteToEdit) {
-            const data = { _id: quoteToEdit._id, course, duration, description, requestedBy: userService.getCurrentUserId(), requestedTo: quoteToEdit.requestedTo._id };
-            data._id = quoteToEdit._id;
+            const data = { _id: quoteToEdit._id, course, duration, description };
+            if (isAnswer) {
+                if (!price) {
+                    miscService.handleError('Please Add Price');
+                    return;
+                }
+                data.quotedAmount = price;
+                data.status = 1; // Means Replied
+            }
+
             httpService.putRequest(URLS.QUOTE, data).subscribe(() => {
                 onClose();
-            })
+            });
         } else {
             const data = { course, duration, description, requestedBy: userService.getCurrentUserId(), requestedTo: tutor._id };
             httpService.postRequest(URLS.QUOTE, data).subscribe(d => {
                 onClose();
-            })
+            });
         }
 
-    }
+    };
 
     return (
         <div className="request-quote-component">
 
             <form>
-
-                {/* Select Subject */}
-                {/* Select Expected Duration */}
-                {/* Write Some Description */}
 
                 <div className="form-group row">
                     <div className="col-md-3">
@@ -84,6 +89,7 @@ export default function RequestQuote(props) {
                             value={course}
                             required
                             filter
+                            disabled={isAnswer}
                             options={courseOptions}
                             placeholder="Select Course"
                             className="form-cotntrol single-control"
@@ -105,6 +111,7 @@ export default function RequestQuote(props) {
                             value={duration}
                             required
                             filter
+                            disabled={isAnswer}
                             options={DURATION_OPTIONS}
                             placeholder="Expected Duration"
                             className="form-cotntrol single-control"
@@ -122,19 +129,47 @@ export default function RequestQuote(props) {
                     </div>
 
                     <div className="col-md-9">
-                        <InputTextarea rows={5} className="form-control single-control" value={description} onChange={(e) => setDescription(e.target.value)} />
+                        <InputTextarea disabled={isAnswer} rows={5} className="form-control single-control" value={description} onChange={(e) => setDescription(e.target.value)} />
                     </div>
                 </div>
+
+                {isAnswer &&
+                    <div className="form-group row">
+                        <div className="col-md-3">
+                            <label htmlFor="quotedAmount">Your Price</label>
+                        </div>
+
+                        <div className="col-md-7">
+                            <InputText
+                                value={price}
+                                type="text"
+                                required
+                                id="quotedAmount"
+                                className="form-control single-control"
+                                onChange={(e) => {
+                                    setPrice(e.target.value);
+                                }}
+                            />
+                        </div>
+                        <div className="col-md-2">
+                            PKR per Hour
+                        </div>
+                    </div>
+                }
 
                 <div className="row">
                     <div className="col-md-7"></div>
 
                     <div className="col-md-2">
-                        <div className="btn btn-secondary btn-cancel form-control" onClick={onClose}>Cancel</div>
+                        <div className="btn btn-secondary btn-cancel form-control" onClick={onClose}>
+                            Cancel
+                        </div>
                     </div>
 
                     <div className="col-md-3">
-                        <div className="btn btn-primary btn-submit form-control" onClick={onFormSubmit}>Request Quote</div>
+                        <div className="btn btn-primary btn-submit form-control" onClick={onFormSubmit}>
+                            {isAnswer ? 'Quote Price' : 'Request Quote'}
+                        </div>
                     </div>
                 </div>
 
@@ -142,7 +177,7 @@ export default function RequestQuote(props) {
             </form>
 
         </div>
-    )
+    );
 }
 
 

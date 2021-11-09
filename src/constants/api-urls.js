@@ -6,6 +6,7 @@ const URLS = {
     UPLOAD_PP: '/users/uploadProfImg',
     GET_TUTORS: '/users/getTutors',
     CHANGE_PASSWORD: '/users/changePassword',
+    RESET_PASSWORD: '/users/resetPassword',
 
     COURSE: '/courses',
 

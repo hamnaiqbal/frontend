@@ -4,6 +4,7 @@ import { InputSwitch } from 'primereact/inputswitch';
 import { InputText } from 'primereact/inputtext';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { useEffect, useState } from 'react';
+import MapMarker from '../../components/MapMarker/MapMarker';
 import URLS from '../../constants/api-urls';
 import CONSTANTS from '../../constants/constants';
 import httpService from '../../services/httpservice';
@@ -77,11 +78,11 @@ export default function UserProfile(props) {
                 console.log({
                     long: position.coords.longitude,
                     lat: position.coords.latitude
-                })
+                });
                 setUserLocation({
                     latitude: user.latitude || position.coords.latitude,
                     longitude: user.longitude || position.coords.longitude
-                })
+                });
 
                 onValuesChange('latitude', position.coords.latitude);
                 onValuesChange('longitude', position.coords.longitude);
@@ -99,7 +100,7 @@ export default function UserProfile(props) {
             latitude: obj.lat,
             longitude: obj.lng
         });
-    }
+    };
 
 
     const personalInfoFields = (fields) => {
@@ -153,9 +154,14 @@ export default function UserProfile(props) {
         if (isPassword) {
             setPasswords({ ...passwords, [field]: value });
         } else {
-            setUser(user => {
-                return { ...user, [field]: value }
-            });
+            if (['latitude', 'longitude'].includes(field)) {
+                user[field] = value;
+                setUser(user);
+            } else {
+                setUser(user => {
+                    return { ...user, [field]: value };
+                });
+            }
         }
     };
 
@@ -430,7 +436,7 @@ export default function UserProfile(props) {
                                             onClick={onMapClick}
                                             onBoundsChange={onMapClick}
                                         >
-                                            <Marker />
+                                            <MapMarker user={user} userLocation={userLocation} />
                                         </GoogleMapReact>
                                     </div>
                                 </form>
@@ -503,7 +509,7 @@ export default function UserProfile(props) {
 
                     {
                         (!user.appliedAsTutor && !user.listedAsTutor) &&
-                        <button className="profile-btn btn btn-success" onClick={(e) => { submitForm(e, false, true) }}>
+                        <button className="profile-btn btn btn-success" onClick={(e) => { submitForm(e, false, true); }}>
                             Submit for a Tutor
                         </button>
                     }
@@ -520,7 +526,7 @@ export default function UserProfile(props) {
             httpService.postRequest(URLS.UPLOAD_PP, { image: event.target.files[0] }, true, true).subscribe(data => {
                 console.log(data);
                 setProfileImage(data.imageLink);
-            })
+            });
         }
     };
 
@@ -530,9 +536,9 @@ export default function UserProfile(props) {
             httpService.postRequest(URLS.UPLOAD_CV, { cvLink: event.target.files[0] }, true, true).subscribe(data => {
                 setCvLink(data.cvLink);
                 onValuesChange('cvLink', data.cvLink);
-            })
+            });
         }
-    }
+    };
 
     const submitForm = (event, isPassword = false, isTutorSubmission = false) => {
         event.preventDefault();
@@ -614,20 +620,7 @@ export default function UserProfile(props) {
 
         return valid;
 
-    }
-
-    const Marker = () => {
-        return (
-            <div>
-                <div className="marker"
-                    lat={user.latitude || userLocation.latitude}
-                    lng={user.longitude || userLocation.longitude}
-                    text="My Marker"
-                >
-                </div>
-            </div>
-        )
-    }
+    };
 
     return (
         <div>

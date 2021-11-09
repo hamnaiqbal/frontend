@@ -264,6 +264,7 @@ function ViewUsers() {
                     setShowDialog(false);
                 }}
                 className="col-md-4 col-sm-12"
+                header={userToView?.name}
             >
                 <UserProfile user={userToView}></UserProfile>
             </Dialog>
