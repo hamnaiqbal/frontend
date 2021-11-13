@@ -80,7 +80,7 @@ function Sidebar() {
         {
             label: 'View Jobs Feed',
             icon: 'pi pi-list',
-            link: '/home/profile',
+            link: '/home/jobs',
         },
         {
             label: 'Search Jobs',

@@ -14,7 +14,7 @@ const CONSTANTS = {
         2: { name: 'Accepted', icon: 'fas fa-check-double' },
         3: { name: 'Rejected', icon: 'fas fa-times' },
     },
-    
+
     DURATION_OPTIONS: [
         { label: '1 Week', value: '1w' },
         { label: '2 Weeks', value: '2w' },
@@ -24,7 +24,13 @@ const CONSTANTS = {
         { label: '4 Months', value: '4m' },
         { label: '6 Months', value: '6m' },
         { label: 'More than 6 Months', value: '6m+' },
-    ]
+    ],
+
+    JOB_TYPES: {
+        'A': 'Assignment Help',
+        'P': 'Project Help',
+        'O': 'Others'
+    }
 
 };
 

@@ -1,28 +1,29 @@
+import { useEffect } from 'react';
 import { Route, Switch } from 'react-router-dom';
 import AddPostForm from '../../components/AddPostForm/AddPostForm';
+import Header from '../../components/Header/Header';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import CONSTANTS from '../../constants/constants';
-import PostDetails from '../PostDetails/PostDetails';
-import PostFeed from '../PostFeed/PostFeed';
-import ScholarshipFeed from '../ScholarshipFeed/ScholarshipFeed';
-import UserProfile from '../UserProfile/UserProfile';
-import ViewUsers from '../ViewUsers/ViewUser';
-import Header from '../../components/Header/Header';
+import chatService from '../../services/chatService';
 import AddTutor from '../AddTutor/AddTutor';
 import AttemptQuiz from '../AttemptQuiz/AttemptQuiz';
 import ChatComponent from '../ChatComponent/ChatComponent';
-import chatService from '../../services/chatService';
-import { useEffect } from 'react';
+import JobsListing from '../JobsListing/JobsListing';
 import NearbyTutors from '../NearbyTutors/NearbyTutors';
+import PostDetails from '../PostDetails/PostDetails';
+import PostFeed from '../PostFeed/PostFeed';
 import RequestedQuotes from '../RequestedQuotes/RequestedQuotes';
+import ScholarshipFeed from '../ScholarshipFeed/ScholarshipFeed';
+import UserProfile from '../UserProfile/UserProfile';
+import ViewUsers from '../ViewUsers/ViewUser';
 
 const Main = ({ match }) => {
 
 
     useEffect(() => {
-        chatService.subscribeToMessages()
-        return () => { }
-    }, [])
+        chatService.subscribeToMessages();
+        return () => { };
+    }, []);
 
     return (
         <div>
@@ -52,6 +53,7 @@ const Main = ({ match }) => {
                                 <Route path={match.url + '/quotes/tutor'} component={RequestedQuotes} />
                                 <Route path={match.url + '/attempt-quiz'} component={AttemptQuiz} />
                                 <Route path={match.url + '/messages'} component={ChatComponent} />
+                                <Route path={match.url + '/jobs'} component={JobsListing} />
                             </Switch>
                         </div>
                     </div>

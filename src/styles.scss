@@ -1,3 +1,6 @@
+@import url('https://fonts.googleapis.com/css?family=Inter');
+
+
 @import "../public/styles/colors.scss";
 
 $header-height: 70px;
@@ -9,6 +12,7 @@ $small-shadow: 0px 0px 5px $light-border;
 body {
     height: 100vh;
     background: $body-bg;
+    font-family: 'Inter', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
 .header {
@@ -59,7 +63,7 @@ body {
         background: none;
         border: none;
 
-        .p-menuitem > .p-menuitem-link {
+        .p-menuitem>.p-menuitem-link {
             margin-right: 10px;
             border: 1px solid $light-color;
             border-radius: 20px;
@@ -72,8 +76,8 @@ body {
     }
 }
 
-.p-float-label input.p-filled ~ label,
-.p-float-label select.p-filled ~ label {
+.p-float-label input.p-filled~label,
+.p-float-label select.p-filled~label {
     top: -0.75rem;
     font-size: 12px;
 }
@@ -189,6 +193,7 @@ body {
 
     .quiz-uploader {
         font-size: large;
+
         p {
             margin-top: 10px;
             z-index: 5;
@@ -209,6 +214,7 @@ body {
 .quiz-results {
     padding-top: 50px;
     padding-bottom: 50px;
+
     i {
         font-size: xx-large;
         font-weight: bold;
@@ -229,6 +235,7 @@ body {
     padding: 10px;
     overflow-y: scroll;
     overflow-x: hidden;
+
     .recent-chat-item {
         padding: 10px 5px;
         text-align: left;
@@ -285,6 +292,7 @@ body {
         .chat-user-info {
             display: flex;
             align-items: center;
+
             img {
                 height: 40px;
                 width: 40px;
@@ -331,6 +339,7 @@ body {
         // position: absolute;
         vertical-align: bottom;
         bottom: 0;
+
         input {
             height: 40px;
             display: inline-block;
@@ -487,6 +496,7 @@ body {
         margin-bottom: 0px;
         padding: 10px 15px;
         cursor: pointer;
+
         i {
             margin-right: 10px;
         }
@@ -495,6 +505,7 @@ body {
     .delete-option {
         color: $failure-color-light;
     }
+
     .edit-option {
         color: $primary;
     }
@@ -504,6 +515,7 @@ body {
         height: 1px;
     }
 }
+
 .scholarship-component {
     .card-heading {
         font-size: larger;
@@ -783,6 +795,7 @@ body {
     .tutor-info-head {
         padding-bottom: 15px;
     }
+
     .tutor-info-head h4.tutor-name {
         margin: 0;
         font-weight: bold;
@@ -879,6 +892,7 @@ body {
         .duration-wrapper {
             font-size: small;
             padding: 5px;
+
             i {
                 margin-right: 5px;
             }
@@ -893,12 +907,15 @@ body {
         .quote-status.status-0 {
             background-color: $placed-color;
         }
+
         .quote-status.status-1 {
             background-color: $replied-color;
         }
+
         .quote-status.status-2 {
             background-color: $accepted-color;
         }
+
         .quote-status.status-3 {
             background-color: $rejected-color;
         }
@@ -926,6 +943,108 @@ body {
         font-weight: bolder;
         color: grey;
         margin-bottom: 20px;
+    }
+}
+
+.job-listing-component {
+    .header-wrapper {
+        display: flex;
+        align-items: center;
+    }
+
+    .job-header {
+        margin-bottom: 10px;
+    }
+
+    .job-icon-wrapper {
+        margin-right: 20px;
+    }
+
+    .title-and-poster p {
+        margin: 0;
+    }
+
+    p.job-title {
+        font-size: larger;
+        font-weight: bold;
+    }
+
+    p.job-poster {
+        color: grey;
+        font-weight: bold;
+    }
+
+    .job-icon i {
+        font-size: x-large;
+        color: white;
+        background: #dddddd;
+        padding: 15px;
+        border-radius: 10px;
+    }
+
+    .app-card.job-card {
+        padding: 30px;
+    }
+
+    .job-budget {
+        font-size: xx-large;
+        font-weight: bolder;
+        text-align: right;
+
+        span {
+            font-size: small;
+        }
+    }
+
+    p.job-description {
+        margin: 0;
+        font-size: 15px;
+        color: grey;
+    }
+
+    p.job-feature {
+        font-size: small;
+        margin: 0;
+        color: grey;
+        padding-bottom: 1px;
+        margin-bottom: 1px;
+
+        i {
+            margin-right: 5px;
+        }
+    }
+
+    p.sidebar-heading {
+        font-size: x-large;
+        padding: 10px;
+        padding-bottom: 20px;
+        margin-bottom: 40px;
+        font-weight: bold;
+        border-bottom: 1px solid #cfcfcf;
+    }
+
+    .add-floating-button {
+        position: fixed;
+        z-index: 10;
+        float: right;
+        padding: 15px 30px;
+        background: $primary;
+        border-radius: 40px;
+        color: white;
+        font-weight: bold;
+        right: 50px;
+        bottom: 30px;
+        cursor: pointer;
+
+
+        i.fas {
+            margin-right: 10px;
+        }
+
+        p.floating-btn-text {
+            margin: 0;
+        }
+
     }
 }
 
@@ -1492,8 +1611,10 @@ p.left {
 
 .user-page-bg {
     background-image: url("https://res.cloudinary.com/studentassister/image/upload/v1630523109/612fcea0e5673_ndk1pq.jpg");
-    background-position: center; /* Center the image */
-    background-repeat: no-repeat; /* Do not repeat the image */
+    background-position: center;
+    /* Center the image */
+    background-repeat: no-repeat;
+    /* Do not repeat the image */
     background-size: cover;
 }
 
@@ -1511,6 +1632,15 @@ p.left {
     margin-bottom: 20px;
     display: flex;
     justify-content: flex-end;
+}
+
+.fw {
+    width: 100%;
+}
+
+.btn-primary {
+    background-color: $primary;
+    border-color: $primary;
 }
 
 button.profile-btn {
@@ -1551,6 +1681,13 @@ button.profile-btn {
 .sidebar-user-section {
     margin-bottom: 20px;
 }
+
+.p-inputnumber-input {
+    width: 100%;
+    border: none;
+    padding: 0;
+}
+
 
 .signup-card,
 .login-card {

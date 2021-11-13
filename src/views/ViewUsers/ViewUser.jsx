@@ -1,5 +1,5 @@
 import { Column } from 'primereact/column';
-import { confirmDialog } from 'primereact/confirmdialog'; // To use confirmDialog method
+import { confirmDialog } from 'primereact/confirmdialog';
 import { DataTable } from 'primereact/datatable';
 import { Dialog } from 'primereact/dialog';
 import { InputSwitch } from 'primereact/inputswitch';
@@ -9,15 +9,6 @@ import httpService from '../../services/httpservice';
 import UserProfile from '../UserProfile/UserProfile';
 
 function ViewUsers() {
-    const [users, setUsers] = useState([]);
-
-    const [showOnlyTutorRequests, setShowOnlyTutorRequests] = useState(false);
-
-    const [columns, setColumns] = useState([]);
-
-    const [userToView, setUserToView] = useState({});
-
-    const [showDialog, setShowDialog] = useState(false);
 
     const allColumns = [
         { field: 'username', header: 'Username' },
@@ -34,8 +25,18 @@ function ViewUsers() {
         { field: 'actions', header: '' },
     ];
 
+    const [columns, setColumns] = useState(allColumns);
+
+    const [showOnlyTutorRequests, setShowOnlyTutorRequests] = useState(false);
+    
+    const [userToView, setUserToView] = useState({});
+
+    const [showDialog, setShowDialog] = useState(false);
+
+    const [users, setUsers] = useState([]);
+
+
     useEffect(() => {
-        setColumns(allColumns);
         fetchUsers();
     }, []);
 

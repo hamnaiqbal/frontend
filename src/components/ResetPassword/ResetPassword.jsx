@@ -129,7 +129,22 @@ export default function ResetPassword() {
         const [password, setPassword] = useState('');
         const [cPassword, setCPassword] = useState('');
 
+
         const changePassword = () => {
+            
+            if (!password || !cPassword) {
+                miscService.handleError('Please Fill all fields');
+                return;
+            }
+            if (password.length < 8) {
+                miscService.handleError('Please make password at least 8 characters long');
+                return;
+            }
+            if (password !== cPassword) {
+                miscService.handleError('Passwords do not match');
+                return;
+            }
+            
             const data = { email: userEmail, newPassword: password, isReset: true };
             httpService.postRequest(URLS.CHANGE_PASSWORD, data).subscribe(d => {
                 history.push('/login');
