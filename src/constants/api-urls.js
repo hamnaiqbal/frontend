@@ -15,8 +15,13 @@ const URLS = {
     POST: '/post',
     GET_SINGLE_POST: '/post/get/{_id}',
     POST_UPVOTE: '/post/upvote',
-
+    
     REPLY: '/reply',
+    
+    JOB: '/job',
+    GET_SINGLE_JOB: '/job/get/{_id}',
+
+    BID: '/bid',
 
     GENERATE_QUESTIONS: '/questions',
     CHECK_QUESTIONS: '/questions/check',

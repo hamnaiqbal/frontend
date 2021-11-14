@@ -1,5 +1,4 @@
 import { Dropdown } from 'primereact/dropdown';
-import { InputSwitch } from 'primereact/inputswitch';
 import { InputText } from 'primereact/inputtext';
 import { Password } from 'primereact/password';
 import React, { useState } from 'react';

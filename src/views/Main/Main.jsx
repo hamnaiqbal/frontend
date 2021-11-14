@@ -8,6 +8,7 @@ import chatService from '../../services/chatService';
 import AddTutor from '../AddTutor/AddTutor';
 import AttemptQuiz from '../AttemptQuiz/AttemptQuiz';
 import ChatComponent from '../ChatComponent/ChatComponent';
+import JobDetail from '../JobDetail/JobDetail';
 import JobsListing from '../JobsListing/JobsListing';
 import NearbyTutors from '../NearbyTutors/NearbyTutors';
 import PostDetails from '../PostDetails/PostDetails';
@@ -54,6 +55,7 @@ const Main = ({ match }) => {
                                 <Route path={match.url + '/attempt-quiz'} component={AttemptQuiz} />
                                 <Route path={match.url + '/messages'} component={ChatComponent} />
                                 <Route path={match.url + '/jobs'} component={JobsListing} />
+                                <Route path={match.url + '/job/:jobId'} component={JobDetail} />
                             </Switch>
                         </div>
                     </div>

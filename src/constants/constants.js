@@ -26,11 +26,21 @@ const CONSTANTS = {
         { label: 'More than 6 Months', value: '6m+' },
     ],
 
-    JOB_TYPES: {
-        'A': 'Assignment Help',
-        'P': 'Project Help',
-        'O': 'Others'
-    }
+    JOB_TYPES: [
+        { label: 'Assignment Help', value: 'A' },
+        { label: 'Project Help', value: 'P' },
+        { label: 'Others', value: 'O' },
+    ],
+
+    DAYS_REQUIRED_OPTIONS: [
+        { label: '1 Day', value: '1' },
+        { label: '2 Days', value: '2' },
+        { label: '3 Days', value: '3' },
+        { label: '5 Days', value: '5' },
+        { label: '8 Days', value: '8' },
+        { label: '10 Days', value: '10' },
+        { label: 'More than 10 Days', value: '10+' },
+    ]
 
 };
 

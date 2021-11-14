@@ -75,13 +75,13 @@ function PostFeed() {
 
     return (
         <div className="post-feed-component row">
-            <div className="add-post-dialog">
+            <div>
                 <Dialog
                     header={addPostType === enums.QUESTION ? 'Ask a Question ' : 'Share a Resource'}
                     visible={showAddDialig}
                     onHide={() => setShowAddDialig(false)}
                     modal={true}
-                    className="add-post-dialog"
+                    className="add-post-dialog custom-scrollbar"
                 >
                     <div className="add-post-dialog-wrapper">
                         <AddPostForm post={postToEdit} type={addPostType} closeDialog={closeDialog} />

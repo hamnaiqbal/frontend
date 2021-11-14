@@ -1,5 +1,6 @@
 import { toast } from 'react-toastify';
 import URLS from '../constants/api-urls';
+import CONSTANTS from '../constants/constants';
 import httpService from './httpservice';
 
 let courseOptions = [];
@@ -44,15 +45,15 @@ const miscService = {
 
     getFormattedDate(strDate, dateOnly = false) {
         if (dateOnly && strDate) {
-            return new Date(strDate).toLocaleDateString()
+            return new Date(strDate).toLocaleDateString();
         }
         if (dateOnly && !strDate) {
-            return (new Date()).toLocaleDateString()
+            return (new Date()).toLocaleDateString();
         }
         if (strDate) {
-            return new Date(strDate).toLocaleString()
+            return new Date(strDate).toLocaleString();
         }
-        return (new Date()).toLocaleString()
+        return (new Date()).toLocaleString();
     },
 
     getCourseOptions() {
@@ -69,9 +70,9 @@ const miscService = {
                     courseOptions = options;
                     resolve(options);
                 }
-                resolve([])
+                resolve([]);
             });
-        })
+        });
     },
 
     async getCourseName(courseId, includeCode = true) {
@@ -83,6 +84,10 @@ const miscService = {
         } else {
             return courseOptions?.find(c => c.value === courseId)?.label.split('-')[1] ?? '';
         }
+    },
+
+    getJobTypeName(value) {
+        return CONSTANTS.JOB_TYPES.find(job => job.value === value).label ?? 'Other';
     }
 
 };

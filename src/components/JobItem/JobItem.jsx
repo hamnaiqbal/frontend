@@ -1,6 +1,15 @@
+import { useHistory } from "react-router";
+
 const JobItem = ({ Job: j }) => {
+
+    const history = useHistory();
+
+    const onJobClick = () => {
+        history.push(`/home/job/${j._id}`);
+    };
+
     return (
-        <div className="single-job-item">
+        <div className="single-job-item" onClick={onJobClick}>
             <div className="app-card job-card">
                 <div className="job-header">
                     <div className="row">
@@ -20,7 +29,7 @@ const JobItem = ({ Job: j }) => {
                                     </p>
 
                                     <p className="job-poster">
-                                        <i className="fas fa-user-circle"></i> <small>{j.postedBy?.name}</small>
+                                        <small>  <i className="fas fa-user-circle first"></i> {j.postedBy?.name} <i className="fas fa-book"></i> {j.subject?.name}</small>
                                     </p>
                                 </div>
                             </div>
@@ -40,8 +49,7 @@ const JobItem = ({ Job: j }) => {
 
                     <div className="row">
                         <div className="col-md-8">
-                            <p className="job-description">
-                                {j.wrappedDesc}
+                            <p className="job-description" dangerouslySetInnerHTML={{ __html: j.wrappedDesc }}>
                             </p>
                         </div>
 

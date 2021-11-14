@@ -1,26 +1,22 @@
+import { Button } from 'primereact/button';
+import { InputTextarea } from 'primereact/inputtextarea';
 import { useEffect, useState } from 'react';
-import { useHistory, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
 import URLS from '../../constants/api-urls';
 import CONSTANTS from '../../constants/constants';
 import enums from '../../constants/enums';
 import httpService from '../../services/httpservice';
-import { InputTextarea } from 'primereact/inputtextarea';
-import { Button } from 'primereact/button';
 import miscService from '../../services/miscService';
 
 function PostDetails(props) {
     const [replies, setReplies] = useState([]);
     const { postId } = useParams();
-    const history = useHistory();
     const [post, setPost] = useState({});
     const [replyContent, setReplyContent] = useState('');
 
     useEffect(() => {
         fetchPost();
-        fetchReplies();
     }, []);
-
-    const fetchReplies = () => {};
 
     const fetchPost = () => {
         httpService.getRequest(URLS.GET_SINGLE_POST, null, { _id: postId }).subscribe((data) => {
@@ -76,7 +72,7 @@ function PostDetails(props) {
                     </div>
                     <div className="reply-content-wrapper">
                         <p className="reply-text">{d.replyContent}</p>
-                    </div>  
+                    </div>
                 </div>
             </div>
         ));

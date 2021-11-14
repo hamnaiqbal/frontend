@@ -1,11 +1,13 @@
+import { Dialog } from 'primereact/dialog';
 import { Dropdown } from 'primereact/dropdown';
 import { InputNumber } from 'primereact/inputnumber';
 import { InputText } from 'primereact/inputtext';
 import { useEffect, useState } from 'react';
 import JobItem from '../../components/JobItem/JobItem';
-import CONSTANTS from '../../constants/constants';
+import PostJob from '../../components/PostJob/PostJob';
+import URLS from '../../constants/api-urls';
+import httpService from '../../services/httpservice';
 import miscService from '../../services/miscService';
-import userService from '../../services/userservice';
 
 function JobsListing() {
 
@@ -15,7 +17,7 @@ function JobsListing() {
     const [budgetFilter, setBudgetFilter] = useState(0);
     const [typeFilter, setTypeFilter] = useState();
 
-    const description = `Lorem Ipsum is simply dummy text of the printing and typesetting industry. Lorem Ipsum has been the industry's standard dummy text ever since the 1500s, when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with desktop publishing software like Aldus PageMaker including versions of Lorem Ipsum.`;
+    const [showAddDialog, setShowAddDialog] = useState(false);
 
     useEffect(() => {
         fetchJobs();
@@ -27,32 +29,22 @@ function JobsListing() {
         { label: 'Others', value: 'O' },
     ];
 
-    const fetchJobs = () => {
+    const fetchJobs = (data) => {
 
-        const jobs = [
-            { title: 'React Assignment', budget: 50, type: 'O', description, postedBy: userService.getLoggedInUser(), createdOn: new Date(), deadline: new Date() },
-            { title: 'React Assignment', budget: 50, type: 'A', description, postedBy: userService.getLoggedInUser(), createdOn: new Date(), deadline: new Date() },
-            { title: 'React Assignment', budget: 50, type: 'O', description, postedBy: userService.getLoggedInUser(), createdOn: new Date(), deadline: new Date() },
-            { title: 'React Assignment', budget: 50, type: 'O', description, postedBy: userService.getLoggedInUser(), createdOn: new Date(), deadline: new Date() },
-            { title: 'React Assignment', budget: 50, type: 'P', description, postedBy: userService.getLoggedInUser(), createdOn: new Date(), deadline: new Date() },
-            { title: 'React Assignment', budget: 50, type: 'O', description, postedBy: userService.getLoggedInUser(), createdOn: new Date(), deadline: new Date() },
-            { title: 'React Assignment', budget: 50, type: 'O', description, postedBy: userService.getLoggedInUser(), createdOn: new Date(), deadline: new Date() },
-            { title: 'React Assignment', budget: 50, type: 'A', description, postedBy: userService.getLoggedInUser(), createdOn: new Date(), deadline: new Date() },
-        ];
-
-        jobs.forEach(j => {
-            j.wrappedDesc = j.description?.length < 180 ? j.description : j.description?.substring(0, 180) + '...';
-            j.createdOnFormatted = miscService.getFormattedDate(j.createdOn, true);
-            j.deadlineFormatted = miscService.getFormattedDate(j.deadline, true);
-            j.typeName = CONSTANTS.JOB_TYPES[j.type] ?? CONSTANTS.JOB_TYPES['O'];
+        httpService.getRequest(URLS.JOB, data).subscribe(jobs => {
+            jobs.forEach(j => {
+                j.wrappedDesc = j.description?.length < 180 ? j.description : j.description?.substring(0, 180) + '...';
+                j.createdOnFormatted = miscService.getFormattedDate(j.createdOn, true);
+                j.deadlineFormatted = miscService.getFormattedDate(j.deadline, true);
+                j.typeName = miscService.getJobTypeName(j.type);
+            });
+            setJobs(jobs);
         });
-
-        setJobs(jobs);
     };
 
     const AddJobFloatingButton = () => {
         return (
-            <div className="add-floating-button">
+            <div className="add-floating-button" onClick={() => { setShowAddDialog(true); }}>
                 <p className="floating-btn-text"> <i className="fas fa-plus-circle"></i> Add Job</p>
             </div>
         );
@@ -64,9 +56,10 @@ function JobsListing() {
             <div className="row">
 
                 <div className="col-md-8">
-                    {jobs.map((job, i) => {
-                        return <JobItem key={i} Job={job} />;
-                    })
+                    {
+                        jobs.map((job, i) => {
+                            return <JobItem key={i} Job={job} />;
+                        })
                     }
                 </div>
 
@@ -144,6 +137,20 @@ function JobsListing() {
 
                 </div>
 
+            </div>
+
+            <div className="post-job-dialog-wrapper">
+                <Dialog
+                    header='Post a New Job'
+                    visible={showAddDialog}
+                    onHide={() => setShowAddDialog(false)}
+                    modal={true}
+                    className="post-job-dialog custom-scrollbar"
+                >
+                    <div className="add-post-dialog-wrapper">
+                        <PostJob onClose={() => setShowAddDialog(false)} />
+                    </div>
+                </Dialog>
             </div>
 
             <AddJobFloatingButton />
