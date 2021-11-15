@@ -1,3 +1,4 @@
+import { Dialog } from 'primereact/dialog';
 import { Dropdown } from 'primereact/dropdown';
 import { InputNumber } from 'primereact/inputnumber';
 import { InputTextarea } from 'primereact/inputtextarea';
@@ -8,6 +9,116 @@ import CONSTANTS from '../../constants/constants';
 import httpService from '../../services/httpservice';
 import miscService from '../../services/miscService';
 import userService from '../../services/userservice';
+
+
+const BidDetail = ({ bid }) => {
+    useEffect(() => {
+        bid.formattedDate = miscService.getFormattedDate(bid.placedOn, true);
+    }, [bid]);
+    return (
+        <div className="bid-detail-component">
+
+            <div className="row">
+                <div className="col-md-6">
+                    {/* Placed By */}
+                    <div className="row bid-detail-feature">
+                        <div className="col-md-12 bid-detail-heading">
+                            <i className="far fa-user-circle"></i> Placed By
+                        </div>
+
+                        <div className="col-md-12">
+                            <p className="bid-detail-value">
+                                {bid?.bidderId?.name}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="col-md-6">
+
+                    {/* Placed On */}
+                    <div className="row bid-detail-feature">
+                        <div className="col-md-12 bid-detail-heading">
+                            <i className="far fa-calendar"></i> Placed On
+                        </div>
+
+                        <div className="col-md-12">
+                            <p className="bid-detail-value">
+                                {miscService.getFormattedDate(bid.placedOn, true)}
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+            <div className="row">
+                <div className="col-md-6">
+
+                    {/* Bid Amount */}
+                    <div className="row bid-detail-feature">
+                        <div className="col-md-12 bid-detail-heading">
+                            <i className="fas fa-coins"></i> Bid Amount
+                        </div>
+
+                        <div className="col-md-12">
+                            <p className="bid-detail-value">
+                                {bid?.bidAmount} PKR
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <div className="col-md-6">
+                    {/* Required Days */}
+                    <div className="row bid-detail-feature">
+                        <div className="col-md-12 bid-detail-heading">
+                            <i className="far fa-clock"></i> Days Required
+                        </div>
+
+                        <div className="col-md-12">
+                            <p className="bid-detail-value">
+                                {bid?.daysNeeded} Days
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+
+            {/* Description */}
+            <div className="row bid-detail-feature">
+                <div className="col-md-12 bid-detail-heading">
+                    <i className="fas fa-info-circle"></i> Description
+                </div>
+
+                <div className="col-md-6">
+                    <p className="bid-detail-value">
+                        {bid?.description}
+                    </p>
+                </div>
+            </div>
+
+            {/* Buttons Row */}
+            <div className="row btn-row">
+                <div className="col-md-4">
+
+                </div>
+
+                <div className="col-md-3">
+                    <button className="btn btn-secondary fw">Close</button>
+                </div>
+                <div className="col-md-5">
+                    <button className="btn btn-success btn-submit fw">
+                       <i className="far fa-check-circle"></i> Accept Bid
+                    </button>
+                </div>
+            </div>
+
+        </div>
+    );
+};
 
 export default function JobDetail() {
 
@@ -104,6 +215,9 @@ export default function JobDetail() {
     const PlacedBids = ({ job, bids }) => {
         const [bidsState, setBidsState] = useState([]);
 
+        const [selectedBid, setSelectedBid] = useState({});
+        const [showDetailDialog, setShowDetailDialog] = useState(false);
+
         useEffect(() => {
             if (bids) {
                 setBidsState(bids);
@@ -115,10 +229,19 @@ export default function JobDetail() {
             }
         }, [job, bids]);
 
+        const onBidClick = (bid) => {
+            setShowDetailDialog(true);
+            setSelectedBid(bid);
+        };
+
+        const onDialogClose = () => {
+            setShowDetailDialog(false);
+        };
+
 
         const renderBids = () => {
             return bidsState.map((b, i) => {
-                return <div key={i} className="single-bid">
+                return <div key={i} className="single-bid" onClick={() => { onBidClick(b); }}>
                     <div className="row">
                         <div className="col-md-8">
                             <p className="bidderName">
@@ -142,6 +265,10 @@ export default function JobDetail() {
         return (
             <div className="placed-bids">
                 {renderBids()}
+
+                <Dialog visible={showDetailDialog} onHide={onDialogClose} header={`Bid by ${selectedBid?.bidderId?.name}`} className="bid-dialog">
+                    <BidDetail bid={selectedBid} />
+                </Dialog>
             </div>
         );
     };

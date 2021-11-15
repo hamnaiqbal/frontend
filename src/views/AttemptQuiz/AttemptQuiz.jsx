@@ -2,6 +2,7 @@ import { useState } from "react";
 import URLS from "../../constants/api-urls";
 import httpService from "../../services/httpservice";
 import QuizRenderer from "../../components/QuizRenderer/QuizRenderer";
+import miscService from "../../services/miscService";
 
 const AttemptQuiz = () => {
 
@@ -14,14 +15,20 @@ const AttemptQuiz = () => {
         if (event.target && event.target.files) {
             const file = event.target.files[0];
 
+            // Limiting file size to 1MB
+            if (file.size > 1_000_000) {
+                miscService.handleError('File Size too big. Maximum File upload size is 1MB')
+                return;
+            }
+
             setIsLoading(true);
             httpService.postRequest(URLS.GENERATE_QUESTIONS, { file }, true, false).subscribe(questions => {
                 setIsLoading(false);
                 setIsLoaded(true);
                 setQuestions(questions);
-            })
+            });
         }
-    }
+    };
 
 
     return (
@@ -86,7 +93,7 @@ const AttemptQuiz = () => {
 
             {!isLoading && isLoaded && <QuizRenderer questions={questions}></QuizRenderer>}
         </div>
-    )
-}
+    );
+};
 
 export default AttemptQuiz;

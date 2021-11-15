@@ -15,6 +15,7 @@ import PostDetails from '../PostDetails/PostDetails';
 import PostFeed from '../PostFeed/PostFeed';
 import RequestedQuotes from '../RequestedQuotes/RequestedQuotes';
 import ScholarshipFeed from '../ScholarshipFeed/ScholarshipFeed';
+import UserJobs from '../UserJobs/UserJobs';
 import UserProfile from '../UserProfile/UserProfile';
 import ViewUsers from '../ViewUsers/ViewUser';
 
@@ -54,6 +55,7 @@ const Main = ({ match }) => {
                                 <Route path={match.url + '/quotes/tutor'} component={RequestedQuotes} />
                                 <Route path={match.url + '/attempt-quiz'} component={AttemptQuiz} />
                                 <Route path={match.url + '/messages'} component={ChatComponent} />
+                                <Route path={match.url + '/jobs/myJobs'} component={UserJobs} />
                                 <Route path={match.url + '/jobs'} component={JobsListing} />
                                 <Route path={match.url + '/job/:jobId'} component={JobDetail} />
                             </Switch>

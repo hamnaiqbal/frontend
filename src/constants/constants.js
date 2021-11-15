@@ -15,6 +15,16 @@ const CONSTANTS = {
         3: { name: 'Rejected', icon: 'fas fa-times' },
     },
 
+    JOB_STATUSES: {
+        0: { name: 'New', icon: 'far fa-check-circle' },
+        1: { name: 'In Progress', icon: 'fas fa-sync' },
+        2: { name: 'Delivered', icon: 'far fa-check-circle' },
+        3: { name: 'Paid', icon: 'far fa-money-bill-alt' },
+        4: { name: 'Completed', icon: 'far fa-check-circle' },
+        5: { name: 'Disputed', icon: 'fas fa-project-diagram' },
+        6: { name: 'Cancelled', icon: 'far fa-times-circle' },
+    },
+
     DURATION_OPTIONS: [
         { label: '1 Week', value: '1w' },
         { label: '2 Weeks', value: '2w' },
@@ -40,7 +50,7 @@ const CONSTANTS = {
         { label: '8 Days', value: '8' },
         { label: '10 Days', value: '10' },
         { label: 'More than 10 Days', value: '10+' },
-    ]
+    ],
 
 };
 

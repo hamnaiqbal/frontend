@@ -88,9 +88,9 @@ function Sidebar() {
             link: '/home/profile',
         },
         {
-            label: 'Post a New Job',
-            icon: 'pi pi-plus-circle',
-            link: '/home/profile',
+            label: 'My Jobs',
+            icon: 'fas fa-briefcase',
+            link: '/home/jobs/myJobs',
         },
         {
             label: 'Quiz',

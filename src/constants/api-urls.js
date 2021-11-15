@@ -20,6 +20,7 @@ const URLS = {
     
     JOB: '/job',
     GET_SINGLE_JOB: '/job/get/{_id}',
+    GET_USER_PROJECTS: '/job/getUserProjects',
 
     BID: '/bid',
 

@@ -780,7 +780,8 @@ body {
 }
 
 .add-post-dialog,
-.post-job-dialog {
+.post-job-dialog,
+.bid-dialog {
     width: 30%;
 }
 
@@ -1189,6 +1190,46 @@ body {
             font-weight: bold;
             font-size: large;
         }
+    }
+
+
+    .single-bid:hover {
+        color: $primary;
+        cursor: pointer;
+        border-left: 10px solid $primary;
+        transition-duration: 200ms;
+    }
+
+    .bid-detail-heading {
+        font-weight: bold;
+
+        i {
+            margin-right: 10px;
+        }
+    }
+
+    .bid-detail-feature {
+        margin-bottom: 10px;
+        padding-bottom: 10px;
+        border-bottom: 1px solid #e7e7e7;
+    }
+
+    p.bid-detail-value {
+        margin: 0;
+        padding-left: 28px;
+        margin-top: 5px;
+    }
+
+    .btn-row {
+        margin-top: 30px;
+    }
+
+    
+}
+
+.btn-submit {
+    i {
+        margin-right: 10px;
     }
 }
 
@@ -1787,6 +1828,11 @@ p.left {
 .btn-primary {
     background-color: $primary;
     border-color: $primary;
+}
+
+.btn-success {
+    background-color: $success-color-dark;
+    border-color: $success-color-dark;
 }
 
 button.profile-btn {

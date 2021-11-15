@@ -82,12 +82,12 @@ function Post(props) {
         const diff = cDate.getTime() - pDate.getTime();
 
         if (diff > DAYS_MS) {
-            return `${Math.round(diff / DAYS_MS)} days ago`
+            return `${Math.floor(diff / DAYS_MS)} days ago`
         }
         if (diff > HOURS_MS) {
-            return `${Math.round(diff / HOURS_MS)} hours ago`
+            return `${Math.floor(diff / HOURS_MS)} hours ago`
         }
-        return `${Math.round(diff / MINS_MS)} minutes ago`
+        return `${Math.floor(diff / MINS_MS)} minutes ago`
     }
 
     return (
