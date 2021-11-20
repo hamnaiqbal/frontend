@@ -38,7 +38,11 @@ function PostDetails(props) {
     };
 
     const upDownVote = (upvote = true) => {
-        httpService.postRequest(URLS.POST_UPVOTE, { _id: postId, upvote: !!upvote }).subscribe();
+        httpService.postRequest(URLS.POST_UPVOTE, { _id: postId, upvote: !!upvote }).subscribe(() => {
+            const originalCount = post.upvotes;
+            const newCount = upvote ? originalCount + 1 : originalCount - 1;
+            setPost(p => { return { ...p, upvotes: newCount }; });
+        });
     };
 
     const isImage = () => {
@@ -80,89 +84,96 @@ function PostDetails(props) {
 
     return (
         <div className="post-details-component">
-            <div className="post-details-wrapper">
-                <div className="post-details-card">
-                    <div className="post-top-section d-flex">
-                        <div className="post-votes">
-                            <i
-                                className="pi pi-caret-up vote-icon upvote c-pointer"
-                                onClick={() => {
-                                    upDownVote(true);
-                                }}
-                            ></i>
-                            <p className="votes-count center">{post.upvotes}</p>
-                            <i
-                                className="pi pi-caret-down vote-icon downvote c-pointer"
-                                onClick={() => {
-                                    upDownVote(false);
-                                }}
-                            ></i>
-                        </div>
-                        <div className="title-and-poster">
-                            <div className="title-wrapper">
-                                <p className="post-heading">{post.title}</p>
+            <div className="row">
+                <div className="col-md-8">
+                    <div className="post-details-wrapper">
+                        <div className="post-details-card">
+                            <div className="post-top-section d-flex">
+                                <div className="post-votes">
+                                    <i
+                                        className="pi pi-caret-up vote-icon upvote c-pointer"
+                                        onClick={() => {
+                                            upDownVote(true);
+                                        }}
+                                    ></i>
+                                    <p className="votes-count center">{post.upvotes}</p>
+                                    <i
+                                        className="pi pi-caret-down vote-icon downvote c-pointer"
+                                        onClick={() => {
+                                            upDownVote(false);
+                                        }}
+                                    ></i>
+                                </div>
+                                <div className="title-and-poster">
+                                    <div className="title-wrapper">
+                                        <p className="post-heading">{post.title}</p>
+                                    </div>
+                                    <div className="poster-details d-flex">
+                                        <img
+                                            className="posted-by-image"
+                                            src={CONSTANTS.DEFAULT_USER_IMAGE}
+                                            alt={post.userId?.name}
+                                        />
+                                        <p>
+                                            <span className="posted-by-name bold">{post.userId?.name}</span> -{' '}
+                                            <span className="posted-on">{post.createdOn}</span>
+                                        </p>
+                                    </div>
+                                </div>
                             </div>
-                            <div className="poster-details d-flex">
-                                <img
-                                    className="posted-by-image"
-                                    src={CONSTANTS.DEFAULT_USER_IMAGE}
-                                    alt={post.userId?.name}
-                                />
-                                <p>
-                                    <span className="posted-by-name bold">{post.userId?.name || 'Hamna Iqbal'}</span> -{' '}
-                                    <span className="posted-on">{post.createdOn}</span>
+                            <div className="post-details">
+                                <p className="post-description" dangerouslySetInnerHTML={{ __html: post.description }}></p>
+                                {post.attachmentLink && isImage() && (
+                                    <div className="post-image-wrapper">
+                                        <img className="post-image" src={post.attachmentLink} alt={post.title} />
+                                    </div>
+                                )}
+                                {post.attachmentLink && !isImage() && (
+                                    <div className="post-resource-wrapper">
+                                        <a href={post.attachmentLink} target="_blank" rel="noreferrer">
+                                            <button className="primary-button btn">
+                                                <i className="pi pi-download"></i>
+                                                Download Resource
+                                            </button>
+                                        </a>
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+
+                <div className="col-md-4">
+                    <div className="add-reply-card">
+                        <div className="add-reply-wrapper"></div>
+                    </div>
+                    <div className="replies-card">
+                        <p className="replies-card-heading">{post.type === enums.QUESTION ? 'Answers' : 'Replies'}</p>
+
+                        <div className="replies-wrapper">{repliesList()}</div>
+                        <hr />
+                        <div className="add-reply-wrapper">
+                            <div className="form-group">
+                                <p className="post-reply-heading">
+                                    {post.type === enums.QUESTION ? 'Answer this Question' : 'Post a Reply'}
                                 </p>
+                                <InputTextarea
+                                    rows={5}
+                                    className="form-control"
+                                    onChange={(e) => {
+                                        setReplyContent(e.target.value);
+                                    }}
+                                />
+                            </div>
+                            <div className="form-group d-flex a-i-start">
+                                <Button label="Add Reply" className="primary-button" onClick={addReply} />
                             </div>
                         </div>
                     </div>
-                    <div className="post-details">
-                        <p className="post-description" dangerouslySetInnerHTML={{ __html: post.description }}></p>
-                        {post.attachmentLink && isImage() && (
-                            <div className="post-image-wrapper">
-                                <img className="post-image" src={post.attachmentLink} alt={post.title} />
-                            </div>
-                        )}
-                        {post.attachmentLink && !isImage() && (
-                            <div className="post-resource-wrapper">
-                                <a href={post.attachmentLink} target="_blank" rel="noreferrer">
-                                    <button className="primary-button btn">
-                                        <i className="pi pi-download"></i>
-                                        Download Resource
-                                    </button>
-                                </a>
-                            </div>
-                        )}
-                    </div>
                 </div>
             </div>
 
-            <div className="add-reply-card">
-                <div className="add-reply-wrapper"></div>
-            </div>
-
-            <div className="replies-card">
-                <p className="replies-card-heading">{post.type === enums.QUESTION ? 'Answers' : 'Replies'}</p>
-
-                <div className="replies-wrapper">{repliesList()}</div>
-                <hr />
-                <div className="add-reply-wrapper">
-                    <div className="form-group">
-                        <p className="post-reply-heading">
-                            {post.type === enums.QUESTION ? 'Answer this Question' : 'Post a Reply'}
-                        </p>
-                        <InputTextarea
-                            rows={5}
-                            className="form-control"
-                            onChange={(e) => {
-                                setReplyContent(e.target.value);
-                            }}
-                        />
-                    </div>
-                    <div className="form-group d-flex a-i-start">
-                        <Button label="Add Reply" className="primary-button" onClick={addReply} />
-                    </div>
-                </div>
-            </div>
         </div>
     );
 }

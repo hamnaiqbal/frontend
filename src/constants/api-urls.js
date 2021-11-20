@@ -13,6 +13,7 @@ const URLS = {
     QUOTE: '/quote',
 
     POST: '/post',
+    SEARCH_POSTS: '/post/search',
     GET_SINGLE_POST: '/post/get/{_id}',
     POST_UPVOTE: '/post/upvote',
     
@@ -23,6 +24,9 @@ const URLS = {
     GET_USER_PROJECTS: '/job/getUserProjects',
 
     BID: '/bid',
+    ACCEPT_BID: '/bid/accept',
+
+    REPORT: '/report',
 
     GENERATE_QUESTIONS: '/questions',
     CHECK_QUESTIONS: '/questions/check',

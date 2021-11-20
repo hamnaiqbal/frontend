@@ -31,6 +31,9 @@ function JobsListing() {
 
     const fetchJobs = (data) => {
 
+        data = data ?? {};
+        data.status = 0; // show only jobs that are new and not yet started
+
         httpService.getRequest(URLS.JOB, data).subscribe(jobs => {
             jobs.forEach(j => {
                 j.wrappedDesc = j.description?.length < 180 ? j.description : j.description?.substring(0, 180) + '...';

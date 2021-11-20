@@ -4,6 +4,7 @@ import { useLocation } from 'react-router';
 import AddPostForm from '../../components/AddPostForm/AddPostForm';
 import JobFeed from '../../components/JobFeed/JobFeed';
 import Post from '../../components/PostComponent/Post';
+import ReportItem from '../../components/ReportItem/ReportItem';
 import URLS from '../../constants/api-urls';
 import enums from '../../constants/enums';
 import httpService from '../../services/httpservice';
@@ -12,6 +13,9 @@ import userService from '../../services/userservice';
 function PostFeed() {
     const [showAddDialig, setShowAddDialig] = useState(false);
     const [addPostType, setAddPostType] = useState(enums.QUESTION);
+
+    const [showReportDialog, setShowReportDialog] = useState(false);
+    const [postToReport, setPostToReport] = useState({});
 
     const [postsList, setPostsList] = useState([]);
 
@@ -30,6 +34,11 @@ function PostFeed() {
         setAddPostType(type);
     };
 
+    const viewReportsDialog = (post) => {
+        setPostToReport(post);
+        setShowReportDialog(true);
+    }
+
     const fetchPosts = () => {
         const filter = {}
         const showAllPosts = !location.pathname?.includes('myPosts');
@@ -46,7 +55,7 @@ function PostFeed() {
 
     const posts = () => {
         return postsToShow.map((post) => {
-            return <Post fetchPosts={fetchPosts} showEditDialog={showEditDialog} post={post} key={post._id} />;
+            return <Post fetchPosts={fetchPosts} showEditDialog={showEditDialog} showReportDialog={viewReportsDialog} post={post} key={post._id} />;
         });
     };
 
@@ -86,6 +95,10 @@ function PostFeed() {
                     <div className="add-post-dialog-wrapper">
                         <AddPostForm post={postToEdit} type={addPostType} closeDialog={closeDialog} />
                     </div>
+                </Dialog>
+
+                <Dialog visible={showReportDialog} className="report-dialog" header="Report a Post" onHide={() => { setShowReportDialog(false) }}>
+                    <ReportItem id={postToReport._id} type="P" onClose={() => setShowReportDialog(false)} />
                 </Dialog>
             </div>
             <div className="col-md-8">

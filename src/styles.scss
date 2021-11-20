@@ -781,7 +781,8 @@ body {
 
 .add-post-dialog,
 .post-job-dialog,
-.bid-dialog {
+.bid-dialog,
+.report-dialog {
     width: 30%;
 }
 
@@ -1224,7 +1225,7 @@ body {
         margin-top: 30px;
     }
 
-    
+
 }
 
 .btn-submit {
@@ -1492,6 +1493,131 @@ body {
     }
 }
 
+
+.user-jobs-component {
+    p {
+        margin: 0;
+    }
+
+    .job-status-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    p.job-status {
+        padding: 5px 10px;
+        text-align: center;
+        font-size: small;
+        text-transform: uppercase;
+        width: 80%;
+        border-radius: 10px;
+
+        i {
+            margin-right: 10px;
+        }
+    }
+
+    p.job-status.status-0 {
+        background: $new-job;
+    }
+
+    p.job-status.status-1 {
+        background: $ip-job;
+    }
+
+    p.job-status.status-2 {
+        background: $delivered-job;
+    }
+
+    p.job-status.status-3 {
+        background: $paid-job;
+    }
+
+    p.job-status.status-4 {
+        background: $completed-job;
+    }
+
+    p.job-status.status-5 {
+        background: $disputed-job;
+    }
+
+    p.job-status.status-6 {
+        background: $cancelled-job;
+    }
+
+
+    p.job-title {
+        font-weight: bold;
+        font-size: large;
+    }
+
+    p.posted-by {
+        font-size: small;
+        color: grey;
+        font-weight: bold;
+    }
+
+    .single-job-name-column {
+        display: flex;
+        align-items: center;
+    }
+
+
+    .job-feature {
+        font-size: small;
+        color: grey;
+        margin: 5px 0px;
+
+        .job-feature-heading {
+            font-weight: bolder;
+            i {
+                margin-right: 10px;
+            }
+        }
+
+        .job-feature-value {
+            padding-left: 20px;
+        }
+    }
+
+
+    p.job-section-heading {
+        margin-bottom: 20px;
+        font-size: x-large;
+        font-weight: bold;
+        color: $dark-text;
+        border-left: 15px solid $primary;
+        background-color: white;
+        text-align: left;
+        padding: 10px 20px;
+    }
+
+    button.btn.job-action-btn {
+        width: 60%;
+        font-size: small;
+        font-weight: bold;
+        margin: 0;
+        text-align: center;
+        padding: 10px;
+        color: $primary;
+        border: 1px solid $primary;
+        // border-left-width: 10px;
+        margin-bottom: 5px;
+
+        i {
+            margin-right: 5px;
+        }
+    }
+}
+
+
+.flex-ac-jc {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
 .post-details-component {
     .post-details-card {
         padding: 40px;
@@ -1551,7 +1677,7 @@ body {
     .replies-card {
         box-shadow: $card-shadow;
         padding: 20px 30px;
-        margin-top: 30px;
+        // margin-top: 30px;
         border-radius: 5px;
         background: $light-color;
     }

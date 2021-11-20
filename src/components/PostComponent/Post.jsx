@@ -35,12 +35,19 @@ function Post(props) {
         if (props.showEditDialog) {
             props.showEditDialog(post);
         }
-    }
+    };
+
+    const showReportDialog = (event) => {
+        event.stopPropagation();
+        if (props.showReportDialog) {
+            props.showReportDialog(post);
+        }
+    };
 
     const showOptions = (event) => {
         event.stopPropagation();
         op.current.toggle(event);
-    }
+    };
 
     // This method is used to show the confirm delete dialog box
     const confirmDeleteDialog = (event) => {
@@ -52,7 +59,7 @@ function Post(props) {
             icon: 'pi pi-exclamation-triangle',
             accept: () => deletePost(),
         });
-    }
+    };
 
     // This method will be executed when the user presses confirm on delete dialog
     const deletePost = () => {
@@ -62,13 +69,13 @@ function Post(props) {
                 props.fetchPosts();
             }
         });
-    }
+    };
 
     // This will tell whether to show the delte and edit options or not
     // Currently, they are set for admins and authors
     const shouldShowOptions = () => {
         return userService.isCurrentUserAdmin() || post?.userId?._id === userService.getCurrentUserId();
-    }
+    };
 
 
     const getTimeDifference = (postDate) => {
@@ -82,13 +89,13 @@ function Post(props) {
         const diff = cDate.getTime() - pDate.getTime();
 
         if (diff > DAYS_MS) {
-            return `${Math.floor(diff / DAYS_MS)} days ago`
+            return `${Math.floor(diff / DAYS_MS)} days ago`;
         }
         if (diff > HOURS_MS) {
-            return `${Math.floor(diff / HOURS_MS)} hours ago`
+            return `${Math.floor(diff / HOURS_MS)} hours ago`;
         }
-        return `${Math.floor(diff / MINS_MS)} minutes ago`
-    }
+        return `${Math.floor(diff / MINS_MS)} minutes ago`;
+    };
 
     return (
         <div
@@ -139,7 +146,7 @@ function Post(props) {
                             </p>
                         </div>
                         {
-                            shouldShowOptions() && <div className="options-div" onClick={showOptions}>
+                            <div className="options-div" onClick={showOptions}>
                                 <p>
                                     <i className="pi pi-fw pi-ellipsis-v"></i>Options
                                 </p>
@@ -151,12 +158,27 @@ function Post(props) {
 
             <OverlayPanel ref={op}>
                 <div className="options-overlay-div">
-                    <p className="edit-option" onClick={showEditDialog}>
-                        <i className="pi pi-fw pi-pencil"></i>Edit
-                    </p>
-                    <hr />
-                    <p className="delete-option" onClick={confirmDeleteDialog}>
-                        <i className="pi pi-fw pi-trash"></i>Delete
+                    {
+                        shouldShowOptions() &&
+                        <div>
+                            <p className="edit-option" onClick={showEditDialog}>
+                                <i className="pi pi-fw pi-pencil"></i>Edit
+                            </p>
+                            <hr />
+                        </div>
+                    }
+                    {
+                        shouldShowOptions() &&
+                        <div>
+
+                            <p className="delete-option" onClick={confirmDeleteDialog}>
+                                <i className="pi pi-fw pi-trash"></i>Delete
+                            </p>
+                            <hr />
+                        </div>
+                    }
+                    <p className="report-option" onClick={showReportDialog}>
+                        <i className="far fa-flag"></i>Report
                     </p>
                 </div>
             </OverlayPanel>

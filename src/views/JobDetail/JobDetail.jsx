@@ -12,6 +12,15 @@ import userService from '../../services/userservice';
 
 
 const BidDetail = ({ bid }) => {
+
+    const acceptBid = () => {
+        const bidId = bid._id;
+        httpService.postRequest(URLS.ACCEPT_BID, { bidId }).subscribe(() => {
+
+        });
+    };
+
+
     useEffect(() => {
         bid.formattedDate = miscService.getFormattedDate(bid.placedOn, true);
     }, [bid]);
@@ -110,8 +119,8 @@ const BidDetail = ({ bid }) => {
                     <button className="btn btn-secondary fw">Close</button>
                 </div>
                 <div className="col-md-5">
-                    <button className="btn btn-success btn-submit fw">
-                       <i className="far fa-check-circle"></i> Accept Bid
+                    <button onClick={acceptBid} className="btn btn-success btn-submit fw">
+                        <i className="far fa-check-circle"></i> Accept Bid
                     </button>
                 </div>
             </div>

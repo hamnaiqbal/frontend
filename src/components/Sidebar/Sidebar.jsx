@@ -35,7 +35,7 @@ function Sidebar() {
         {
             label: 'Search Posts',
             icon: 'pi pi-search',
-            link: '/home/profile',
+            link: '/home/posts/searchPosts',
         },
         {
             label: 'View My Posts',

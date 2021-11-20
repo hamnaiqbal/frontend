@@ -15,6 +15,7 @@ import PostDetails from '../PostDetails/PostDetails';
 import PostFeed from '../PostFeed/PostFeed';
 import RequestedQuotes from '../RequestedQuotes/RequestedQuotes';
 import ScholarshipFeed from '../ScholarshipFeed/ScholarshipFeed';
+import SearchPosts from '../SearchPosts/SearchPosts';
 import UserJobs from '../UserJobs/UserJobs';
 import UserProfile from '../UserProfile/UserProfile';
 import ViewUsers from '../ViewUsers/ViewUser';
@@ -44,6 +45,7 @@ const Main = ({ match }) => {
                         <div className="container-fluid">
                             <Switch>
                                 <Route path={match.url + '/'} exact component={PostFeed} />
+                                <Route path={match.url + '/posts/searchPosts'} component={SearchPosts} />
                                 <Route path={match.url + '/myPosts'} exact component={PostFeed} />
                                 <Route path={match.url + '/addPost'} component={AddPostForm} />
                                 <Route path={match.url + '/post/:postId'} component={PostDetails} />
