@@ -786,6 +786,58 @@ body {
     width: 30%;
 }
 
+.notifications-dialog {
+    width: 40%;
+}
+
+.notifications-component {
+
+    p {
+        margin: 0;
+    }
+
+    small.notification-date {
+        font-size: x-small;
+        color: grey;
+    }
+
+    .single-notification {
+        margin-bottom: 10px;
+    }
+
+    .notification-icon {
+        font-size: x-large;
+        border: 3px solid $primary;
+        background: whitesmoke;
+        padding: 10px;
+        height: 60px;
+        width: 60px;
+        color: $primary;
+        border-radius: 50%;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .time-difference-wrapper {
+        font-size: small;
+        color: grey;
+        display: flex;
+        align-items: center;
+        justify-content: flex-end;
+    }
+
+    p.notification-text {
+        font-weight: bold;
+    }
+
+    p.no-notifications-text {
+        font-weight: bold;
+        text-align: center;
+        font-size: large;
+    }
+}
+
 .add-post-dialog-wrapper,
 .post-job-dialog-wrapper {
     padding-top: 20px;
@@ -1571,6 +1623,7 @@ body {
 
         .job-feature-heading {
             font-weight: bolder;
+
             i {
                 margin-right: 10px;
             }

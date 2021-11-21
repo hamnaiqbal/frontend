@@ -8,6 +8,7 @@ function Sidebar() {
     const history = useHistory();
 
     const isUserAdmin = userService.isCurrentUserAdmin();
+    const isUserTutor = userService.getLoggedInUser()?.listedAsTutor;
 
     useEffect(() => {
         fetchUser();
@@ -48,9 +49,10 @@ function Sidebar() {
             isTitle: true
         },
         {
-            label: 'Tutor Dashboard',
-            icon: 'pi pi-home',
-            link: '/home/profile',
+            label: 'Dashboard',
+            icon: 'fas fa-file-invoice-dollar',
+            link: '/home/quotes/tutor',
+            showTo: ['A', 'T']
         },
         {
             label: 'Nearby Tutors',
@@ -60,12 +62,8 @@ function Sidebar() {
         {
             label: 'Become a Tutor',
             icon: 'pi pi-user',
-            link: '/home/becomeTutor',
-        },
-        {
-            label: 'Requested Quotes',
-            icon: 'fas fa-file-invoice-dollar',
-            link: '/home/quotes/tutor',
+            link: '/home/profile',
+            showTo: ['A', 'S']
         },
         {
             label: 'Jobs',
@@ -74,8 +72,8 @@ function Sidebar() {
 
         {
             label: 'Jobs Dashboard',
-            icon: 'pi pi-home',
-            link: '/home/profile',
+            icon: 'pi pi-briefcase',
+            link: '/home/jobs/myJob',
         },
         {
             label: 'View Jobs Feed',
@@ -86,11 +84,6 @@ function Sidebar() {
             label: 'Search Jobs',
             icon: 'pi pi-search',
             link: '/home/profile',
-        },
-        {
-            label: 'My Jobs',
-            icon: 'fas fa-briefcase',
-            link: '/home/jobs/myJobs',
         },
         {
             label: 'Quiz',
@@ -119,7 +112,7 @@ function Sidebar() {
             label: 'Manage Users',
             icon: 'pi pi-users',
             link: '/home/viewUsers',
-            adminOnly: true
+            showTo: ['A']
         },
         {
             label: 'Profile',
@@ -135,7 +128,13 @@ function Sidebar() {
     const sidebarLinks = () => {
         return links.map((link, index) => {
             return (
-                ((link.adminOnly && isUserAdmin) || !link.adminOnly) && <div
+                (!link.showTo
+                    || (link.showTo.includes('T') && isUserTutor)
+                    || (link.showTo.includes('A') && isUserAdmin)
+                    || (link.showTo.includes('S') && !isUserTutor)
+                ) &&
+
+                <div
                     className="sidebar-link-wrapper"
                     key={index}
                     onClick={() => {
@@ -165,42 +164,6 @@ function Sidebar() {
 
     const onLinkClick = (link) => {
         history.push(link);
-    };
-
-    const middleSection = () => {
-        if (!user.listedAsTutor && !user.appliedAsTutor) {
-            return (
-                <div>
-                    <hr />
-
-                    <div className="bottom-card">
-                        <p className="become-tutor-heading center">Become a Tutor</p>
-                        <p className="become-tutor-desc center">
-                            The new modifier instructs the compiler to use the new implementation instead of the base class
-                            function.
-                        </p>
-
-                        <div className="tutor-button-wrapper">
-                            <button className="become-tutor-button primary-color">Become a Tutor</button>
-                        </div>
-                    </div>
-                </div>
-            );
-        } else {
-            return (
-                <div className="bottom-card">
-                    {/* <p className="become-tutor-heading center">Become a Tutor</p>
-                    <p className="become-tutor-desc center">
-                        The new modifier instructs the compiler to use the new implementation instead of the base class
-                        function.
-                    </p>
-
-                    <div className="tutor-button-wrapper">
-                        <button className="become-tutor-button primary-color">Become a Tutor</button>
-                    </div> */}
-                </div>
-            );
-        }
     };
 
     return (

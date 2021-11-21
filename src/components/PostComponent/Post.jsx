@@ -5,6 +5,7 @@ import { useHistory } from 'react-router-dom';
 import URLS from '../../constants/api-urls';
 import CONSTANTS from '../../constants/constants';
 import httpService from '../../services/httpservice';
+import miscService from '../../services/miscService';
 import userService from '../../services/userservice';
 
 
@@ -78,25 +79,6 @@ function Post(props) {
     };
 
 
-    const getTimeDifference = (postDate) => {
-        const pDate = new Date(postDate);
-        const cDate = new Date();
-
-        const MINS_MS = 1000 * 60;
-        const HOURS_MS = MINS_MS * 60;
-        const DAYS_MS = HOURS_MS * 24;
-
-        const diff = cDate.getTime() - pDate.getTime();
-
-        if (diff > DAYS_MS) {
-            return `${Math.floor(diff / DAYS_MS)} days ago`;
-        }
-        if (diff > HOURS_MS) {
-            return `${Math.floor(diff / HOURS_MS)} hours ago`;
-        }
-        return `${Math.floor(diff / MINS_MS)} minutes ago`;
-    };
-
     return (
         <div
             className="single-post-wrapper"
@@ -111,7 +93,7 @@ function Post(props) {
                         <div className="post-user">
                             <p className="post-username">{post.userId?.name || 'Hamna Iqbal'}</p>
                             <p className="post-meta">
-                                <span className="post-time">{getTimeDifference(post.createdOn)}</span> -{' '}
+                                <span className="post-time">{miscService.getTimeDifference(post.createdOn)}</span> -{' '}
                                 <span className="post-subject">{post.courseId?.name}</span>
                             </p>
                         </div>

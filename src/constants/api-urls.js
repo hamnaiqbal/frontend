@@ -26,6 +26,8 @@ const URLS = {
     BID: '/bid',
     ACCEPT_BID: '/bid/accept',
 
+    GET_NOTIFICATIONS: '/notifications/get',
+
     REPORT: '/report',
 
     GENERATE_QUESTIONS: '/questions',

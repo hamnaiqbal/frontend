@@ -556,7 +556,7 @@ export default function UserProfile(props) {
         } else {
             const updatedUser = { ...user };
 
-            if (isTutorSubmission && !validateTutorFields()) {
+            if ((isTutorSubmission || user.listedAsTutor) && !validateTutorFields()) {
                 return;
             }
 
@@ -602,7 +602,7 @@ export default function UserProfile(props) {
                     miscService.handleError('Please Select Your Location on Map');
                     return;
                 } else {
-                    miscService.handleError(`Please provide ${k} before submitting`);
+                    miscService.handleError(`You cannot leave ${k} empty`);
                     return;
                 }
             }
