@@ -13,6 +13,7 @@ import JobsListing from '../JobsListing/JobsListing';
 import NearbyTutors from '../NearbyTutors/NearbyTutors';
 import PostDetails from '../PostDetails/PostDetails';
 import PostFeed from '../PostFeed/PostFeed';
+import ReportedItems from '../ReportedItems/ReportedItems';
 import RequestedQuotes from '../RequestedQuotes/RequestedQuotes';
 import ScholarshipFeed from '../ScholarshipFeed/ScholarshipFeed';
 import SearchPosts from '../SearchPosts/SearchPosts';
@@ -48,6 +49,7 @@ const Main = ({ match }) => {
                                 <Route path={match.url + '/posts/searchPosts'} component={SearchPosts} />
                                 <Route path={match.url + '/myPosts'} exact component={PostFeed} />
                                 <Route path={match.url + '/addPost'} component={AddPostForm} />
+                                <Route path={match.url + '/reportedItems'} component={ReportedItems} />
                                 <Route path={match.url + '/post/:postId'} component={PostDetails} />
                                 <Route path={match.url + '/profile'} component={UserProfile} />
                                 <Route path={match.url + '/scholarships'} component={ScholarshipFeed} />

@@ -42,7 +42,11 @@ function Sidebar() {
             label: 'View My Posts',
             icon: 'pi pi-list',
             link: '/home/myPosts',
-            separatorBelow: true
+        },
+        {
+            label: 'Reported Items',
+            icon: 'fas fa-flag',
+            link: '/home/reportedItems',
         },
         {
             label: 'Tutor',
@@ -106,7 +110,7 @@ function Sidebar() {
         {
             label: 'Users',
             isTitle: true,
-            adminOnly: true
+            showTo: ['A']
         },
         {
             label: 'Manage Users',

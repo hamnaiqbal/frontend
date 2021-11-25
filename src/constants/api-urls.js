@@ -7,6 +7,7 @@ const URLS = {
     GET_TUTORS: '/users/getTutors',
     CHANGE_PASSWORD: '/users/changePassword',
     RESET_PASSWORD: '/users/resetPassword',
+    GET_USER_MESSAGES: '/users/getUserMessages',
 
     COURSE: '/courses',
 
@@ -28,7 +29,7 @@ const URLS = {
 
     GET_NOTIFICATIONS: '/notifications/get',
 
-    REPORT: '/report',
+    REPORT: '/file-report',
 
     GENERATE_QUESTIONS: '/questions',
     CHECK_QUESTIONS: '/questions/check',

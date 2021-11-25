@@ -90,7 +90,7 @@ const miscService = {
         return CONSTANTS.JOB_TYPES.find(job => job.value === value).label ?? 'Other';
     },
 
-    getTimeDifference(postDate) {
+    getTimeDifference(postDate, diffInMS, shortVersion = false) {
         const pDate = new Date(postDate);
         const cDate = new Date();
 
@@ -98,13 +98,22 @@ const miscService = {
         const HOURS_MS = MINS_MS * 60;
         const DAYS_MS = HOURS_MS * 24;
 
-        const diff = cDate.getTime() - pDate.getTime();
+        const diff = diffInMS ?? cDate.getTime() - pDate.getTime();
 
         if (diff > DAYS_MS) {
+            if (shortVersion) {
+                return `${Math.floor(diff / DAYS_MS)}d`;
+            }
             return `${Math.floor(diff / DAYS_MS)} days ago`;
         }
         if (diff > HOURS_MS) {
+            if (shortVersion) {
+                return `${Math.floor(diff / HOURS_MS)}h`; 
+            }
             return `${Math.floor(diff / HOURS_MS)} hours ago`;
+        }
+        if (shortVersion) {
+            return `${Math.floor(diff / MINS_MS)}m`; 
         }
         return `${Math.floor(diff / MINS_MS)} minutes ago`;
     }
