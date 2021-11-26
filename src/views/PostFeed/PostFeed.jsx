@@ -40,7 +40,7 @@ function PostFeed() {
     }
 
     const fetchPosts = () => {
-        const filter = {}
+        const filter = { $not: { active: false } };
         const showAllPosts = !location.pathname?.includes('myPosts');
         setAllPostsFeed(showAllPosts)
         if (!showAllPosts) {

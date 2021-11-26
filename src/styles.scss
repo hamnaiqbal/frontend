@@ -563,14 +563,26 @@ body {
         display: flex;
         align-items: center;
         justify-content: center;
+        padding: 30px;
     }
 
     p.report-status {
         padding: 5px 15px;
-        background: #ff7676;
         border-radius: 15px;
         color: white;
         font-weight: bold;
+    }
+
+    p.report-status.status-cleared {
+        background: $report-cleared;
+    }
+
+    p.report-status.status-deactivated {
+        background: $report-deactivated;
+    }
+
+    p.report-status.status-reported {
+        background: $report-reported;
     }
 
     p.reported-by {
@@ -586,6 +598,72 @@ body {
     p.post-title {
         font-weight: bold;
         font-size: large;
+        cursor: pointer;
+    }
+
+    p.report-action {
+        padding: 10px 10px;
+        text-align: center;
+        margin-bottom: 15px;
+        width: 75%;
+        box-shadow: 0 0 10px #dbdbdb;
+        border-radius: 25px;
+        margin-left: 10%;
+        cursor: pointer;
+        transition-duration: 300ms;
+
+        i {
+            margin-right: 10px;
+        }
+    }
+
+    p.report-action:hover {
+        transition-duration: 300ms;
+    }
+
+    .report-action.deactivate {
+        color: $failure-color-light;
+    }
+
+    .report-action.clear {
+        color: $success-color-light;
+    }
+
+    .report-action.deactivate:hover {
+        background: $failure-color-light;
+        color: white;
+        transition-duration: 300ms;
+    }
+
+    .report-action.clear:hover {
+        background: $success-color-light;
+        color: white;
+        transition-duration: 300ms;
+    }
+
+    p.section-heading {
+        margin-bottom: 20px;
+        font-size: x-large;
+        font-weight: bold;
+        color: $dark-text;
+        border-left: 15px solid $primary;
+        background-color: white;
+        text-align: left;
+        padding: 10px 20px;
+    }
+
+    .switch-field {
+        display: flex;
+        justify-content: space-between;
+        width: 100%;
+        padding: 13px 20px;
+        background: white;
+        border-left: 15px solid $primary;
+    }
+
+    p.switch-label {
+        font-size: larger;
+        font-weight: bold;
     }
 }
 

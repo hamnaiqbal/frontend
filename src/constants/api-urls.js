@@ -30,6 +30,7 @@ const URLS = {
     GET_NOTIFICATIONS: '/notifications/get',
 
     REPORT: '/file-report',
+    REPORT_ACTION: '/report/action',
 
     GENERATE_QUESTIONS: '/questions',
     CHECK_QUESTIONS: '/questions/check',

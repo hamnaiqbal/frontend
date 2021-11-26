@@ -77,7 +77,7 @@ function Sidebar() {
         {
             label: 'Jobs Dashboard',
             icon: 'pi pi-briefcase',
-            link: '/home/jobs/myJob',
+            link: '/home/jobs/myJobs',
         },
         {
             label: 'View Jobs Feed',
