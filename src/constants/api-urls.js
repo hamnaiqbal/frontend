@@ -8,6 +8,7 @@ const URLS = {
     CHANGE_PASSWORD: '/users/changePassword',
     RESET_PASSWORD: '/users/resetPassword',
     GET_USER_MESSAGES: '/users/getUserMessages',
+    USER_OAUTH_VERIFICATION: '/users/verifyOAuth',
 
     COURSE: '/courses',
 

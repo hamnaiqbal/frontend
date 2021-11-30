@@ -66,6 +66,17 @@ export default function ResetPassword() {
                     </div>
                 </form>
 
+                <p className="login-message">
+                    <span
+                        onClick={() => {
+                            history.push('/login');
+                        }}
+                    >
+                        Go Back to Login
+                    </span>
+                </p>
+
+
             </div>
         );
 
@@ -131,7 +142,7 @@ export default function ResetPassword() {
 
 
         const changePassword = () => {
-            
+
             if (!password || !cPassword) {
                 miscService.handleError('Please Fill all fields');
                 return;
@@ -144,7 +155,7 @@ export default function ResetPassword() {
                 miscService.handleError('Passwords do not match');
                 return;
             }
-            
+
             const data = { email: userEmail, newPassword: password, isReset: true };
             httpService.postRequest(URLS.CHANGE_PASSWORD, data).subscribe(d => {
                 history.push('/login');

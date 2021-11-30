@@ -13,11 +13,6 @@ function Signup() {
     const [name, setName] = useState('');
     const [password, setPassword] = useState('');
     const [degree, setDegree] = useState('');
-    const [appliedAsTutor, setAppliedAsTutor] = useState(false);
-    const [tutorReason, setTutorReason] = useState('');
-    const [cvLink, setCvLink] = useState('');
-
-    const [signedUp, setSignedUp] = useState(false);
 
     const reqFields = [username, email, name, password, degree];
 
@@ -54,57 +49,20 @@ function Signup() {
             name,
             password,
             degree,
-            appliedAsTutor,
-            tutorReason,
-            cvLink,
         };
-        httpService.postRequest(URLS.USERS, body).subscribe(() => {
-            setSignedUp(true);
-        });
-    };
+        httpService.postRequest(URLS.USERS, body).subscribe((accountLink) => {
+            // TODO: Change this when exiting test mode in stripe
+            const stateToMaintain = JSON.stringify({
+                email
+            })
 
-    const uploadCV = (event) => {
-        const data = { cvLink: event.target.files[0] };
-        httpService.postRequest(URLS.UPLOAD_CV, data, true).subscribe((data) => {
-            console.log(data);
-            setCvLink(data.cvLink);
-        });
-    };
+            window.location.href = `https://connect.stripe.com/express/oauth/authorize?response_type=code&client_id=ca_KfhYejJvknzeT11hZpLgSWuzeVxTOkxT&state=${stateToMaintain}`;
 
-    const fieldsForTutor = () => {
-        return (
-            <div>
-                <div className="form-group p-float-label">
-                    <textarea
-                        rows="5"
-                        value={tutorReason}
-                        id="tutorReason"
-                        className="form-control single-control"
-                        onChange={(e) => {
-                            setTutorReason(e.target.value);
-                        }}
-                    />
-                    <label htmlFor="tutorReason">Tell Us Why You should be listed as tutor?</label>
-                </div>
-                <div className="form-group">
-                    <div className="upload-attachment-wrapper">
-                        <p>
-                            <i className="pi pi-upload"></i>
-                            Upload Your CV
-                        </p>
-                    </div>
-                    <input
-                        type="file"
-                        id="attachmentLink"
-                        className="form-control-file attachment-input"
-                        name="attachmentLink"
-                        onChange={(e) => {
-                            uploadCV(e);
-                        }}
-                    />
-                </div>
-            </div>
-        );
+            // if (accountLink) {
+            // window.location.href = accountLink.url;
+            // }
+            // history.push('/signup/success');
+        });
     };
 
     const signUpForm = () => {
@@ -202,38 +160,12 @@ function Signup() {
         );
     };
 
-    const successfullySignedUp = () => {
-        return (
-            <div className="signed-up-message">
-                <p className="success-heading">
-                    <span className="pi pi-check-circle"></span>
-                    You Have Successfully Signed Up
-                </p>
-                <hr />
-                <p className="success-description">
-                    You Sign Up Form has been submitted. Now you can login to our website using the given credentials. Happy
-                    Time Enjoying Our Services !!
-                </p>
-                <button
-                    onClick={() => {
-                        history.push('/login');
-                    }}
-                    className="btn primary-button form-control"
-                >
-                    Go to Login
-                </button>
-            </div>
-        );
-    };
-
     return (
         <div className="signup-component user-page-bg">
             <div className="container-fluid bg-overlay">
                 <div className="signup-card-div d-flex j-center row">
                     <div className="signup-card col-md-4">
-                        {!signedUp && signUpForm()}
-
-                        {signedUp && successfullySignedUp()}
+                        {signUpForm()}
                     </div>
                 </div>
             </div>
