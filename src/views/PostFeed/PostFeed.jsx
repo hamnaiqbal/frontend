@@ -40,7 +40,7 @@ function PostFeed() {
     }
 
     const fetchPosts = () => {
-        const filter = { $not: { active: false } };
+        const filter = {};
         const showAllPosts = !location.pathname?.includes('myPosts');
         setAllPostsFeed(showAllPosts)
         if (!showAllPosts) {
@@ -86,7 +86,7 @@ function PostFeed() {
         <div className="post-feed-component row">
             <div>
                 <Dialog
-                    header={addPostType === enums.QUESTION ? 'Ask a Question ' : 'Share a Resource'}
+                    header={addPostType === enums.QUESTION ? 'Ask a Question ' : addPostType === enums.RESOURCE ? 'Share a Resource' : 'Request for a Resource'}
                     visible={showAddDialig}
                     onHide={() => setShowAddDialig(false)}
                     modal={true}
@@ -122,6 +122,15 @@ function PostFeed() {
                         >
                             <p className="add-post center subtext">Got Something to Share?</p>
                             <p className="add-post center main-text resource">Post a Resource</p>
+                        </div>
+                        <div
+                            className="add-post-div ask-resource"
+                            onClick={() => {
+                                showDialog(enums.ASK_RESOURCE);
+                            }}
+                        >
+                            <p className="add-post center subtext">Looking for a resource?</p>
+                            <p className="add-post center main-text ask-resource">Request a Resource</p>
                         </div>
                     </div>
                 }

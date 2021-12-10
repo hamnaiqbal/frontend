@@ -1,18 +1,23 @@
 import { Button } from 'primereact/button';
+import { Dialog } from 'primereact/dialog';
 import { InputTextarea } from 'primereact/inputtextarea';
 import { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import AddPostForm from '../../components/AddPostForm/AddPostForm';
 import URLS from '../../constants/api-urls';
 import CONSTANTS from '../../constants/constants';
 import enums from '../../constants/enums';
 import httpService from '../../services/httpservice';
 import miscService from '../../services/miscService';
 
-function PostDetails(props) {
+function PostDetails() {
     const [replies, setReplies] = useState([]);
     const { postId } = useParams();
     const [post, setPost] = useState({});
     const [replyContent, setReplyContent] = useState('');
+
+    const [showEditDialog, setShowEditDialog] = useState(false);
+    const [isAddingResource, setIsAddingResource] = useState(false);
 
     useEffect(() => {
         fetchPost();
@@ -53,6 +58,11 @@ function PostDetails(props) {
         );
     };
 
+    const uploadResource = () => {
+        setIsAddingResource(true);
+        setShowEditDialog(true);
+    }
+
     const repliesList = () => {
         if (replies.length === 0) {
             return <p>No Replies Yet</p>;
@@ -84,6 +94,11 @@ function PostDetails(props) {
 
     return (
         <div className="post-details-component">
+
+            <Dialog visible={showEditDialog} header='Upload a resource' onHide={() => { setShowEditDialog(false) }}>
+                <AddPostForm post={post} closeDialog={() => { setShowEditDialog(false) }} isAddingResource={isAddingResource} type={post.postType} />
+            </Dialog>
+
             <div className="row">
                 <div className="col-md-8">
                     <div className="post-details-wrapper">
@@ -111,7 +126,7 @@ function PostDetails(props) {
                                     <div className="poster-details d-flex">
                                         <img
                                             className="posted-by-image"
-                                            src={CONSTANTS.DEFAULT_USER_IMAGE}
+                                            src={post.userId?.imageLink ?? CONSTANTS.DEFAULT_USER_IMAGE}
                                             alt={post.userId?.name}
                                         />
                                         <p>
@@ -123,6 +138,26 @@ function PostDetails(props) {
                             </div>
                             <div className="post-details">
                                 <p className="post-description" dangerouslySetInnerHTML={{ __html: post.description }}></p>
+
+                                {
+                                    post.postType === enums.ASK_RESOURCE && post.isPaidResource && post.resourceRefLink && !post.attachmentLink &&
+                                    <>
+
+                                        <div className='form-group'>
+                                            <a href={post.resourceRefLink} target="_blank" rel="noreferrer">
+                                                <button className="btn btn-primary">
+                                                    <i className="fas fa-link"></i>
+                                                    Visit Original Resource Page
+                                                </button>
+                                            </a>
+                                        </div>
+                                        <div className='form-group' onClick={uploadResource}>
+                                            <button className="btn btn-primary">
+                                                <i className="fas fa-upload"></i> Provide the Resource
+                                            </button>
+                                        </div>
+                                    </>
+                                }
                                 {post.attachmentLink && isImage() && (
                                     <div className="post-image-wrapper">
                                         <img className="post-image" src={post.attachmentLink} alt={post.title} />

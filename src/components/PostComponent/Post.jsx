@@ -4,6 +4,7 @@ import React, { useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import URLS from '../../constants/api-urls';
 import CONSTANTS from '../../constants/constants';
+import enums from '../../constants/enums';
 import httpService from '../../services/httpservice';
 import miscService from '../../services/miscService';
 import userService from '../../services/userservice';
@@ -91,7 +92,7 @@ function Post(props) {
                     <div className="post-user-info d-flex a-center">
                         <img className="user-image" src={post.userId?.imageLink || CONSTANTS.DEFAULT_USER_IMAGE} alt="" />
                         <div className="post-user">
-                            <p className="post-username">{post.userId?.name || 'Hamna Iqbal'}</p>
+                            <p className="post-username"><span>{post.userId?.name || 'Hamna Iqbal'}</span> {post.postType === enums.QUESTION ? 'asked a question' : post.postType === enums.RESOURCE ? 'shared a resource' : ' is looking for a resource'}</p>
                             <p className="post-meta">
                                 <span className="post-time">{miscService.getTimeDifference(post.createdOn)}</span> -{' '}
                                 <span className="post-subject">{post.courseId?.name}</span>

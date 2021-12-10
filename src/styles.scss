@@ -460,7 +460,11 @@ body {
             margin-left: 20px;
 
             .post-username {
-                font-weight: 500;
+                color: $light-text;
+                span {
+                    font-weight: bold;
+                    color: $dark-text;
+                }
             }
         }
 
@@ -737,7 +741,7 @@ body {
     .add-post-div {
         display: inline-block;
         padding: 30px;
-        width: 50%;
+        width: 33.3%;
 
         p {
             margin: 0;
@@ -756,6 +760,9 @@ body {
     .add-post.main-text.resource {
         color: $resource-color-dark;
     }
+    .add-post.main-text.ask-resource {
+        color: $ask-resource-color-dark;
+    }
 
     .add-post-div:hover {
         color: $light-color;
@@ -769,7 +776,7 @@ body {
             color: $light-color;
         }
 
-        box-shadow: 0px 0px 5px 3px $question-color-light;
+        // box-shadow: 0px 0px 5px 3px $question-color-light;
         border-top-left-radius: 5px;
         border-bottom-left-radius: 5px;
         background-color: $question-color-dark;
@@ -781,10 +788,19 @@ body {
             color: $light-color;
         }
 
-        box-shadow: 0px 0px 5px 3px $resource-color-light;
+        // box-shadow: 0px 0px 5px 3px $resource-color-light;
+        background-color: $resource-color-dark;
+    }
+    .add-post-div.ask-resource:hover {
+        .add-post.main-text.ask-resource {
+            transition-duration: 200ms;
+            color: $light-color;
+        }
+
+        // box-shadow: 0px 0px 5px 3px $ask-resource-color-light;
         border-top-right-radius: 5px;
         border-bottom-right-radius: 5px;
-        background-color: $resource-color-dark;
+        background-color: $ask-resource-color-dark;
     }
 
     .add-post.subtext {
@@ -793,6 +809,9 @@ body {
 
     .add-post-div.add-question {
         border-right: 1px $light-border solid;
+    }
+    .add-post-div.ask-resource {
+        border-left: 1px $light-border solid;
     }
 
     .post-feed-wrapper {
@@ -1972,6 +1991,10 @@ body {
 
     .post-details {
         padding-top: 30px;
+
+        i {
+            margin-right: 10px;
+        }
     }
 
     .post-description {

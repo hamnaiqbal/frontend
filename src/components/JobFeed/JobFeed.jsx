@@ -3,6 +3,7 @@ import { useHistory } from 'react-router';
 import URLS from '../../constants/api-urls';
 import httpService from '../../services/httpservice';
 import miscService from '../../services/miscService';
+import userService from '../../services/userservice';
 
 function JobFeed() {
     const [jobs, setJobs] = useState([]);
@@ -14,8 +15,8 @@ function JobFeed() {
     }
 
     useEffect(() => {
-        const data = { status: 0 };
-        httpService.getRequest(URLS.JOB, data, null, false).subscribe(jobs => {
+        const data = { userId: userService.getCurrentUserId() };
+        httpService.getRequest(URLS.GET_JOB_LISTING, data, null, false).subscribe(jobs => {
 
             if (jobs.length > 5) {
                 jobs = jobs.slice(0, 5);
@@ -56,7 +57,20 @@ function JobFeed() {
                     Latest Jobs
                 </p>
             </div>
-            <div className="sidebar-jobs-list">{jobFeed()}</div>
+            <div className="sidebar-jobs-list">
+                {
+                    jobs.length > 0 &&
+                    jobFeed()
+                }
+                {jobs.length === 0 &&
+                    <div>
+                        <h6 className='bold' style={{marginTop: '20px'}}>
+                            No New Jobs Found
+                        </h6>
+
+                    </div>
+                }
+            </div>
         </div>
     );
 }
