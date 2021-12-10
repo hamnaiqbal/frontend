@@ -9,6 +9,7 @@ const URLS = {
     RESET_PASSWORD: '/users/resetPassword',
     GET_USER_MESSAGES: '/users/getUserMessages',
     USER_OAUTH_VERIFICATION: '/users/verifyOAuth',
+    USER_PAY: '/users/pay',
 
     COURSE: '/courses',
 
@@ -24,6 +25,7 @@ const URLS = {
     JOB: '/job',
     GET_SINGLE_JOB: '/job/get/{_id}',
     GET_USER_PROJECTS: '/job/getUserProjects',
+    GET_JOB_LISTING: '/job/getJobs',
 
     BID: '/bid',
     ACCEPT_BID: '/bid/accept',
@@ -35,6 +37,8 @@ const URLS = {
 
     GENERATE_QUESTIONS: '/questions',
     CHECK_QUESTIONS: '/questions/check',
+    GET_AVAILABLE_SUBJECTS: '/questions/availableSubjects',
+    GET_EXPERT_QUIZ: '/questions/expert/{subjectId}',
 
     INTERNATIONAL_SCHOLARSHIPS: '/scholarships/international',
 };

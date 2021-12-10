@@ -1,6 +1,5 @@
 import { Dialog } from 'primereact/dialog';
 import { Dropdown } from 'primereact/dropdown';
-import { InputNumber } from 'primereact/inputnumber';
 import { InputTextarea } from 'primereact/inputtextarea';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
@@ -11,14 +10,22 @@ import miscService from '../../services/miscService';
 import userService from '../../services/userservice';
 
 
-const BidDetail = ({ bid }) => {
+const BidDetail = ({ bid, onClose, alreadyAccepted }) => {
 
     const acceptBid = () => {
         const bidId = bid._id;
         httpService.postRequest(URLS.ACCEPT_BID, { bidId }).subscribe(() => {
-
+            if (onClose) {
+                onClose();
+            }
         });
     };
+
+    const onCancel = () => {
+        if (onClose) {
+            onClose();
+        }
+    }
 
 
     useEffect(() => {
@@ -116,12 +123,13 @@ const BidDetail = ({ bid }) => {
                 </div>
 
                 <div className="col-md-3">
-                    <button className="btn btn-secondary fw">Close</button>
+                    <button className="btn btn-secondary fw" onClick={onCancel}>Close</button>
                 </div>
                 <div className="col-md-5">
-                    <button onClick={acceptBid} className="btn btn-success btn-submit fw">
+                    <button onClick={acceptBid} disabled={alreadyAccepted} className="btn btn-success btn-submit fw">
                         <i className="far fa-check-circle"></i> Accept Bid
                     </button>
+
                 </div>
             </div>
 
@@ -256,14 +264,14 @@ export default function JobDetail() {
                             <p className="bidderName">
                                 {b.bidderId?.name}
                             </p>
-                            <p className="needed-days">
+                            {/* <p className="needed-days">
                                 Will Complete in {b.daysNeeded} Days
-                            </p>
+                            </p> */}
                         </div>
 
                         <div className="col-md-4">
                             <p className="bid-budget">
-                                PKR <span>{b.bidAmount}</span>
+                                <span>{b.daysNeeded} Days</span>
                             </p>
                         </div>
                     </div>
@@ -276,7 +284,7 @@ export default function JobDetail() {
                 {renderBids()}
 
                 <Dialog visible={showDetailDialog} onHide={onDialogClose} header={`Bid by ${selectedBid?.bidderId?.name}`} className="bid-dialog">
-                    <BidDetail bid={selectedBid} />
+                    <BidDetail bid={selectedBid} onClose={onDialogClose} alreadyAccepted={job.acceptedBid} />
                 </Dialog>
             </div>
         );
@@ -284,7 +292,7 @@ export default function JobDetail() {
 
     const BidJob = ({ job, bids }) => {
 
-        const [bidAmount, setBidAmount] = useState(0);
+        // const [bidAmount, setBidAmount] = useState(0);
         const [daysNeeded, setdaysNeeded] = useState(0);
         const [description, setDescription] = useState('');
 
@@ -309,12 +317,12 @@ export default function JobDetail() {
         const onFormSubmit = (e) => {
             e.preventDefault();
 
-            if (!bidAmount || !daysNeeded || !description) {
+            if (!daysNeeded || !description) {
                 miscService.handleError('Missing Fields');
                 return;
             }
 
-            const data = { bidAmount, daysNeeded, description, jobId: job._id, bidderId: userService.getCurrentUserId() };
+            const data = { daysNeeded, description, jobId: job._id, bidderId: userService.getCurrentUserId() };
 
             httpService.postRequest(URLS.BID, data).subscribe(() => {
                 setHasAlreadyPlaced(true);
@@ -340,7 +348,7 @@ export default function JobDetail() {
                     <div className="place-bid-form">
                         <form>
 
-                            <div className="form-group p-float-label col-sm-12 p-0">
+                            {/* <div className="form-group p-float-label col-sm-12 p-0">
                                 <InputNumber
                                     value={bidAmount}
                                     type="text"
@@ -352,7 +360,7 @@ export default function JobDetail() {
                                     }}
                                 />
                                 <label htmlFor="word">Bid Amount</label>
-                            </div>
+                            </div> */}
 
                             <div className="form-group p-float-label col-sm-12 p-0 text-left">
                                 <Dropdown

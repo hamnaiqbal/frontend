@@ -3,6 +3,8 @@ const CONSTANTS = {
     MAIN_WIDTH_CLASS: 'container-fluid',
     DEFAULT_USER_IMAGE: 'https://icon-library.com/images/avatar-icon-images/avatar-icon-images-6.jpg',
 
+    MIN_JOB_BUDGET: 100,
+
     DEPARTMENTS: [
         { label: 'Computer Science', value: 'CS' },
         { label: 'Software Engineering', value: 'SE' },
@@ -16,10 +18,10 @@ const CONSTANTS = {
     },
 
     JOB_STATUSES: {
-        0: { name: 'New', icon: 'far fa-check-circle' },
-        1: { name: 'In Progress', icon: 'fas fa-sync' },
-        2: { name: 'Delivered', icon: 'far fa-check-circle' },
-        3: { name: 'Paid', icon: 'far fa-money-bill-alt' },
+        0: { name: 'Unpaid', icon: 'far fa-times-circle' },
+        1: { name: 'Paid', icon: 'far fa-money-bill-alt' },
+        2: { name: 'In Progress', icon: 'fas fa-sync' },
+        3: { name: 'Delivered', icon: 'far fa-check-circle' },
         4: { name: 'Completed', icon: 'far fa-check-circle' },
         5: { name: 'Disputed', icon: 'fas fa-project-diagram' },
         6: { name: 'Cancelled', icon: 'far fa-times-circle' },

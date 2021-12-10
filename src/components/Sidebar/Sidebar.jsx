@@ -99,6 +99,11 @@ function Sidebar() {
             link: '/home/attempt-quiz',
         },
         {
+            label: 'Take Skill Quiz',
+            icon: 'pi pi-th-large',
+            link: '/home/skill-quiz',
+        },
+        {
             label: 'Scholarships',
             isTitle: true,
         },

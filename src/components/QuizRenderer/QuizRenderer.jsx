@@ -3,10 +3,10 @@ import { useState } from "react";
 import URLS from "../../constants/api-urls";
 import httpService from "../../services/httpservice";
 import miscService from "../../services/miscService";
+import userService from "../../services/userservice";
 
-const QuizRenderer = (props) => {
+const QuizRenderer = ({ questions, isForExpert, subjectId }) => {
 
-    const { questions } = props;
     const [isChecked, setIsChecked] = useState(false);
     const [points, setPoints] = useState({ total: 0, got: 0 });
 
@@ -23,7 +23,13 @@ const QuizRenderer = (props) => {
         questionsToSend.forEach((q, i) => {
             questionsToSend[i].selected = answerSelected[i];
         });
-        httpService.postRequest(URLS.CHECK_QUESTIONS, { questions: questionsToSend }).subscribe(res => {
+        const data = {
+            questions: questionsToSend,
+            isForExpert,
+            userId: userService.getCurrentUserId(),
+            subjectId
+        }
+        httpService.postRequest(URLS.CHECK_QUESTIONS, data).subscribe(res => {
             setIsChecked(true);
             setPoints({ total: res.total, got: res.points });
             miscService.handleSuccess(`You have received ${res.points} out of ${res.total}`)

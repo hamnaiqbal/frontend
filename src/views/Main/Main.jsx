@@ -10,6 +10,7 @@ import userService from '../../services/userservice';
 import AddTutor from '../AddTutor/AddTutor';
 import AttemptQuiz from '../AttemptQuiz/AttemptQuiz';
 import ChatComponent from '../ChatComponent/ChatComponent';
+import ExpertQuiz from '../ExpertQuiz/ExpertQuiz';
 import JobDetail from '../JobDetail/JobDetail';
 import JobsListing from '../JobsListing/JobsListing';
 import NearbyTutors from '../NearbyTutors/NearbyTutors';
@@ -69,6 +70,7 @@ const Main = ({ match }) => {
                                 <Route path={match.url + '/nearbyTutos'} component={NearbyTutors} />
                                 <Route path={match.url + '/quotes/tutor'} component={RequestedQuotes} />
                                 <Route path={match.url + '/attempt-quiz'} component={AttemptQuiz} />
+                                <Route path={match.url + '/skill-quiz'} component={ExpertQuiz} />
                                 <Route path={match.url + '/messages'} component={ChatComponent} />
                                 <Route path={match.url + '/jobs/myJobs'} component={UserJobs} />
                                 <Route path={match.url + '/jobs'} component={JobsListing} />

@@ -15,6 +15,8 @@ const StripeStatus = ({ location }) => {
         const process = new URLSearchParams(location.search).get("process");
         const success = new URLSearchParams(location.search).get("success");
 
+        const stateStr = new URLSearchParams(location.search).get("state");
+        const stateObj = JSON.parse(stateStr ?? '{}');
 
         if (process === 'payment' && success === '1') {
             setTitle('Payment Process Successful');
@@ -31,18 +33,12 @@ const StripeStatus = ({ location }) => {
             setIsSuccess(false);
         }
         else if (process === 'signup' && success === '1') {
-            const stateStr = new URLSearchParams(location.search).get("state");
-            const code = new URLSearchParams(location.search).get("code");
 
+            const code = new URLSearchParams(location.search).get("code");
             if (!code || !stateStr) {
                 return;
             }
-
-
-            const stateObj = JSON.parse(stateStr);
-
             const email = stateObj.email;
-
 
             setTitle('Awaiting Token Authentication');
             setDescription('Please wait while your token is being authenticated');

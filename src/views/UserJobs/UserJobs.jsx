@@ -1,4 +1,7 @@
+import { Dialog } from 'primereact/dialog';
 import React, { useCallback, useEffect, useState } from 'react';
+import { useHistory } from 'react-router-dom';
+import PostJob from '../../components/PostJob/PostJob';
 import URLS from '../../constants/api-urls';
 import CONSTANTS from '../../constants/constants';
 import httpService from '../../services/httpservice';
@@ -6,17 +9,17 @@ import miscService from '../../services/miscService';
 import userService from '../../services/userservice';
 
 const SingleJob = ({ job, isUserBuyer, onActionPerform }) => {
+    const history = useHistory();
 
-    const markJobAs = (status) => {
+    const [showEditDialog, setShowEditDialog] = useState(false);
+
+    const markJobAs = (event, status) => {
+        if (event) {
+            event.stopPropagation();
+        }
         if (![0, 1, 2, 3, 4, 5, 6].includes(status)) {
             return;
         }
-
-        if (status === 3) {
-            // TODO
-            // payment logic here
-        }
-
         const data = { ...job, status };
 
         httpService.putRequest(URLS.JOB, data).subscribe(() => {
@@ -26,13 +29,49 @@ const SingleJob = ({ job, isUserBuyer, onActionPerform }) => {
         });
     };
 
-    const editJob = () => {
-
+    const editJob = (event) => {
+        if (event) {
+            event.stopPropagation();
+        }
+        setShowEditDialog(true);
     };
 
+    const onEditDialogClose = () => {
+        setShowEditDialog(false);
+        if (onActionPerform) {
+            onActionPerform();
+        }
+    }
+
+    const payForTheJob = (event) => {
+        if (event) {
+            event.stopPropagation();
+        }
+        const data = {
+            amount: job.budget,
+            name: `${job.title}`,
+            metadata: {
+                jobId: job._id,
+                type: 'J'
+            }
+        }
+
+        httpService.postRequest(URLS.USER_PAY, data).subscribe(d => {
+            window.location.href = d.url;
+        })
+    }
+
+    const goToJob = () => {
+        history.push(`/home/job/${job._id}`)
+    }
 
     return (
         <div className="single-job-item">
+
+            <Dialog visible={showEditDialog} onHide={() => { setShowEditDialog(false) }}>
+                <PostJob job={job} onClose={() => { onEditDialogClose(false) }} />
+            </Dialog>
+
             <div className="app-card single-job-card">
                 <div className="row">
                     {/* Job Status Formatted */}
@@ -48,7 +87,7 @@ const SingleJob = ({ job, isUserBuyer, onActionPerform }) => {
                     {/* Job Name and Poster */}
                     <div className="col-md-3 single-job-name-column">
                         <div className="name-poster-wrapper">
-                            <p className="job-title">
+                            <p className="job-title" onClick={goToJob}>
                                 {job.title}
                             </p>
                             <p className="posted-by">
@@ -73,7 +112,7 @@ const SingleJob = ({ job, isUserBuyer, onActionPerform }) => {
                         {/* Job Start Date and Expected Deadline */}
 
                         {
-                            job.status === 0 &&
+                            [0, 1].includes(job.status) &&
                             <div>
                                 <div className="job-feature">
                                     <p className="job-feature-heading">
@@ -96,7 +135,7 @@ const SingleJob = ({ job, isUserBuyer, onActionPerform }) => {
                             </div>
                         }
                         {
-                            [1, 2, 3, 4, 5, 6].includes(job.status) &&
+                            [2, 3, 4, 5, 6].includes(job.status) &&
                             <div>
                                 <div className="job-feature">
                                     <p className="job-feature-heading">
@@ -189,41 +228,41 @@ const SingleJob = ({ job, isUserBuyer, onActionPerform }) => {
                                     // if the job is new, the user can edit it or cancel it
                                     job.status === 0 &&
                                     <>
+                                        <button onClick={payForTheJob} className="btn job-action-btn pay-btn">
+                                            <i className="fas fa-coins"></i>
+                                            Pay For the Job
+                                        </button>
+                                        <button onClick={(e) => { markJobAs(e, 6); }} className="btn job-action-btn cancel-btn">
+                                            <i className="fas fa-times"></i>
+                                            Cancel Job
+                                        </button>
+                                    </>
+                                }
+                                {
+                                    // if the job is paid, the buyer can cancel it or edit it
+                                    job.status === 1 &&
+                                    <>
                                         <button onClick={editJob} className="btn job-action-btn edit-btn">
                                             <i className="fas fa-pencil-alt"></i>
                                             Edit
                                         </button>
-                                        <button onClick={() => { markJobAs(6); }} className="btn job-action-btn cancel-btn">
+                                        <button onClick={(e) => { markJobAs(e, 6); }} className="btn job-action-btn cancel-btn">
                                             <i className="fas fa-times"></i>
                                             Cancel Job
                                         </button>
                                     </>
                                 }
                                 {
-                                    // if the job is in progress, the buyer can cancel it
-                                    job.status === 1 &&
-                                    <>
-                                        <button onClick={() => { markJobAs(6); }} className="btn job-action-btn cancel-btn">
-                                            <i className="fas fa-times"></i>
-                                            Cancel Job
-                                        </button>
-                                    </>
-                                }
-                                {
-                                    // if the job is delivered, the user can either pay it or mark it in progress again or mark it disputed
+                                    // if the job is delivered, the user can either mark it in progress again or mark it completed
                                     job.status === 2 &&
                                     <>
-                                        <button onClick={() => { markJobAs(3); }} className="btn job-action-btn paid-btn">
-                                            <i className="fas fa-file-invoice-dollar"></i>
-                                            Mark as Paid
+                                        <button onClick={(e) => { markJobAs(e, 4); }} className="btn job-action-btn complete-btn">
+                                            <i className="fas fa-check-circle"></i>
+                                            Mark as Completed
                                         </button>
-                                        <button onClick={() => { markJobAs(1); }} className="btn job-action-btn paid-btn">
+                                        <button onClick={(e) => { markJobAs(e, 2); }} className="btn job-action-btn paid-btn">
                                             <i className="fas fa-redo-alt"></i>
                                             Mark as In Progress
-                                        </button>
-                                        <button onClick={() => { markJobAs(5); }} className="btn job-action-btn disputed-btn">
-                                            <i className="fas fa-balance-scale-right"></i>
-                                            Mark as Disputed
                                         </button>
                                     </>
                                 }
@@ -246,21 +285,17 @@ const SingleJob = ({ job, isUserBuyer, onActionPerform }) => {
                                     // if the job is in progress, seller can mark it delivered
                                     job.status === 1 &&
                                     <>
-                                        <button onClick={() => { markJobAs(2); }} className="btn job-action-btn deliver-btn">
+                                        <button onClick={(e) => { markJobAs(e, 2); }} className="btn job-action-btn deliver-btn">
                                             <i className="fas fa-check-circle"></i>
                                             Mark as Delivered
                                         </button>
                                     </>
                                 }
                                 {
-                                    // if the job is marked paid by the buyer, the seller can confirm by marking it complete or disputed
+                                    // if the job is marked completed by the buyer, the seller can confirm by marking it complete or disputed
                                     job.status === 3 &&
                                     <>
-                                        <button onClick={() => { markJobAs(4); }} className="btn job-action-btn complete-btn">
-                                            <i className="fas fa-check-circle"></i>
-                                            Mark as Completed
-                                        </button>
-                                        <button onClick={() => { markJobAs(5); }} className="btn job-action-btn disputed-btn">
+                                        <button onClick={(e) => { markJobAs(e, 5); }} className="btn job-action-btn disputed-btn">
                                             <i className="fas fa-balance-scale-right"></i>
                                             Mark as Disputed
                                         </button>

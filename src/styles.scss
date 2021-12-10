@@ -1231,6 +1231,23 @@ body {
         }
 
     }
+
+
+    .no-jobs.found.app-card {
+        padding: 30px;
+
+        h5.bold {
+            margin-top: 40px;
+        }
+
+        p.description.text-center {
+            font-size: small;
+            color: grey;
+            font-weight: bold;
+            padding: 20px 50px;
+        }
+
+    }
 }
 
 .post-job-component {
@@ -1247,6 +1264,26 @@ body {
 
     .p-float-label>label {
         left: 1.4rem;
+    }
+
+    .job-added-div {
+        i {
+            font-size: xxx-large;
+            color: $success-color-dark;
+            margin-bottom: 20px;
+        }
+
+        p.already-placed-heading {
+            font-size: larger;
+            font-weight: bold;
+            margin-bottom: 15px;
+        }
+
+        p.already-placed-description {
+            font-size: small;
+            color: grey;
+            margin-bottom: 30px;
+        }
     }
 
 }
@@ -1723,6 +1760,7 @@ body {
     p.job-title {
         font-weight: bold;
         font-size: large;
+        cursor: pointer;
     }
 
     p.posted-by {
@@ -1782,6 +1820,99 @@ body {
         i {
             margin-right: 5px;
         }
+    }
+
+    .job-action-btn.pay-btn {
+        background-color: $primary;
+        color: white !important;
+        // font-weight: bold;
+    }
+
+}
+
+
+.expert-quiz-component {
+    .app-card.expert-description-card {
+        img.expert-img {
+            width: 100%;
+        }
+
+        .col-md-7.description-col {
+            display: flex;
+            align-items: center;
+
+            p.expert-description {
+                /* font-size: small; */
+                color: grey;
+                font-style: italic;
+            }
+
+            .description-wrapper {
+                padding: 30px 50px;
+            }
+
+            h4.bold {
+                text-align: left;
+                margin-bottom: 20px;
+                font-style: italic;
+            }
+        }
+
+    }
+
+    .single-subject {
+        padding: 10px 30px;
+
+        .status-wrapper {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .name-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            font-size: large;
+            font-style: italic;
+        }
+
+        .action-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: end;
+        }
+
+        button.btn.take-test-btn {
+            border-radius: 50px;
+            padding: 10px 30px;
+            background: white;
+            color: $primary;
+            border-color: $primary;
+        }
+
+        p.status {
+            width: auto;
+            padding: 5px 10px;
+            border: 1px solid;
+            border-radius: 10px;
+            text-transform: uppercase;
+            font-weight: bold;
+            font-size: small;
+            color: white;
+        }
+        
+        p.status.taken {
+            border-color: $success-color-light;
+            background: $success-color-light;
+        }
+        p.status.not-taken {
+            border-color: $failure-color-light;
+            background: $failure-color-light;
+        }
+
+
     }
 }
 

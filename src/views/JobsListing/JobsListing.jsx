@@ -8,6 +8,7 @@ import PostJob from '../../components/PostJob/PostJob';
 import URLS from '../../constants/api-urls';
 import httpService from '../../services/httpservice';
 import miscService from '../../services/miscService';
+import userService from '../../services/userservice';
 
 function JobsListing() {
 
@@ -29,12 +30,20 @@ function JobsListing() {
         { label: 'Others', value: 'O' },
     ];
 
-    const fetchJobs = (data) => {
-
-        data = data ?? {};
-        data.status = 0; // show only jobs that are new and not yet started
-
-        httpService.getRequest(URLS.JOB, data).subscribe(jobs => {
+    const fetchJobs = () => {
+        const data = {
+            userId: userService.getCurrentUserId()
+        }
+        if (typeFilter) {
+            data.type = typeFilter;
+        }
+        if (nameFilter && nameFilter !== '') {
+            data.name = nameFilter;
+        }
+        if (budgetFilter && budgetFilter > 0) {
+            data.minBudget = budgetFilter;
+        }
+        httpService.getRequest(URLS.GET_JOB_LISTING, data).subscribe(jobs => {
             jobs.forEach(j => {
                 j.wrappedDesc = j.description?.length < 180 ? j.description : j.description?.substring(0, 180) + '...';
                 j.createdOnFormatted = miscService.getFormattedDate(j.createdOn, true);
@@ -59,10 +68,23 @@ function JobsListing() {
             <div className="row">
 
                 <div className="col-md-8">
-                    {
+                    {jobs.length > 0 &&
                         jobs.map((job, i) => {
                             return <JobItem key={i} Job={job} />;
                         })
+                    }
+                    {
+                        jobs.length === 0 &&
+                        <div className="no-jobs found app-card">
+                            <h5 className='bold'>
+                                No Jobs were Found
+                            </h5>
+
+                            <p className="description text-center">
+                                No Jobs were found for this search. Either change the search filters or
+                                clear more skills courses to unlock more jobs.
+                            </p>
+                        </div>
                     }
                 </div>
 
@@ -131,7 +153,7 @@ function JobsListing() {
                             </div>
 
                             <div className="submit-button-wrapper">
-                                <button className="btn btn-primary fw">Filter</button>
+                                <button onClick={fetchJobs} className="btn btn-primary fw">Filter</button>
                             </div>
 
                         </div>
