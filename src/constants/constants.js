@@ -5,6 +5,12 @@ const CONSTANTS = {
 
     MIN_JOB_BUDGET: 100,
 
+    POST_TYPES: [
+        { label: 'Question', value: 'question' },
+        { label: 'Resource', value: 'resource' },
+        { label: 'Resource Request', value: 'ask_resource' },
+    ],
+
     DEPARTMENTS: [
         { label: 'Computer Science', value: 'CS' },
         { label: 'Software Engineering', value: 'SE' },

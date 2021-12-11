@@ -16,7 +16,6 @@ const URLS = {
     QUOTE: '/quote',
 
     POST: '/post',
-    SEARCH_POSTS: '/post/search',
     GET_SINGLE_POST: '/post/get/{_id}',
     POST_UPVOTE: '/post/upvote',
     

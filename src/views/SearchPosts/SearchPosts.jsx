@@ -3,6 +3,7 @@ import { InputText } from 'primereact/inputtext';
 import React, { useEffect, useState } from 'react'
 import Post from '../../components/PostComponent/Post';
 import URLS from '../../constants/api-urls';
+import CONSTANTS from '../../constants/constants';
 import httpService from '../../services/httpservice';
 import miscService from '../../services/miscService';
 
@@ -21,8 +22,17 @@ export default function SearchPosts() {
     }, []);
 
     const onFilterResults = () => {
-        const filters = { courseId: course, text, postType }
-        httpService.postRequest(URLS.SEARCH_POSTS, filters, false, true, false).subscribe(p => {
+        const filters = {}
+        if (text && text !== '') {
+            filters.textFilter = text;
+        }
+        if (course && course !== '') {
+            filters.courseFilter = course;
+        }
+        if (postType && postType !== '') {
+            filters.typeFilter = postType;
+        }
+        httpService.getRequest(URLS.POST, filters, false, true, false).subscribe(p => {
             setPosts(p);
         })
     }
@@ -35,7 +45,7 @@ export default function SearchPosts() {
     return (
         <div className="search-posts-component">
 
-            <div className="row filters-row">
+            <div className="row filters-row text-left">
                 {/* text, course, type */}
 
                 <div className="col-md-3">
@@ -44,6 +54,7 @@ export default function SearchPosts() {
                             value={text}
                             type="text"
                             required
+                            style={{ padding: '9px' }}
                             id="text"
                             className="form-control single-control"
                             onChange={(e) => {
@@ -68,7 +79,7 @@ export default function SearchPosts() {
                                 setCourse(e.target.value);
                             }}
                         />
-                        <label htmlFor="distance">Distance</label>
+                        <label htmlFor="distance">Course</label>
                     </div>
                 </div>
 
@@ -78,14 +89,14 @@ export default function SearchPosts() {
                             value={postType}
                             required
                             showClear
-                            options={courseOptions}
+                            options={CONSTANTS.POST_TYPES}
                             className="form-cotntrol single-control"
                             id="distance"
                             onChange={(e) => {
                                 setPostType(e.target.value);
                             }}
                         />
-                        <label htmlFor="distance">Distance</label>
+                        <label htmlFor="distance">Type</label>
                     </div>
                 </div>
                 <div className="col-md-3">
