@@ -21,6 +21,7 @@ const URLS = {
     POST_UPVOTE: '/post/upvote',
     
     REPLY: '/reply',
+    REPLY_UPVOTE: '/reply/upvote',
     
     JOB: '/job',
     GET_SINGLE_JOB: '/job/get/{_id}',

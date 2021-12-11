@@ -2023,6 +2023,16 @@ body {
 
     .reply-vote-icon {
         margin: 0 10px;
+        cursor: pointer;
+    }
+
+    .reply-vote-icon.upvote:hover {
+        color: $success-color-dark;
+        transition-duration: 300ms;
+    }
+    .reply-vote-icon.downvote:hover {
+        color: $failure-color-dark;
+        transition-duration: 300ms;
     }
 
     .replier-img {

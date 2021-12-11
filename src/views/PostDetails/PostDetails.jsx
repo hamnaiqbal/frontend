@@ -9,6 +9,7 @@ import CONSTANTS from '../../constants/constants';
 import enums from '../../constants/enums';
 import httpService from '../../services/httpservice';
 import miscService from '../../services/miscService';
+import userService from '../../services/userservice';
 
 function PostDetails() {
     const [replies, setReplies] = useState([]);
@@ -37,10 +38,31 @@ function PostDetails() {
         if (replyContent) {
             const data = { replyContent, postId };
             httpService.postRequest(URLS.REPLY, data).subscribe(d => {
+
+                data.userId = userService.getLoggedInUser();
+                data.upvotes = 0;
+                data.createdOn = new Date();
+
+
+                const newReplies = [...replies, data];
+                setReplies(newReplies);
                 setReplyContent('');
             });
         }
     };
+
+    const upDownVoteReply = (reply, upvote = true) => {
+        httpService.postRequest(URLS.REPLY_UPVOTE, { replyId: reply._id, upvote: !!upvote }).subscribe(() => {
+            const originalCount = reply.upvotes;
+            const newCount = upvote ? originalCount + 1 : originalCount - 1;
+            reply.upvotes = newCount;
+
+            const newRepliesList = [...replies];
+            const index = newRepliesList.findIndex(r => r._id === reply._id);
+            newRepliesList[index] = reply;
+            setReplies(newRepliesList);
+        });
+    }
 
     const upDownVote = (upvote = true) => {
         httpService.postRequest(URLS.POST_UPVOTE, { _id: postId, upvote: !!upvote }).subscribe(() => {
@@ -67,25 +89,25 @@ function PostDetails() {
         if (replies.length === 0) {
             return <p>No Replies Yet</p>;
         }
-        return replies.map((d, i) => (
+        return replies.map((reply, i) => (
             <div className="single-reply-wrapper row" key={i}>
                 <div className="upvotes-div col-sm-2">
-                    <p className="reply-votes-count center">{d.upvotes}</p>
-                    <i className="pi pi-thumbs-up reply-vote-icon upvote"></i>
-                    <i className="pi pi-thumbs-down reply-vote-icon downvote"></i>
+                    <p className="reply-votes-count center">{reply.upvotes}</p>
+                    <i onClick={() => { upDownVoteReply(reply, true) }} className="pi pi-thumbs-up reply-vote-icon upvote"></i>
+                    <i onClick={() => { upDownVoteReply(reply, false) }} className="pi pi-thumbs-down reply-vote-icon downvote"></i>
                 </div>
                 <div className="reply-content-div col-sm-10">
                     <div className="user-info d-flex">
                         <div className="replier-img-wrapper">
-                            <img src={CONSTANTS.DEFAULT_USER_IMAGE} alt="" className="replier-img" />
+                            <img src={reply.userId?.imageLink} alt="" className="replier-img" />
                         </div>
                         <div className="replier-name-and-time">
-                            <p className="replier-name">{d.userId?.name || 'Kashif'}</p>
-                            <p className="reply-time">{miscService.getFormattedDate(d.createdOn)}</p>
+                            <p className="replier-name">{reply.userId?.name || 'Kashif'}</p>
+                            <p className="reply-time">{miscService.getFormattedDate(reply.createdOn)}</p>
                         </div>
                     </div>
                     <div className="reply-content-wrapper">
-                        <p className="reply-text">{d.replyContent}</p>
+                        <p className="reply-text">{reply.replyContent}</p>
                     </div>
                 </div>
             </div>
