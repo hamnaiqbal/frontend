@@ -258,7 +258,7 @@ export default function JobDetail() {
 
         const renderBids = () => {
             return bidsState.map((b, i) => {
-                return <div key={i} className="single-bid" onClick={() => { onBidClick(b); }}>
+                return <div key={i} className={"single-bid " + (job.acceptedBid === b._id ? 'selected' : '')} onClick={() => { onBidClick(b); }}>
                     <div className="row">
                         <div className="col-md-8">
                             <p className="bidderName">

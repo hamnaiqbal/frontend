@@ -45,14 +45,16 @@ export default function NearbyTutors() {
                     long: position.coords.longitude,
                     lat: position.coords.latitude
                 });
-                setUserLocation({
-                    latitude: user.latitude || position.coords.latitude,
-                    longitude: user.longitude || position.coords.longitude
-                });
+                if (position.coords.latitude != userLocation.latitude || position.coords.longitude != userLocation.longitude) {
+                    setUserLocation({
+                        latitude: position.coords.latitude,
+                        longitude: position.coords.longitude
+                    });
+                }
             }
         });
 
-    }, []);
+    }, [userLocation]);
 
     const hideQuoteDialog = (e) => {
         if (e) {
@@ -67,6 +69,13 @@ export default function NearbyTutors() {
         setShowQuoteDialog(true);
     };
 
+    const onMapClick = (obj) => {
+        setUserLocation({
+            latitude: obj.lat,
+            longitude: obj.lng
+        });
+    }
+
 
     const fetchCourses = async () => {
         if (courseList.length === 0) {
@@ -76,11 +85,19 @@ export default function NearbyTutors() {
     };
 
     const getCourseName = (courseId) => {
-        return courseList?.find(cf => cf.value === courseId)?.label ?? 'HUHU';
+        return courseList?.find(cf => cf.value === courseId)?.label;
     };
 
     const fetchTutors = (filters) => {
-        httpService.postRequest(URLS.GET_TUTORS, filters ?? {}).subscribe(d => {
+        filters = filters ?? {};
+        console.log(userLocation);
+        if (userLocation.latitude && userLocation.longitude) {
+            filters.position = {
+                lat: userLocation.latitude,
+                lon: userLocation.longitude
+            };
+        }
+        httpService.postRequest(URLS.GET_TUTORS, filters ?? {}, false, true, false).subscribe(d => {
             setTutorsList(d);
         });
     };
@@ -92,12 +109,7 @@ export default function NearbyTutors() {
         }
         if (distance && distance !== '0') {
             filters.distance = distance;
-            filters.position = {
-                lat: userLocation.latitude,
-                lon: userLocation.longitude
-            };
         }
-
         fetchTutors(filters);
     };
 
@@ -117,7 +129,10 @@ export default function NearbyTutors() {
                             <div className="tutor-info-head">
                                 <h4 className="tutor-name">{t.name}</h4>
                                 <small className="tutor-address">
-                                    5.0 KM - From {t.city} - {t.country}
+                                    {
+                                        t.distance != null && Math.round(t.distance) + "KM - "
+                                    }
+                                    From {t.city} - {t.country}
                                 </small>
                             </div>
 
@@ -245,6 +260,7 @@ export default function NearbyTutors() {
                                     <div style={{ height: '30vh', width: '100%' }}>
                                         <GoogleMapReact
                                             bootstrapURLKeys={{ key: API_KEY }}
+                                            onClick={onMapClick}
                                             center={{
                                                 lat: user.latitude,
                                                 lng: user.longitude

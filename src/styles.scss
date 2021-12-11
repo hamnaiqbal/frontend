@@ -1402,6 +1402,11 @@ body {
         padding: 10px;
     }
 
+    .single-bid.selected {
+        border: 1px dashed $success-color-dark;
+        color: $success-color-dark;
+    }
+
     p.bidderName {
         font-weight: bold;
     }
