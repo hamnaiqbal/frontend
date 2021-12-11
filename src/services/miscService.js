@@ -87,7 +87,7 @@ const miscService = {
     },
 
     getJobTypeName(value) {
-        return CONSTANTS.JOB_TYPES.find(job => job.value === value).label ?? 'Other';
+        return CONSTANTS.JOB_TYPES.find(job => job.value === value)?.label ?? 'Other';
     },
 
     getTimeDifference(postDate, diffInMS, shortVersion = false) {

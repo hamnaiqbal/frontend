@@ -1,6 +1,6 @@
 import { confirmDialog } from 'primereact/confirmdialog'; // To use confirmDialog method
 import { OverlayPanel } from 'primereact/overlaypanel';
-import React, { useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import URLS from '../../constants/api-urls';
 import CONSTANTS from '../../constants/constants';
@@ -10,12 +10,21 @@ import miscService from '../../services/miscService';
 import userService from '../../services/userservice';
 
 
-function Post(props) {
-    const post = props.post;
+function Post({ post, showEditDialog, showReportDialog, fetchPosts }) {
     const history = useHistory();
     const op = useRef(null);
 
     const [upvotes, setUpvotes] = useState(post.upvotes);
+
+    const [hasAlreadyUpvted, setHasAlreadyUpvted] = useState(false);
+
+    const userId = userService.getCurrentUserId();
+
+    useEffect(() => {
+        const upvotedBy = post.upvotedBy ?? [];
+        const hasUpvoted = upvotedBy.includes(userId);
+        setHasAlreadyUpvted(hasUpvoted);
+    }, [post, userId]);
 
     const redirectToPost = () => {
         history.push(`/home/post/${post._id}`);
@@ -27,22 +36,26 @@ function Post(props) {
 
     const upvote = (event) => {
         event.stopPropagation();
-        httpService.postRequest(URLS.POST_UPVOTE, { _id: post._id, upvote: true }).subscribe(data => {
+        if (hasAlreadyUpvted) {
+            return;
+        }
+        httpService.postRequest(URLS.POST_UPVOTE, { _id: post._id, upvote: true, userId: userService.getCurrentUserId() }).subscribe(data => {
+            setHasAlreadyUpvted(true);
             setUpvotes(upvote => upvote + 1);
         });
     };
 
-    const showEditDialog = (event) => {
+    const viewEditDialog = (event) => {
         event.stopPropagation();
-        if (props.showEditDialog) {
-            props.showEditDialog(post);
+        if (showEditDialog) {
+            showEditDialog(post);
         }
     };
 
-    const showReportDialog = (event) => {
+    const viewReportDialog = (event) => {
         event.stopPropagation();
-        if (props.showReportDialog) {
-            props.showReportDialog(post);
+        if (showReportDialog) {
+            showReportDialog(post);
         }
     };
 
@@ -67,8 +80,8 @@ function Post(props) {
     const deletePost = () => {
         const data = { _id: post._id };
         httpService.deleteRequest(URLS.POST, data).subscribe(() => {
-            if (props.fetchPosts) {
-                props.fetchPosts();
+            if (fetchPosts) {
+                fetchPosts();
             }
         });
     };
@@ -116,7 +129,7 @@ function Post(props) {
                 </div>
                 <div className="post-bottom-section">
                     <div className="post-numbers-wrapper">
-                        <div className="upvotes-count" onClick={upvote}>
+                        <div className={"upvotes-count" + (hasAlreadyUpvted ? ' selected' : '')} onClick={upvote}>
                             <p>
                                 <i className="pi pi-fw pi-chevron-up"></i>
                                 {upvotes} Upvotes
@@ -144,7 +157,7 @@ function Post(props) {
                     {
                         shouldShowOptions() &&
                         <div>
-                            <p className="edit-option" onClick={showEditDialog}>
+                            <p className="edit-option" onClick={viewEditDialog}>
                                 <i className="pi pi-fw pi-pencil"></i>Edit
                             </p>
                             <hr />
@@ -160,7 +173,7 @@ function Post(props) {
                             <hr />
                         </div>
                     }
-                    <p className="report-option" onClick={showReportDialog}>
+                    <p className="report-option" onClick={viewReportDialog}>
                         <i className="far fa-flag"></i>Report
                     </p>
                 </div>

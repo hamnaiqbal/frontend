@@ -28,15 +28,15 @@ const Main = ({ match }) => {
 
     const history = useHistory();
 
-
     useEffect(() => {
-        chatService.subscribeToMessages();
 
         if (!userService.isLoggedIn()) {
             miscService.handleError('You are not logged In');
             history.push('/login');
             return;
         }
+
+        chatService.subscribeToMessages();
 
         return () => { };
     }, []);

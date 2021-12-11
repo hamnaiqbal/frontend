@@ -45,8 +45,8 @@ const CONSTANTS = {
     ],
 
     JOB_TYPES: [
-        { label: 'Assignment Help', value: 'A' },
-        { label: 'Project Help', value: 'P' },
+        // { label: 'Assignment Help', value: 'A' },
+        // { label: 'Project Help', value: 'P' },
         { label: 'Others', value: 'O' },
     ],
 

@@ -1,7 +1,8 @@
 import { Dialog } from 'primereact/dialog';
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import CONSTANTS from '../../constants/constants';
+import { MESSAGE_OBSERVER } from '../../services/chatService';
 import userService from '../../services/userservice';
 import Notifications from '../Notifications/Notifications';
 
@@ -9,6 +10,24 @@ function Header() {
     const history = useHistory();
 
     const [showNotificationsModal, setShowNotificationsModal] = useState(false);
+
+    const [hasNewMessage, setHasNewMessage] = useState(false);
+
+
+    useEffect(() => {
+        const subs = [];
+        const s = MESSAGE_OBSERVER.subscribe(m => {
+            if (m) {
+                setHasNewMessage(true);
+            }
+        })
+        subs.push(s);
+        return () => {
+            subs.forEach(s => {
+                s.unsubscribe();
+            })
+        }
+    }, []);
 
     const logout = () => {
         userService.logout();
@@ -41,7 +60,12 @@ function Header() {
                     <div className="header-icon-wrapper" onClick={onNotificationClick}>
                         <i className='header-icon fas fa-bell'></i>
                     </div>
-                    <div className="header-icon-wrapper" onClick={onMessageClick}>
+                    <div className={"header-icon-wrapper"} onClick={onMessageClick}>
+                        {
+                            hasNewMessage && <div className='new-messages'>
+
+                            </div>
+                        }
                         <i className='header-icon pi pi-comments'></i>
                     </div>
                     <div className="header-icon-wrapper" onClick={onProfileClick}>

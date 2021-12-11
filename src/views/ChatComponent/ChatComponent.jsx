@@ -1,3 +1,5 @@
+import { Dialog } from "primereact/dialog";
+import { InputText } from "primereact/inputtext";
 import { useEffect, useRef, useState } from "react";
 import URLS from "../../constants/api-urls";
 import CONSTANTS from "../../constants/constants";
@@ -13,6 +15,7 @@ const ChatComponent = () => {
     const [chatMessages, setChatMessages] = useState([]);
     const [message, setMessage] = useState('');
 
+    const [showNewMessageDialog, setShowNewMessageDialog] = useState(false);
     const [alreadyObserved, setAlreadyObserved] = useState(false);
 
     const [fetchedMessagesData, setFetchedMessagesData] = useState([]);
@@ -86,7 +89,7 @@ const ChatComponent = () => {
             const recChats = msgData.map(m => {
                 m.user.textedLast = miscService.getTimeDifference(null, m.lastMessaged, true);
                 return m.user
-                
+
             });
             setRecentChats(recChats);
             setFetchedMessagesData(msgData);
@@ -186,14 +189,113 @@ const ChatComponent = () => {
         </div>
     }
 
+    const startChatWithNewUser = (user) => {
+
+        setShowNewMessageDialog(false);
+
+        const rcObj = { ...user };
+        rcObj.textedLast = '';
+        rcObj.hasUnred = false;
+
+        showSelectedChatMessages(rcObj);
+
+        const index = recentChats.findIndex(rc => rc._id === rcObj._id);
+        if (index < 0) {
+            recentChats.unshift(rcObj);
+        }
+    }
+
+    const AddNewChat = ({ onUserSelect }) => {
+
+        const [newChatUsername, setNewChatUsername] = useState('');
+        const [searchedUsers, setSearchedUsers] = useState([]);
+
+
+        const searchUsers = () => {
+            if (!newChatUsername || newChatUsername === '') {
+                return miscService.handleError('Please enter some text');
+            }
+
+            httpService.getRequest(URLS.SEARCH_USERS_BY_NAMES, { searchText: newChatUsername }).subscribe(users => {
+                setSearchedUsers(users);
+            })
+
+        }
+
+
+        const SingleUserRow = ({ user: u }) => {
+            return <div className="single-user">
+                <div className="row">
+                    <div className="col-md-2">
+                        <img src={u.imageLink ?? CONSTANTS.DEFAULT_USER_IMAGE} alt={u.name} />
+                    </div>
+
+                    <div className="col-md-7 name-wrapper">
+                        {u.name} - ({u.username})
+                    </div>
+
+                    <div className="col-md-3 btn-wrapper">
+                        <button className="btn start-chat-btn" onClick={() => { onUserSelect(u) }}>
+                            <i className="far fa-comments"></i> Start Chat
+                        </button>
+                    </div>
+                </div>
+            </div>
+        }
+
+        return (
+            <div className="add-new-chat">
+                <div className="row">
+                    <div className="col-md-8">
+                        <div className="form-group p-float-label">
+                            <InputText
+                                value={newChatUsername}
+                                required
+                                className="form-cotntrol single-control"
+                                id="resourceRefLink"
+                                onChange={(e) => {
+                                    setNewChatUsername(e.target.value);
+                                }}
+                            />
+                            <label htmlFor="resourceRefLink">Enter User Name Here</label>
+                        </div>
+                    </div>
+                    <div className="col-md-4">
+                        <button style={{ padding: '8px' }} className="btn btn-primary fw" onClick={searchUsers}>Search Users</button>
+                    </div>
+                </div>
+
+                <div className="found-users row">
+                    {
+                        searchedUsers.map((u, i) => {
+                            return <SingleUserRow key={i} user={u} />
+                        })
+                    }
+                </div>
+            </div>
+        )
+    }
+
 
     return (
         <div className="chat-component">
+
+            <Dialog header='Start new chat' className="new-chat-dialog custom-scrollbar" visible={showNewMessageDialog} onHide={() => { setShowNewMessageDialog(false) }}>
+                <AddNewChat onUserSelect={startChatWithNewUser} />
+            </Dialog>
+
             <div className="row">
 
                 <div className="col-md-3 chat-sidebar-wrapper">
                     {/* Chat Sidebar - To Show the Recent Chats of the User */}
                     <div className="chat-sidebar">
+
+                        <div className="add-new-chat">
+                            <button className="btn btn-primary fw new-msg-btn" onClick={() => { setShowNewMessageDialog(true) }}>
+                                <i className="pi pi-comments"></i>  Add new Chat
+                            </button>
+                        </div>
+
                         {renderRecentChats()}
                     </div>
                 </div>

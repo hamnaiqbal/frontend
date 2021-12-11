@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useHistory } from 'react-router-dom';
 import CONSTANTS from '../../constants/constants';
-import userService from '../../services/userservice';
+import userService, { onUserChange } from '../../services/userservice';
 
 function Sidebar() {
     const [user, setUser] = useState({});
@@ -10,8 +10,13 @@ function Sidebar() {
     const isUserAdmin = userService.isCurrentUserAdmin();
     const isUserTutor = userService.getLoggedInUser()?.listedAsTutor;
 
+    // const userLocalStorage = localStorage.getItem('user');
+
     useEffect(() => {
         fetchUser();
+        onUserChange().subscribe(() => {
+            fetchUser();
+        })
     }, []);
 
     const fetchUser = () => {
@@ -83,11 +88,6 @@ function Sidebar() {
             label: 'View Jobs Feed',
             icon: 'pi pi-list',
             link: '/home/jobs',
-        },
-        {
-            label: 'Search Jobs',
-            icon: 'pi pi-search',
-            link: '/home/profile',
         },
         {
             label: 'Quiz',

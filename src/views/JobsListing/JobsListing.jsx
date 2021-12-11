@@ -6,6 +6,7 @@ import { useEffect, useState } from 'react';
 import JobItem from '../../components/JobItem/JobItem';
 import PostJob from '../../components/PostJob/PostJob';
 import URLS from '../../constants/api-urls';
+import CONSTANTS from '../../constants/constants';
 import httpService from '../../services/httpservice';
 import miscService from '../../services/miscService';
 import userService from '../../services/userservice';
@@ -23,12 +24,6 @@ function JobsListing() {
     useEffect(() => {
         fetchJobs();
     }, []);
-
-    const JOB_TYPES = [
-        { label: 'Assignment Help', value: 'A' },
-        { label: 'Project Help', value: 'P' },
-        { label: 'Others', value: 'O' },
-    ];
 
     const fetchJobs = () => {
         const data = {
@@ -140,7 +135,7 @@ function JobsListing() {
                                         <Dropdown
                                             value={typeFilter}
                                             required
-                                            options={JOB_TYPES}
+                                            options={CONSTANTS.JOB_TYPES}
                                             className="form-cotntrol single-control"
                                             id="type"
                                             onChange={(e) => {

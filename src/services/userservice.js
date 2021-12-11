@@ -1,6 +1,15 @@
+import { Subject } from "rxjs";
+
+const userObserver = new Subject();
+
+export const onUserChange = () => {
+    return userObserver;
+}
+
 const userService = {
     saveLoggedInUser(user) {
         localStorage.setItem('user', JSON.stringify(user));
+        userObserver.next(user);
     },
     isLoggedIn() {
         return localStorage.getItem('user') !== null;

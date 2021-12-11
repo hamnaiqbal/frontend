@@ -20,16 +20,34 @@ function PostDetails() {
     const [showEditDialog, setShowEditDialog] = useState(false);
     const [isAddingResource, setIsAddingResource] = useState(false);
 
+    // 0: Not voted, 1: Upvoted, 2: Downvoted
+    const [hasAlreadyVoted, setHasAlreadyVoted] = useState(0);
+
+    const userId = userService.getCurrentUserId();
+
     useEffect(() => {
         fetchPost();
     }, []);
 
     const fetchPost = () => {
-        httpService.getRequest(URLS.GET_SINGLE_POST, null, { _id: postId }).subscribe((data) => {
+        httpService.getRequest(URLS.GET_SINGLE_POST, { userId }, { _id: postId }).subscribe((data) => {
             if (data) {
                 data.post.createdOn = miscService.getFormattedDate(data.post.createdOn);
                 setPost(data.post);
                 setReplies(data.replies || []);
+                // TODO: ADD IT TO BACKEND
+                const upvotedBy = data.post.upvotedBy ?? [];
+                const downvotedBy = data.post.downvotedBy ?? [];
+
+                if (upvotedBy.includes(userId)) {
+                    // data.post.hasUpvoted = true;
+                    setHasAlreadyVoted(1);
+                } else if (downvotedBy.includes(userId)) {
+                    // data.post.hasDownvoted = true;
+                    setHasAlreadyVoted(2);
+                }
+
+
             }
         });
     };
@@ -65,9 +83,18 @@ function PostDetails() {
     }
 
     const upDownVote = (upvote = true) => {
-        httpService.postRequest(URLS.POST_UPVOTE, { _id: postId, upvote: !!upvote }).subscribe(() => {
+
+        if (hasAlreadyVoted === 1 && upvote) {
+            return;
+        }
+        if (hasAlreadyVoted === 2 && !upvote) {
+            return;
+        }
+
+        httpService.postRequest(URLS.POST_UPVOTE, { _id: postId, upvote: !!upvote, userId: userService.getCurrentUserId() }).subscribe(() => {
             const originalCount = post.upvotes;
             const newCount = upvote ? originalCount + 1 : originalCount - 1;
+            setHasAlreadyVoted(upvote ? 1 : 2);
             setPost(p => { return { ...p, upvotes: newCount }; });
         });
     };
@@ -128,14 +155,14 @@ function PostDetails() {
                             <div className="post-top-section d-flex">
                                 <div className="post-votes">
                                     <i
-                                        className="pi pi-caret-up vote-icon upvote c-pointer"
+                                        className={"pi pi-caret-up vote-icon upvote c-pointer" + (hasAlreadyVoted === 1 ? ' selected' : '')}
                                         onClick={() => {
                                             upDownVote(true);
                                         }}
                                     ></i>
                                     <p className="votes-count center">{post.upvotes}</p>
                                     <i
-                                        className="pi pi-caret-down vote-icon downvote c-pointer"
+                                        className={"pi pi-caret-down vote-icon downvote c-pointer" + (hasAlreadyVoted === 2 ? ' selected' : '')}
                                         onClick={() => {
                                             upDownVote(false);
                                         }}

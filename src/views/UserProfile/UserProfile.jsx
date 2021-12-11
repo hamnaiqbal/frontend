@@ -155,8 +155,11 @@ export default function UserProfile(props) {
             setPasswords({ ...passwords, [field]: value });
         } else {
             if (['latitude', 'longitude'].includes(field)) {
-                user[field] = value;
-                setUser(user);
+                // user[field] = value;
+                // setUser(user);
+                setUser(user => {
+                    return { ...user, [field]: value };
+                });
             } else {
                 setUser(user => {
                     return { ...user, [field]: value };

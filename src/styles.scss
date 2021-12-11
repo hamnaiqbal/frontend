@@ -43,6 +43,16 @@ body {
         cursor: pointer;
     }
 
+    .new-messages {
+        height: 10px;
+        width: 10px;
+        position: absolute;
+        background: $failure-color-light;
+        top: 15px;
+        border-radius: 50%;
+        right: 160px;
+    }
+
     .header-icon-wrapper:hover {
         box-shadow: 0px 0px 20px #b4b4b4;
         transition-duration: 300ms;
@@ -236,6 +246,14 @@ body {
     overflow-y: scroll;
     overflow-x: hidden;
 
+    .new-msg-btn {
+        margin-bottom: 30px;
+
+        i {
+            margin-right: 10px;
+        }
+    }
+
     .recent-chat-item {
         padding: 10px 5px;
         text-align: left;
@@ -262,6 +280,44 @@ body {
     .recent-chat-item.unread {
         font-weight: bold;
         font-size: large;
+    }
+}
+
+.add-new-chat {
+    .single-user {
+
+        padding: 10px 5px;
+        vertical-align: middle;
+
+        .btn-wrapper {
+            display: flex;
+            align-items: center;
+            justify-content: end;
+        }
+
+        .start-chat-btn {
+            border: 1px solid $primary;
+            border-radius: 50px;
+            color: $primary;
+        }
+
+        .start-chat-btn:hover {
+            background-color: $primary;
+            color: white;
+            transition-duration: 300ms;
+        }
+
+        .name-wrapper {
+            display: flex;
+            font-weight: bold;
+            align-items: center;
+        }
+
+        img {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+        }
     }
 }
 
@@ -439,6 +495,10 @@ body {
             }
         }
 
+        .upvotes-count.selected {
+            color: $success-color-dark;
+        }
+
         .replies-count,
         .options-div {
             margin-left: 20px;
@@ -461,6 +521,7 @@ body {
 
             .post-username {
                 color: $light-text;
+
                 span {
                     font-weight: bold;
                     color: $dark-text;
@@ -760,6 +821,7 @@ body {
     .add-post.main-text.resource {
         color: $resource-color-dark;
     }
+
     .add-post.main-text.ask-resource {
         color: $ask-resource-color-dark;
     }
@@ -791,6 +853,7 @@ body {
         // box-shadow: 0px 0px 5px 3px $resource-color-light;
         background-color: $resource-color-dark;
     }
+
     .add-post-div.ask-resource:hover {
         .add-post.main-text.ask-resource {
             transition-duration: 200ms;
@@ -810,6 +873,7 @@ body {
     .add-post-div.add-question {
         border-right: 1px $light-border solid;
     }
+
     .add-post-div.ask-resource {
         border-left: 1px $light-border solid;
     }
@@ -884,6 +948,7 @@ body {
 
     .profile-image {
         width: 100%;
+        max-width: 120px;
         border-radius: 50%;
         max-height: 120px;
     }
@@ -926,7 +991,8 @@ body {
     width: 30%;
 }
 
-.notifications-dialog {
+.notifications-dialog,
+.new-chat-dialog {
     width: 40%;
 }
 
@@ -1188,6 +1254,7 @@ body {
 
     .app-card.job-card {
         padding: 30px;
+        cursor: pointer;
     }
 
     .job-budget {
@@ -1926,11 +1993,12 @@ body {
             font-size: small;
             color: white;
         }
-        
+
         p.status.taken {
             border-color: $success-color-light;
             background: $success-color-light;
         }
+
         p.status.not-taken {
             border-color: $failure-color-light;
             background: $failure-color-light;
@@ -1984,6 +2052,13 @@ body {
         line-height: 0;
     }
 
+    .vote-icon.upvote.selected {
+        color: $success-color-dark;
+    }
+    .vote-icon.downvote.selected {
+        color: $failure-color-dark;
+    }
+ 
     .post-heading {
         font-size: x-large;
         font-weight: bold;
@@ -2035,6 +2110,7 @@ body {
         color: $success-color-dark;
         transition-duration: 300ms;
     }
+
     .reply-vote-icon.downvote:hover {
         color: $failure-color-dark;
         transition-duration: 300ms;
