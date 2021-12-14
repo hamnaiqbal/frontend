@@ -179,7 +179,7 @@ function PostDetails() {
                                             alt={post.userId?.name}
                                         />
                                         <p>
-                                            <span className="posted-by-name bold">{post.userId?.name}</span> -{' '}
+                                            <span className="posted-by-name bold">{post.userId?.name} ({post.userId?.username})</span> -{' '}
                                             <span className="posted-on">{post.createdOn}</span>
                                         </p>
                                     </div>
