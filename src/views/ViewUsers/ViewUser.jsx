@@ -15,6 +15,7 @@ function ViewUsers() {
         { field: 'name', header: 'Name' },
         { field: 'userType', header: 'User Type' },
         { field: 'active', header: 'Active' },
+        { field: 'admin', header: 'Admin' },
         { field: 'listedAsTutor', header: 'Tutor' },
         { field: 'userActions', header: '' },
     ];
@@ -28,7 +29,7 @@ function ViewUsers() {
     const [columns, setColumns] = useState(allColumns);
 
     const [showOnlyTutorRequests, setShowOnlyTutorRequests] = useState(false);
-    
+
     const [userToView, setUserToView] = useState({});
 
     const [showDialog, setShowDialog] = useState(false);
@@ -67,6 +68,19 @@ function ViewUsers() {
             setUsers(tempUsers);
         });
     };
+
+    const changeAdminStatus = (rowData, admin) => {
+
+        const userType = admin ? 1 : 0;
+
+        httpService.putRequest(URLS.USERS, { ...rowData, userType }).subscribe((d) => {
+            const index = users.findIndex((u) => u.username === rowData.username);
+            const tempUsers = [...users];
+            tempUsers[index] = { ...rowData, userType };
+            setUsers(tempUsers);
+        });
+
+    }
 
     const userTypeTemplate = (row) => {
         const type = row.userType === 0 ? 'Student' : 'Admin';
@@ -117,8 +131,8 @@ function ViewUsers() {
             type === 'delete'
                 ? `delete ${rowData.name} from Users?`
                 : type === 'accept'
-                ? `accept ${rowData.name} as tutor?`
-                : `reject ${rowData.name}'s application for tutor?`;
+                    ? `accept ${rowData.name} as tutor?`
+                    : `reject ${rowData.name}'s application for tutor?`;
         confirmDialog({
             message: `Are you sure to ${message}`,
             header: 'Confirmation',
@@ -138,7 +152,7 @@ function ViewUsers() {
                         break;
                 }
             },
-            reject: () => {},
+            reject: () => { },
         });
     };
 
@@ -191,13 +205,17 @@ function ViewUsers() {
         const classes = row.listedAsTutor
             ? 'check-circle listed-tutor'
             : row.appliedAsTutor
-            ? 'exclamation-circle applied-tutor'
-            : 'times-circle not-tutor';
+                ? 'exclamation-circle applied-tutor'
+                : 'times-circle not-tutor';
         return <span className={`tutor-status pi pi-${classes}`}></span>;
     };
 
     const activeStatusTemplate = (row) => {
         return <InputSwitch checked={row.active} onChange={(e) => changeActiveUser(row, e.value)} />;
+    };
+
+    const adminStatusTemplate = (row) => {
+        return <InputSwitch checked={row.userType === 1} onChange={(e) => changeAdminStatus(row, e.value)} />;
     };
 
     const cvLinkTemplate = (row) => {
@@ -211,6 +229,9 @@ function ViewUsers() {
     const dynamicColumns = columns.map((col, i) => {
         if (col.field === 'active') {
             return <Column key={col.field} field={col.field} header={col.header} body={activeStatusTemplate} />;
+        }
+        else if (col.field === 'admin') {
+            return <Column key={col.field} field={col.field} header={col.header} body={adminStatusTemplate} />;
         } else if (col.field === 'userType') {
             return (
                 <Column
@@ -244,10 +265,12 @@ function ViewUsers() {
     return (
         <div className="view-user-component">
             <div className="app-card">
-                <div className="users-filters-div">
-                    <div className="single-filter col-md-4">
-                        <p className="filter-heading center bold">Show Pending Tutor Requests</p>
-                        <InputSwitch checked={showOnlyTutorRequests} onChange={showPendingTutorRequests} />
+                <div className="row">
+                    <div className="single-filter-wrapper col-md-5">
+                        <div className="single-filter switch-field">
+                            <p className="filter-heading center bold">Show Pending Tutor Requests</p>
+                            <InputSwitch checked={showOnlyTutorRequests} onChange={showPendingTutorRequests} />
+                        </div>
                     </div>
                 </div>
             </div>

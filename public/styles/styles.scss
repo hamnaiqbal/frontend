@@ -1648,6 +1648,13 @@ body {
         text-align: center;
     }
 
+    .switch-field {
+        display: flex;
+        justify-content: space-between;
+        margin-top: 10px;
+        padding: 10px;
+    }
+
     span.user-type-badge.user-type-student {
         background: $student-type;
     }
