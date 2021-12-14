@@ -11,6 +11,7 @@ const URLS = {
     SEARCH_USERS_BY_NAMES: '/users/searchUsersByName',
     USER_OAUTH_VERIFICATION: '/users/verifyOAuth',
     USER_PAY: '/users/pay',
+    USER_GET_ADMIN_STATS: '/users/getAdminStats',
 
     COURSE: '/courses',
 
@@ -27,6 +28,8 @@ const URLS = {
     GET_SINGLE_JOB: '/job/get/{_id}',
     GET_USER_PROJECTS: '/job/getUserProjects',
     GET_JOB_LISTING: '/job/getJobs',
+    GET_JOBS_ADMIN: '/job/getJobsForAdmin',
+    MARK_AS_PAID: '/job/markJobAsPaid',
 
     BID: '/bid',
     ACCEPT_BID: '/bid/accept',

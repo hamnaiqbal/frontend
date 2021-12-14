@@ -3,6 +3,7 @@ import { Dropdown } from 'primereact/dropdown';
 import { InputTextarea } from 'primereact/inputtextarea';
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router';
+import ConnectStripe from '../../components/ConnectStripe/ConnectStripe';
 import URLS from '../../constants/api-urls';
 import CONSTANTS from '../../constants/constants';
 import httpService from '../../services/httpservice';
@@ -298,6 +299,8 @@ export default function JobDetail() {
 
         const [hasAlreadyPlaced, setHasAlreadyPlaced] = useState(false);
 
+        const [showConnectDialog, setShowConnectDialog] = useState(false);
+
         useEffect(() => {
             if (job._id) {
                 if (bids && bids.length > 0) {
@@ -318,8 +321,14 @@ export default function JobDetail() {
             e.preventDefault();
 
             if (!daysNeeded || !description) {
-                miscService.handleError('Missing Fields');
-                return;
+                return miscService.handleError('Missing Fields');
+            }
+
+            // check if the user has connected the stripe or not
+            const user = userService.getLoggedInUser();
+
+            if (!user.stripeUser) {
+                return setShowConnectDialog(true);
             }
 
             const data = { daysNeeded, description, jobId: job._id, bidderId: userService.getCurrentUserId() };
@@ -332,6 +341,11 @@ export default function JobDetail() {
 
         return (
             <div className="place-bid-form-wrapper">
+
+                <Dialog header={'You have not connected your stripe account'} className='connect-stripe-dialog' visible={showConnectDialog} onHide={() => { setShowConnectDialog(false) }}>
+                    <ConnectStripe />
+                </Dialog>
+
                 {hasAlreadyPlaced &&
                     <div className="already-placed-bid text-center">
                         <i className="far fa-check-circle" />

@@ -12,7 +12,7 @@ import '../node_modules/@fortawesome/fontawesome-free/css/all.min.css';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
-import './styles.scss';
+import '../public/styles/styles.scss';
 import App from './views/App/App';
 import { BrowserRouter } from 'react-router-dom';
 

@@ -8,6 +8,8 @@ import chatService from '../../services/chatService';
 import miscService from '../../services/miscService';
 import userService from '../../services/userservice';
 import AddTutor from '../AddTutor/AddTutor';
+import AdminDashboard from '../AdminDashboard/AdminDashboard';
+import AdminJobStatuses from '../AdminJobStatuses/AdminJobStatuses';
 import AttemptQuiz from '../AttemptQuiz/AttemptQuiz';
 import ChatComponent from '../ChatComponent/ChatComponent';
 import ExpertQuiz from '../ExpertQuiz/ExpertQuiz';
@@ -58,6 +60,7 @@ const Main = ({ match }) => {
                         <div className="container-fluid">
                             <Switch>
                                 <Route path={match.url + '/'} exact component={PostFeed} />
+                                <Route path={match.url + '/admin-dashboard'} exact component={AdminDashboard} />
                                 <Route path={match.url + '/posts/searchPosts'} component={SearchPosts} />
                                 <Route path={match.url + '/myPosts'} exact component={PostFeed} />
                                 <Route path={match.url + '/addPost'} component={AddPostForm} />
@@ -74,6 +77,7 @@ const Main = ({ match }) => {
                                 <Route path={match.url + '/messages'} component={ChatComponent} />
                                 <Route path={match.url + '/jobs/myJobs'} component={UserJobs} />
                                 <Route path={match.url + '/jobs'} component={JobsListing} />
+                                <Route path={match.url + '/admin-jobs'} component={AdminJobStatuses} />
                                 <Route path={match.url + '/job/:jobId'} component={JobDetail} />
                             </Switch>
                         </div>

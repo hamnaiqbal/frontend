@@ -1,7 +1,7 @@
 @import url('https://fonts.googleapis.com/css?family=Inter');
 
 
-@import "../public/styles/colors.scss";
+@import "colors.scss";
 
 $header-height: 70px;
 
@@ -992,8 +992,20 @@ body {
 }
 
 .notifications-dialog,
-.new-chat-dialog {
+.new-chat-dialog,
+.connect-stripe-dialog,
+.payout-dialog {
     width: 40%;
+}
+
+
+.payout-deatil {
+    p.user-detail-heading {
+        margin: 0;
+        font-size: small;
+        font-weight: bold;
+    }
+
 }
 
 .notifications-component {
@@ -1573,6 +1585,60 @@ body {
     }
 }
 
+.admin-dashboard {
+
+    .app-card.admin-stat-card {
+        padding: 30px;
+
+        i.admin-stat-icon {
+            font-size: 90px;
+            position: absolute;
+            color: grey;
+            opacity: 0.5;
+            margin-top: -40px;
+            margin-left: 30px;
+        }
+
+        p.admin-stat-heading {
+            font-weight: bold;
+        }
+
+        p.admin-stat-number {
+            font-size: xx-large;
+            font-weight: bold;
+        }
+    }
+
+}
+
+
+
+.connect-stripe {
+    h4.stripe-heading {
+        font-size: large;
+        margin-bottom: 20px;
+        display: inline-block;
+        border-bottom: 1px solid #bdbdbd;
+        padding-bottom: 20px;
+    }
+
+    p.stripe-description {
+        font-size: medium;
+        color: grey;
+    }
+
+    button.btn.btn-connect-stripe {
+        border: 1px $primary solid;
+        color: $primary;
+        margin-top: 20px;
+        border-radius: 50px;
+    }
+
+    i.fas.fa-link {
+        margin-right: 10px;
+    }
+}
+
 .view-user-component {
     span.user-type-badge {
         padding: 2px 5px;
@@ -1794,8 +1860,56 @@ body {
     }
 }
 
+.admin-job-status-component {
+    .budget-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        /* text-align: center; */
+    }
 
-.user-jobs-component {
+    p.budget-text {
+        text-align: center;
+        font-size: small;
+        font-weight: bold;
+        color: grey;
+    }
+
+    p.budget {
+        font-size: small;
+        text-align: center;
+    }
+
+    .budget span {
+        font-size: x-large;
+        font-weight: bolder;
+    }
+
+    .actions-wrapper {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .job-action {
+        color: $primary;
+        border: 1px solid $primary;
+        padding: 10px 20px;
+        border-radius: 30px;
+        cursor: pointer;
+    }
+
+    .paid-to-seller {
+        color: $success-color-dark;
+        i {
+            margin-right: 10px;
+        }
+    }
+}
+
+
+.user-jobs-component,
+.admin-job-status-component {
     p {
         margin: 0;
     }
@@ -2055,10 +2169,11 @@ body {
     .vote-icon.upvote.selected {
         color: $success-color-dark;
     }
+
     .vote-icon.downvote.selected {
         color: $failure-color-dark;
     }
- 
+
     .post-heading {
         font-size: x-large;
         font-weight: bold;

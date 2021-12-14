@@ -27,7 +27,7 @@ function PostDetails() {
 
     useEffect(() => {
         fetchPost();
-    }, []);
+    }, [postId]);
 
     const fetchPost = () => {
         httpService.getRequest(URLS.GET_SINGLE_POST, { userId }, { _id: postId }).subscribe((data) => {

@@ -52,7 +52,8 @@ const SingleJob = ({ job, isUserBuyer, onActionPerform }) => {
             name: `${job.title}`,
             metadata: {
                 jobId: job._id,
-                type: 'J'
+                type: 'J',
+                userId: userService.getCurrentUserId()
             }
         }
 

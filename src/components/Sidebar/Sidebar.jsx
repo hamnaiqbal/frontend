@@ -30,6 +30,17 @@ function Sidebar() {
 
     const links = [
         {
+            label: 'Dashboard',
+            isTitle: true,
+            showTo: ['A']
+        },
+        {
+            label: 'Dashboard',
+            icon: 'pi pi-send',
+            link: '/home/admin-dashboard',
+            showTo: ['A']
+        },
+        {
             label: 'Feed',
             isTitle: true
         },
@@ -88,6 +99,12 @@ function Sidebar() {
             label: 'View Jobs Feed',
             icon: 'pi pi-list',
             link: '/home/jobs',
+        },
+        {
+            label: 'View all Jobs Status',
+            icon: 'pi pi-list',
+            link: '/home/admin-jobs',
+            showTo: ['A']
         },
         {
             label: 'Quiz',
