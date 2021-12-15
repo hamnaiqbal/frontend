@@ -63,13 +63,11 @@ const Main = ({ match }) => {
                                 <Route path={match.url + '/admin-dashboard'} exact component={AdminDashboard} />
                                 <Route path={match.url + '/posts/searchPosts'} component={SearchPosts} />
                                 <Route path={match.url + '/myPosts'} exact component={PostFeed} />
-                                <Route path={match.url + '/addPost'} component={AddPostForm} />
                                 <Route path={match.url + '/reportedItems'} component={ReportedItems} />
                                 <Route path={match.url + '/post/:postId'} component={PostDetails} />
                                 <Route path={match.url + '/profile'} component={UserProfile} />
                                 <Route path={match.url + '/scholarships'} component={ScholarshipFeed} />
                                 <Route path={match.url + '/viewUsers'} component={ViewUsers} />
-                                <Route path={match.url + '/becomeTutor'} component={AddTutor} />
                                 <Route path={match.url + '/nearbyTutos'} component={NearbyTutors} />
                                 <Route path={match.url + '/quotes/tutor'} component={RequestedQuotes} />
                                 <Route path={match.url + '/attempt-quiz'} component={AttemptQuiz} />

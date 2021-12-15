@@ -30,104 +30,32 @@ function Sidebar() {
 
     const links = [
         {
-            label: 'Dashboard',
+            label: 'Overview',
             isTitle: true,
             showTo: ['A']
         },
         {
-            label: 'Dashboard',
-            icon: 'pi pi-send',
+            label: 'Admin Dashboard',
+            icon: 'fas fa-chart-bar',
             link: '/home/admin-dashboard',
             showTo: ['A']
         },
         {
-            label: 'Feed',
-            isTitle: true
+            label: 'View all Jobs Status',
+            icon: 'fas fa-briefcase',
+            link: '/home/admin-jobs',
+            showTo: ['A']
         },
         {
-            label: 'View Feed',
-            icon: 'pi pi-send',
-            link: '/home',
-        },
-        {
-            label: 'Search Posts',
-            icon: 'pi pi-search',
-            link: '/home/posts/searchPosts',
-        },
-        {
-            label: 'View My Posts',
-            icon: 'pi pi-list',
-            link: '/home/myPosts',
+            label: 'Reports',
+            isTitle: true,
+            showTo: ['A']
         },
         {
             label: 'Reported Items',
             icon: 'fas fa-flag',
             link: '/home/reportedItems',
-        },
-        {
-            label: 'Tutor',
-            isTitle: true
-        },
-        {
-            label: 'Dashboard',
-            icon: 'fas fa-file-invoice-dollar',
-            link: '/home/quotes/tutor',
-            showTo: ['A', 'T']
-        },
-        {
-            label: 'Nearby Tutors',
-            icon: 'pi pi-map',
-            link: '/home/nearbyTutos',
-        },
-        {
-            label: 'Become a Tutor',
-            icon: 'pi pi-user',
-            link: '/home/profile',
-            showTo: ['A', 'S']
-        },
-        {
-            label: 'Jobs',
-            isTitle: true
-        },
-
-        {
-            label: 'Jobs Dashboard',
-            icon: 'pi pi-briefcase',
-            link: '/home/jobs/myJobs',
-        },
-        {
-            label: 'View Jobs Feed',
-            icon: 'pi pi-list',
-            link: '/home/jobs',
-        },
-        {
-            label: 'View all Jobs Status',
-            icon: 'pi pi-list',
-            link: '/home/admin-jobs',
             showTo: ['A']
-        },
-        {
-            label: 'Quiz',
-            isTitle: true,
-        },
-        {
-            label: 'Attempt Practice Quiz',
-            icon: 'pi pi-th-large',
-            link: '/home/attempt-quiz',
-        },
-        {
-            label: 'Take Skill Quiz',
-            icon: 'pi pi-th-large',
-            link: '/home/skill-quiz',
-        },
-        {
-            label: 'Scholarships',
-            isTitle: true,
-        },
-        {
-            label: 'View Scholarships',
-            icon: 'pi pi-money-bill',
-            link: '/home/scholarships',
         },
         {
             label: 'Users',
@@ -139,6 +67,95 @@ function Sidebar() {
             icon: 'pi pi-users',
             link: '/home/viewUsers',
             showTo: ['A']
+        },
+        {
+            label: 'Feed',
+            isTitle: true,
+        },
+        {
+            label: 'View Feed',
+            icon: 'fas fa-copy',
+            link: '/home',
+        },
+        {
+            label: 'Search Posts',
+            icon: 'pi pi-search',
+            link: '/home/posts/searchPosts',
+        },
+        {
+            label: 'View My Posts',
+            icon: 'pi pi-list',
+            link: '/home/myPosts',
+            showTo: ['T', 'S']
+        },
+        {
+            label: 'Tutor',
+            isTitle: true,
+            showTo: ['T', 'S']
+        },
+        {
+            label: 'Dashboard',
+            icon: 'fas fa-file-invoice-dollar',
+            link: '/home/quotes/tutor',
+            showTo: ['T', 'S']
+        },
+        {
+            label: 'Nearby Tutors',
+            icon: 'pi pi-map',
+            link: '/home/nearbyTutos',
+            showTo: ['T', 'S']
+        },
+        {
+            label: 'Become a Tutor',
+            icon: 'pi pi-user',
+            link: '/home/profile',
+            showTo: ['S']
+        },
+        {
+            label: 'Jobs',
+            isTitle: true,
+            showTo: ['T', 'S']
+        },
+
+        {
+            label: 'Jobs Dashboard',
+            icon: 'pi pi-briefcase',
+            link: '/home/jobs/myJobs',
+            showTo: ['T', 'S']
+        },
+        {
+            label: 'View Jobs Feed',
+            icon: 'pi pi-list',
+            link: '/home/jobs',
+            showTo: ['T', 'S']
+        },
+        {
+            label: 'Quiz',
+            isTitle: true,
+            showTo: ['T', 'S']
+        },
+        {
+            label: 'Attempt Practice Quiz',
+            icon: 'pi pi-th-large',
+            link: '/home/attempt-quiz',
+            showTo: ['T', 'S']
+        },
+        {
+            label: 'Take Skill Quiz',
+            icon: 'pi pi-th-large',
+            link: '/home/skill-quiz',
+            showTo: ['T', 'S']
+        },
+        {
+            label: 'Scholarships',
+            isTitle: true,
+            showTo: ['T', 'S']
+        },
+        {
+            label: 'View Scholarships',
+            icon: 'pi pi-money-bill',
+            link: '/home/scholarships',
+            showTo: ['T', 'S']
         },
         {
             label: 'Profile',
@@ -154,10 +171,20 @@ function Sidebar() {
     const sidebarLinks = () => {
         return links.map((link, index) => {
             return (
-                (!link.showTo
-                    || (link.showTo.includes('T') && isUserTutor)
-                    || (link.showTo.includes('A') && isUserAdmin)
-                    || (link.showTo.includes('S') && !isUserTutor)
+                (
+                    // we do not mention who it is for
+                    (!link.showTo) ||
+
+                    // we mentioned that it is for admin and the logged in user is admin
+                    (link.showTo && isUserAdmin && link.showTo.includes('A')) ||
+
+                    // we mentioned that it is for not for admin and it is either for tutor or student
+                    (link.showTo && !isUserAdmin &&
+                        (
+                            (link.showTo.includes('T') && isUserTutor) ||
+                            (link.showTo.includes('S') && !isUserTutor)
+                        )
+                    )
                 ) &&
 
                 <div

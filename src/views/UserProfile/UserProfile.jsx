@@ -53,10 +53,10 @@ export default function UserProfile(props) {
 
 
     const socialLinksFields = [
-        { label: 'Facebook', key: 'fbLink', type: 'text' },
-        { label: 'Twitter', key: 'twitterLink', type: 'text' },
-        { label: 'LinkedIn', key: 'linkedInLink', type: 'text' },
-        { label: 'GitHub', key: 'githubLink', type: 'text' },
+        { label: 'Facebook', key: 'fbLink', type: 'url' },
+        { label: 'Twitter', key: 'twitterLink', type: 'url' },
+        { label: 'LinkedIn', key: 'linkedInLink', type: 'url' },
+        { label: 'GitHub', key: 'githubLink', type: 'url' },
     ];
 
     useEffect(() => {
@@ -107,7 +107,7 @@ export default function UserProfile(props) {
         return fields.map((f) => {
             return (
                 <div className="form-group p-float-label" key={f.key}>
-                    {(f.type === 'text' || f.type === 'email' || f.type === 'password') && (
+                    {(f.type === 'text' || f.type === 'url' || f.type === 'email' || f.type === 'password') && (
                         <InputText
                             disabled={!editable || f.disabled}
                             type={f.type}
@@ -358,7 +358,7 @@ export default function UserProfile(props) {
                                 <form>
                                     <div className="form-group p-float-label">
                                         <InputText
-                                            type="text"
+                                            type="number"
                                             value={user.mobileNo || ''}
                                             className="form-control"
                                             name="mobileNo"
@@ -561,6 +561,22 @@ export default function UserProfile(props) {
 
             if ((isTutorSubmission || user.listedAsTutor) && !validateTutorFields()) {
                 return;
+            }
+
+            const urlRegex = CONSTANTS.REGEXES.URL;
+            if (
+                (updatedUser.fbLink && !urlRegex.test(updatedUser.fbLink)) ||
+                (updatedUser.linkedInLink && !urlRegex.test(updatedUser.linkedInLink)) ||
+                (updatedUser.twitterLink && !urlRegex.test(updatedUser.twitterLink)) ||
+                (updatedUser.githubLink && !urlRegex.test(updatedUser.githubLink))
+            ) {
+                return miscService.handleError('Social Media Links are not correct');
+            }
+
+            const mobileRegex = CONSTANTS.REGEXES.MOBILE_NO;
+
+            if (updatedUser.mobileNo && !mobileRegex.test(updatedUser.mobileNo)) {
+                return miscService.handleError('Please Enter Correct Mobile Number');
             }
 
             if (profileImage) {

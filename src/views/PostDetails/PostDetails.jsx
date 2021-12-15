@@ -189,17 +189,19 @@ function PostDetails() {
                                 <p className="post-description" dangerouslySetInnerHTML={{ __html: post.description }}></p>
 
                                 {
-                                    post.postType === enums.ASK_RESOURCE && post.isPaidResource && post.resourceRefLink && !post.attachmentLink &&
+                                    post.postType === enums.ASK_RESOURCE && !post.attachmentLink &&
                                     <>
-
-                                        <div className='form-group'>
-                                            <a href={post.resourceRefLink} target="_blank" rel="noreferrer">
-                                                <button className="btn btn-primary">
-                                                    <i className="fas fa-link"></i>
-                                                    Visit Original Resource Page
-                                                </button>
-                                            </a>
-                                        </div>
+                                        {
+                                            post.isPaidResource && post.resourceRefLink &&
+                                            <div className='form-group'>
+                                                <a href={post.resourceRefLink} target="_blank" rel="noreferrer">
+                                                    <button className="btn btn-primary">
+                                                        <i className="fas fa-link"></i>
+                                                        Visit Original Resource Page
+                                                    </button>
+                                                </a>
+                                            </div>
+                                        }
                                         <div className='form-group' onClick={uploadResource}>
                                             <button className="btn btn-primary">
                                                 <i className="fas fa-upload"></i> Provide the Resource

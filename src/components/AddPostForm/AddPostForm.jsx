@@ -5,6 +5,7 @@ import { InputSwitch } from 'primereact/inputswitch';
 import { InputText } from 'primereact/inputtext';
 import { useEffect, useState } from 'react';
 import URLS from '../../constants/api-urls';
+import CONSTANTS from '../../constants/constants';
 import enums from '../../constants/enums';
 import httpService from '../../services/httpservice';
 import miscService from '../../services/miscService';
@@ -45,17 +46,25 @@ function AddPostForm({ type, post, closeDialog, isAddingResource }) {
             }
         });
 
+        if (!valid) {
+            return;
+        }
+
         if (type === enums.RESOURCE && !attachmentLink) {
             miscService.handleError('Please Upload the Material First');
-            valid = false;
+            return false;
         }
 
         if (isPaidResource && resourceRefLink === '') {
             miscService.handleError('Please give URL of original resource');
-            valid = false;
+            return false;
+        }
+        if (resourceRefLink && !CONSTANTS.REGEXES.URL.test(resourceRefLink)) {
+            miscService.handleError('Link of original resource is invalid');
+            return false;
         }
 
-        return valid;
+        return true;
     };
 
     const submitForm = (e) => {

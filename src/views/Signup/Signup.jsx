@@ -124,7 +124,7 @@ function Signup() {
                         options={degrees}
                         filter
                         placeholder="Select Degree"
-                        className="single-control"
+                        className="single-control text-left"
                         onChange={(e) => {
                             setDegree(e.value);
                         }}

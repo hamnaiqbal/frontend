@@ -4,12 +4,14 @@ import { useHistory } from 'react-router-dom';
 import CONSTANTS from '../../constants/constants';
 import { MESSAGE_OBSERVER } from '../../services/chatService';
 import userService from '../../services/userservice';
+import HelpComponent from '../HelpComponent/HelpComponent';
 import Notifications from '../Notifications/Notifications';
 
 function Header() {
     const history = useHistory();
 
     const [showNotificationsModal, setShowNotificationsModal] = useState(false);
+    const [showHelpDialog, setShowHelpDialog] = useState(false);
 
     const [hasNewMessage, setHasNewMessage] = useState(false);
 
@@ -42,6 +44,10 @@ function Header() {
         setShowNotificationsModal(true);
     }
 
+    const onHelpClick = () => {
+        setShowHelpDialog(true);   
+    }
+
     const onProfileClick = () => {
         history.push('/home/profile');
     }
@@ -54,6 +60,9 @@ function Header() {
         <div className="header">
             <div className={CONSTANTS.MAIN_WIDTH_CLASS}>
                 <div className="header-wrapper">
+                    <div className="header-icon-wrapper" onClick={onHelpClick}>
+                        <i className='header-icon far fa-question-circle'></i>
+                    </div>
                     <div className="header-icon-wrapper" onClick={onSearchClick}>
                         <i className='header-icon pi pi-search'></i>
                     </div>
@@ -79,6 +88,10 @@ function Header() {
 
             <Dialog header='Notifications' visible={showNotificationsModal} className="notifications-dialog custom-scrollbar" onHide={() => { setShowNotificationsModal(false) }}>
                 <Notifications closeDialog={() => { setShowNotificationsModal(false) }} />
+            </Dialog>
+
+            <Dialog header='Contact for help' visible={showHelpDialog} className="help-dialog custom-scrollbar" onHide={() => { setShowHelpDialog(false) }}>
+                <HelpComponent closeDialog={() => { setShowHelpDialog(false) }} />
             </Dialog>
         </div>
     );

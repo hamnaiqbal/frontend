@@ -19,7 +19,11 @@ function Login() {
         };
         httpService.postRequest(URLS.LOGIN, body).subscribe((data) => {
             userService.saveLoggedInUser(data);
-            history.push('/home');
+            if(data.userType === 0) {
+                history.push('/home');
+            } else {
+                history.push('/home/admin-dashboard');
+            }
         });
     };
 

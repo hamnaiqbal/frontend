@@ -113,6 +113,12 @@ export default function NearbyTutors() {
         fetchTutors(filters);
     };
 
+    const openTutorMap = (lat, lng) => {
+        const url = "https://maps.google.com/?q=" + lat + "," + lng;
+        window.open(url, '_blank');
+    }
+
+
     const renderTutorsList = () => {
         return tutorsList.map((t, i) => {
             return <div className="tutor-item app-card" key={i}>
@@ -127,7 +133,7 @@ export default function NearbyTutors() {
                         <div className="tutor-info text-left">
 
                             <div className="tutor-info-head">
-                                <h4 className="tutor-name">{t.name}</h4>
+                                <h4 className="tutor-name">{t.name} - ({t.username})</h4>
                                 <small className="tutor-address">
                                     {
                                         t.distance != null && Math.round(t.distance) + "KM - "
@@ -215,7 +221,7 @@ export default function NearbyTutors() {
                         <div className="tutor-actions">
 
                             {/* View on Map */}
-                            <div className="tutor-action-wrapper">
+                            <div className="tutor-action-wrapper" onClick={() => { openTutorMap(t.latitude, t.longitude) }}>
                                 <p><i className="fas fa-map-marker-alt" />Map</p>
                             </div>
 

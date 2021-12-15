@@ -12,6 +12,11 @@ const URLS = {
     USER_OAUTH_VERIFICATION: '/users/verifyOAuth',
     USER_PAY: '/users/pay',
     USER_GET_ADMIN_STATS: '/users/getAdminStats',
+    
+    
+    DELETE_CHAT: '/chat/delete-chat',
+    DELETE_MSG: '/chat/delete-message',
+
 
     COURSE: '/courses',
 

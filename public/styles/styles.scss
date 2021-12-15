@@ -338,7 +338,6 @@ body {
         .chat-header-actions {
             i {
                 font-size: large;
-                color: $dark-text;
                 font-weight: bold;
             }
 
@@ -987,7 +986,8 @@ body {
 .add-post-dialog,
 .post-job-dialog,
 .bid-dialog,
-.report-dialog {
+.report-dialog,
+.help-dialog {
     width: 30%;
 }
 
@@ -1593,21 +1593,63 @@ body {
         i.admin-stat-icon {
             font-size: 90px;
             position: absolute;
-            color: grey;
+            color: whitesmoke;
             opacity: 0.5;
-            margin-top: -40px;
+            margin-top: -60px;
             margin-left: 30px;
         }
 
         p.admin-stat-heading {
             font-weight: bold;
+            margin: 0;
         }
 
         p.admin-stat-number {
             font-size: xx-large;
             font-weight: bold;
+            margin: 0;
         }
     }
+
+    .app-card.action-item-card {
+        padding: 20px 30px;
+
+        p {
+            margin: 0;
+
+            i {
+                margin-right: 10px;
+                color: orange;
+            }
+        }
+
+        .action-item-wrapper {
+            display: flex;
+            align-items: center;
+        }
+
+        p.action-item-text {
+            font-weight: bold;
+        }
+
+        .action-item-text i {
+            margin-right: 20px;
+        }
+
+        .btn.action-btn {
+            border: 1px solid $primary;
+            border-radius: 50px;
+            color: $primary;
+            padding: 10px 20px;
+        }
+
+        .btn.action-btn:hover {
+            color: white;
+            background-color: $primary;
+            transition-duration: 300ms;
+        }
+    }
+
 
 }
 
@@ -1908,6 +1950,7 @@ body {
 
     .paid-to-seller {
         color: $success-color-dark;
+
         i {
             margin-right: 10px;
         }

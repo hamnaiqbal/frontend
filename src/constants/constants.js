@@ -3,6 +3,11 @@ const CONSTANTS = {
     MAIN_WIDTH_CLASS: 'container-fluid',
     DEFAULT_USER_IMAGE: 'https://icon-library.com/images/avatar-icon-images/avatar-icon-images-6.jpg',
 
+    REGEXES: {
+        MOBILE_NO: /^((\+92)?(0092)?(92)?(0)?)(3)([0-9]{9})$/i,
+        URL: new RegExp('(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})')
+    },
+
     MIN_JOB_BUDGET: 100,
 
     POST_TYPES: [

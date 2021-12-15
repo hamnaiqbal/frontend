@@ -20,6 +20,8 @@ const ChatComponent = () => {
 
     const [fetchedMessagesData, setFetchedMessagesData] = useState([]);
 
+    const [hoveredMsg, setHoveredMsg] = useState({});
+
     const messagesEndRef = useRef(null)
 
 
@@ -31,6 +33,27 @@ const ChatComponent = () => {
         observeMessages();
 
     }, [])
+
+    const deleteChat = () => {
+        if (!selectedChat) {
+            return;
+        }
+        const data = {
+            user1Id: userService.getCurrentUserId(),
+            user2Id: selectedChat._id
+        };
+        httpService.deleteRequest(URLS.DELETE_CHAT, data).subscribe(() => {
+            setSelectedChat({})
+            fetchMessages();
+        })
+    }
+
+
+    const deleteMessage = (messageId) => {
+        httpService.deleteRequest(URLS.DELETE_MSG, { messageId }).subscribe(() => {
+            fetchMessages();
+        })
+    }
 
 
     const observeMessages = () => {
@@ -145,10 +168,11 @@ const ChatComponent = () => {
     const renderChatMessages = () => {
 
         return chatMessages.map((m, i) => {
-            return <div key={i}>
+            return <div key={i} onMouseEnter={() => { setHoveredMsg(m._id) }}>
                 <p className={"single-message " + (m.isUserSender ? "own" : "other")}>
                     {m?.text}
                 </p>
+                {hoveredMsg === m._id && <div className="delete-msg"><i className="fas fa-trash"></i></div>}
                 {(i === chatMessages.length - 1) && <div className="scrollchat" ref={messagesEndRef} />}
             </div>
 
@@ -165,7 +189,9 @@ const ChatComponent = () => {
                 </div>
 
                 <div className="chat-header-actions">
-                    <i className="pi pi-ban block-icon"></i>
+                    <button className="btn btn-danger" onClick={deleteChat}>
+                        <i className="fas fa-trash-alt"></i>
+                    </button>
                 </div>
             </div>
 

@@ -22,6 +22,8 @@ export default function RequestedQuotes() {
 
     const [showPriceDialog, setShowPriceDialog] = useState(false);
 
+    const isTutor = userService.getLoggedInUser().listedAsTutor;
+
     const subscriptions = [];
 
     const getDurationLabel = (durValue) => {
@@ -123,14 +125,14 @@ export default function RequestedQuotes() {
                         {isForUser &&
                             <div>
                                 <p className="card-heading-text">
-                                    <i className="fas fa-file-invoice-dollar"></i> Quote Requests For User
+                                    <i className="fas fa-file-invoice-dollar"></i> Quote Received
                                 </p>
                             </div>
                         }
                         {!isForUser &&
                             <div>
                                 <p className="card-heading-text">
-                                    <i className="fas fa-file-invoice-dollar"></i> Quote Requests By User
+                                    <i className="fas fa-file-invoice-dollar"></i> Quote Sent
                                 </p>
                             </div>
                         }
@@ -255,7 +257,10 @@ export default function RequestedQuotes() {
 
 
             {/* QUOTES FOR THE USER */}
-            <QuoteTable quotes={quotesForUser} isForUser={true} />
+            {
+                isTutor &&
+                <QuoteTable quotes={quotesForUser} isForUser={true} />
+            }
 
 
             {/* MODAL TO EDIT QUOTE */}

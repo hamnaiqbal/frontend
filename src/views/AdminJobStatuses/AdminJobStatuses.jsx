@@ -130,13 +130,13 @@ export default function AdminJobStatuses() {
                             <div className="col-md-3 actions-wrapper">
                                 {/* JOB ACTIONS */}
                                 <div className="job-actions">
-                                    {j.status === 4 && !j.paidToCustomer &&
+                                    {j.status === 4 && !j.paidToSeller &&
                                         <div className='job-action' onClick={() => { viewPayoutDialog(j) }}>
                                             <i className="fas fa-coins" /> Payout
                                         </div>
                                     }
 
-                                    {j.status === 4 && j.paidToCustomer &&
+                                    {j.status === 4 && j.paidToSeller &&
                                         <div className='paid-to-seller'>
                                             <i className="fas fa-check-circle" /> Paid to Seller
                                         </div>
