@@ -15,6 +15,78 @@ body {
     font-family: 'Inter', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
+
+// FOR RESPONSIVESS 
+
+@media only screen and (max-width: 768px) {
+
+    .app-card {
+        padding: 30px;
+    }
+
+    .admin-job-status-component {
+        .job-status-wrapper {
+            margin-bottom: 20px;
+        }
+    }
+
+    .show-only-on-mobile {
+        display: block;
+    }
+
+    .add-post-dialog,
+    .post-job-dialog,
+    .bid-dialog,
+    .report-dialog,
+    .help-dialog {
+        width: 80%;
+    }
+
+    .notifications-dialog,
+    .new-chat-dialog,
+    .connect-stripe-dialog,
+    .payout-dialog {
+        width: 95%;
+    }
+
+    
+    .add-post-div {
+        width: 100%;
+        border-bottom: 1px solid $light-border;
+    }
+
+}
+
+@media screen and (min-width: 768px) {
+    .show-only-on-mobile {
+        display: none;
+    }
+
+    .add-post-dialog,
+    .post-job-dialog,
+    .bid-dialog,
+    .report-dialog,
+    .help-dialog {
+        width: 30%;
+    }
+
+    .notifications-dialog,
+    .new-chat-dialog,
+    .connect-stripe-dialog,
+    .payout-dialog {
+        width: 40%;
+    }
+    
+    .add-post-div {
+        width: 33.3%;
+    }
+
+}
+
+
+
+
+
 .header-tooltip.p-tooltip {
     .p-tooltip-text {
         background-color: $primary;
@@ -815,7 +887,6 @@ body {
     .add-post-div {
         display: inline-block;
         padding: 30px;
-        width: 33.3%;
 
         p {
             margin: 0;
@@ -997,20 +1068,6 @@ body {
     }
 }
 
-.add-post-dialog,
-.post-job-dialog,
-.bid-dialog,
-.report-dialog,
-.help-dialog {
-    width: 30%;
-}
-
-.notifications-dialog,
-.new-chat-dialog,
-.connect-stripe-dialog,
-.payout-dialog {
-    width: 40%;
-}
 
 
 .payout-deatil {
@@ -1600,7 +1657,7 @@ body {
 }
 
 .admin-dashboard {
-    
+
     .app-card.admin-stat-card {
         transition-duration: 300ms;
         padding: 30px;
