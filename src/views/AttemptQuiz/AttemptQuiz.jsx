@@ -26,6 +26,9 @@ const AttemptQuiz = () => {
                 setIsLoading(false);
                 setIsLoaded(true);
                 setQuestions(questions);
+            }, err => {
+                setIsLoading(false);
+                setIsLoaded(false);
             });
         }
     };

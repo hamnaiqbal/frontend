@@ -174,13 +174,19 @@ export default function JobDetail() {
         return (
             <div className="job-info">
                 <div className="job-info-header">
-                    <p className="job-title">
-                        {j.title}
-                    </p>
+                    <div>
+                        <p className="job-title">
+                            {j.title}
+                        </p>
 
-                    <p className="job-poster">
-                        By {j.postedBy?.name}
-                    </p>
+                        <p className="job-poster">
+                            By {j.postedBy?.name}
+                        </p>
+                    </div>
+
+                    <div className="job-budget">
+                        PKR <span>{j.budget}</span>
+                    </div>
 
                 </div>
 

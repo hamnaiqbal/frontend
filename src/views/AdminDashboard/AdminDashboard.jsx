@@ -80,6 +80,38 @@ export default function AdminDashboard() {
                 </div>
 
             </div>
+            <div className="row">
+
+                <div className="col-md-3 admin-stat-wrapper">
+                    <div className="app-card admin-stat-card">
+                        <p className="admin-stat-number">{stats.tutorCount}</p>
+                        <i className="admin-stat-icon fas fa-user-graduate" />
+                        <p className="admin-stat-heading">Tutors</p>
+                    </div>
+                </div>
+                <div className="col-md-3 admin-stat-wrapper">
+                    <div className="app-card admin-stat-card">
+                        <p className="admin-stat-number">{stats.expertCount}</p>
+                        <i className="admin-stat-icon fas fa-certificate" />
+                        <p className="admin-stat-heading">Exprts</p>
+                    </div>
+                </div>
+                <div className="col-md-3 admin-stat-wrapper">
+                    <div className="app-card admin-stat-card">
+                        <p className="admin-stat-number">{stats.jobsPrevWeekCount}</p>
+                        <i className="admin-stat-icon far fa-file-alt" />
+                        <p className="admin-stat-heading">Jobs in Last Week</p>
+                    </div>
+                </div>
+                <div className="col-md-3 admin-stat-wrapper">
+                    <div className="app-card admin-stat-card">
+                        <p className="admin-stat-number">{stats.postsPrevWeekCount}</p>
+                        <i className="admin-stat-icon far fa-question-circle" />
+                        <p className="admin-stat-heading">Posts in Last week</p>
+                    </div>
+                </div>
+
+            </div>
 
             <br />
 

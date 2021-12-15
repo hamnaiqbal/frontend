@@ -15,6 +15,18 @@ body {
     font-family: 'Inter', 'Trebuchet MS', 'Lucida Sans Unicode', 'Lucida Grande', 'Lucida Sans', Arial, sans-serif;
 }
 
+.header-tooltip.p-tooltip {
+    .p-tooltip-text {
+        background-color: $primary;
+        color: white;
+        font-size: small;
+    }
+
+    .p-tooltip-arrow {
+        border: unset;
+    }
+}
+
 .header {
     padding: 15px;
     position: absolute;
@@ -54,6 +66,8 @@ body {
     }
 
     .header-icon-wrapper:hover {
+        background-color: $primary;
+        color: white;
         box-shadow: 0px 0px 20px #b4b4b4;
         transition-duration: 300ms;
     }
@@ -1586,8 +1600,9 @@ body {
 }
 
 .admin-dashboard {
-
+    
     .app-card.admin-stat-card {
+        transition-duration: 300ms;
         padding: 30px;
 
         i.admin-stat-icon {
@@ -1609,6 +1624,13 @@ body {
             font-weight: bold;
             margin: 0;
         }
+    }
+
+    .admin-stat-card:hover {
+        transition-duration: 300ms;
+        background-color: $primary;
+        color: white;
+        cursor: pointer;
     }
 
     .app-card.action-item-card {

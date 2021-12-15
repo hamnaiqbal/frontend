@@ -1,4 +1,5 @@
 import { Dialog } from 'primereact/dialog';
+import { Tooltip } from 'primereact/tooltip';
 import React, { useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import CONSTANTS from '../../constants/constants';
@@ -45,7 +46,7 @@ function Header() {
     }
 
     const onHelpClick = () => {
-        setShowHelpDialog(true);   
+        setShowHelpDialog(true);
     }
 
     const onProfileClick = () => {
@@ -60,16 +61,18 @@ function Header() {
         <div className="header">
             <div className={CONSTANTS.MAIN_WIDTH_CLASS}>
                 <div className="header-wrapper">
-                    <div className="header-icon-wrapper" onClick={onHelpClick}>
+                    <Tooltip className='header-tooltip' target=".header-icon-wrapper" />
+
+                    <div className="header-icon-wrapper" data-pr-tooltip="Help" data-pr-position="bottom" onClick={onHelpClick}>
                         <i className='header-icon far fa-question-circle'></i>
                     </div>
-                    <div className="header-icon-wrapper" onClick={onSearchClick}>
+                    <div className="header-icon-wrapper" data-pr-tooltip="Search" data-pr-position="bottom" onClick={onSearchClick}>
                         <i className='header-icon pi pi-search'></i>
                     </div>
-                    <div className="header-icon-wrapper" onClick={onNotificationClick}>
+                    <div className="header-icon-wrapper" data-pr-tooltip="Notifications" data-pr-position="bottom" onClick={onNotificationClick}>
                         <i className='header-icon fas fa-bell'></i>
                     </div>
-                    <div className={"header-icon-wrapper"} onClick={onMessageClick}>
+                    <div className="header-icon-wrapper" data-pr-tooltip="Messages" data-pr-position="bottom" onClick={onMessageClick}>
                         {
                             hasNewMessage && <div className='new-messages'>
 
@@ -77,10 +80,10 @@ function Header() {
                         }
                         <i className='header-icon pi pi-comments'></i>
                     </div>
-                    <div className="header-icon-wrapper" onClick={onProfileClick}>
+                    <div className="header-icon-wrapper" data-pr-tooltip="Profile" data-pr-position="bottom" onClick={onProfileClick}>
                         <i className='header-icon pi pi-user'></i>
                     </div>
-                    <div className="header-icon-wrapper" onClick={logout}>
+                    <div className="header-icon-wrapper" data-pr-tooltip="Logout" data-pr-position="bottom" onClick={logout}>
                         <i className='header-icon pi pi-sign-out'></i>
                     </div>
                 </div>
