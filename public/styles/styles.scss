@@ -2215,7 +2215,7 @@ body {
         .action-wrapper {
             display: flex;
             align-items: center;
-            justify-content: end;
+            justify-content: center;
         }
 
         button.btn.take-test-btn {
@@ -2226,6 +2226,11 @@ body {
             border-color: $primary;
         }
 
+        button.btn.take-test-btn.failed {
+            color: grey;
+            border-color: grey;
+        }
+        
         p.status {
             width: auto;
             padding: 5px 10px;
@@ -2242,9 +2247,14 @@ body {
             background: $success-color-light;
         }
 
-        p.status.not-taken {
+        p.status.failed {
             border-color: $failure-color-light;
             background: $failure-color-light;
+        }
+        
+        p.status.not-taken {
+            border-color: $light-text;
+            background: $light-text;
         }
 
 

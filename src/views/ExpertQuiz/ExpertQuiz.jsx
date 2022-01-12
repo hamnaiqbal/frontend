@@ -1,3 +1,4 @@
+import { Tooltip } from 'primereact/tooltip';
 import React, { useEffect, useState } from 'react'
 import QuizRenderer from '../../components/QuizRenderer/QuizRenderer';
 import URLS from '../../constants/api-urls';
@@ -77,20 +78,32 @@ export default function ExpertQuiz() {
                                 return <div className="single-subject">
                                     <div className="row">
                                         <div className="col-md-2 status-wrapper">
-                                            <p className={"status " + (s.taken ? 'taken' : 'not-taken')}>
-                                                {s.taken ? 'Cleared' : 'Not Taken'}
+                                            <p className={"status " + (s.taken ? 'taken' : s.failed ? 'failed' : 'not-taken')}>
+                                                {s.taken ? 'Cleared' : s.failed ? 'Unsuccessful' : 'Not Taken'}
                                             </p>
                                         </div>
 
-                                        <div className="col-md-6 name-wrapper">
+                                        <div className="col-md-8 name-wrapper">
                                             <p className="subject-name">
                                                 {s.name}
                                             </p>
                                         </div>
 
-                                        {!s.taken &&
-                                            <div className="col-md-3 action-wrapper" onClick={() => { onSubjectSelect(s) }}>
-                                                <button className='btn btn-primary take-test-btn'>Take Test</button>
+                                        {!s.taken && !s.failed &&
+                                            <div className="col-md-2 action-wrapper" onClick={() => { onSubjectSelect(s) }}>
+                                                <button className='btn btn-primary take-test-btn'>
+                                                    Take Test
+                                                </button>
+                                            </div>
+                                        }
+                                        {!s.taken && s.failed &&
+                                            <div className="col-md-2 action-wrapper">
+                                                <div className='failed-quiz'>
+                                                    <Tooltip className='quiz-btn-tooltip' target=".failed" />
+                                                    <button className='btn btn-primary take-test-btn failed' data-pr-position="top" data-pr-tooltip={`You Failed this quiz on ${miscService.getFormattedDate(s.attemptedOn, true)}. Quiz can only be retaken after 15 days of its attempt`}>
+                                                        <i className="fas fa-lock"></i> Locked
+                                                    </button>
+                                                </div>
                                             </div>
                                         }
                                     </div>

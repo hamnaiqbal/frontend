@@ -1,13 +1,11 @@
 import { useEffect } from 'react';
 import { Route, Switch, useHistory } from 'react-router-dom';
-import AddPostForm from '../../components/AddPostForm/AddPostForm';
 import Header from '../../components/Header/Header';
 import Sidebar from '../../components/Sidebar/Sidebar';
 import CONSTANTS from '../../constants/constants';
 import chatService from '../../services/chatService';
 import miscService from '../../services/miscService';
 import userService from '../../services/userservice';
-import AddTutor from '../AddTutor/AddTutor';
 import AdminDashboard from '../AdminDashboard/AdminDashboard';
 import AdminJobStatuses from '../AdminJobStatuses/AdminJobStatuses';
 import AttemptQuiz from '../AttemptQuiz/AttemptQuiz';

@@ -169,7 +169,7 @@ export default function RequestedQuotes() {
                                 quotes.map((quote, i) => <tr className="quote-row" key={i}>
                                     <td>
                                         <p className="quote-name">
-                                            {isForUser ? quote?.requestedBy?.name : quote?.requestedTo?.name}
+                                            {isForUser ? `${quote?.requestedBy?.name} - (${quote?.requestedBy?.username}) ` : `${quote?.requestedTo?.name} - (${quote?.requestedTo?.username})`}
                                         </p>
                                         <div>
                                             {quote?.course?.name}
