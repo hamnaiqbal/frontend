@@ -9,7 +9,7 @@ export default function ConnectStripe() {
             email: user.email
         })
 
-        window.location.href = `https://connect.stripe.com/express/oauth/authorize?response_type=code&client_id=ca_KfhYejJvknzeT11hZpLgSWuzeVxTOkxT&state=${stateToMaintain}`;
+        window.location.href = `https://connect.stripe.com/express/oauth/authorize?response_type=code&client_id=ca_KxTHIWCpZZo1kqVzBLRY58ahVW5o48IV&state=${stateToMaintain}`;
     }
 
     return (
